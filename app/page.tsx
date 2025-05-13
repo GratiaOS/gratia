@@ -1,16 +1,17 @@
 import Image from 'next/image';
 import GratiaLogo from '@/components/GratiaLogo';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#fdfaf3] text-[#2d2d2d] font-serif flex flex-col items-center justify-center px-6 py-24">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-24">
       {/* Logo & Title */}
       <div className="text-center mb-12">
         <div className="mb-4">
-          <GratiaLogo className="w-48 h-auto inline mb-8 animate-pulse-slow" />
+          <GratiaLogo className="w-48 h-auto inline mb-8 animate-pulse-slow text-[#11392A]" />
         </div>
-        <h1 className="text-4xl font-semibold tracking-wide">The First Gratia Note</h1>
-        <div className="w-24 h-0.5 bg-[#2d2d2d] mx-auto mt-4 mb-6" />
+        <h1 className="text-4xl font-semibold tracking-wide text-[#11392A]">The First Gratia Note</h1>
+        <div className="w-24 h-0.5 bg-[#11392A] mx-auto mt-4 mb-6" />
       </div>
 
       {/* Note Content */}
@@ -29,15 +30,15 @@ export default function Home() {
 
       {/* Call to Action */}
       <div className="mt-10">
-        <button className="px-6 py-3 border border-[#2d2d2d] text-[#2d2d2d] rounded-full hover:bg-[#2d2d2d] hover:text-[#fdfaf3] transition">
-          Walk with Us
-        </button>
+        <Link href="/join">
+          <button className="px-6 py-3 border-2 border-[#11392A] text-[#11392A] rounded-full hover:bg-[#f5f5f5] transition">Walk with Us</button>
+        </Link>
       </div>
 
       {/* Footer Blessing */}
       <footer className="mt-20 text-center text-sm italic text-[#555] px-4">
         May your path be held, your voice remembered, your light reflected.
       </footer>
-    </main>
+    </div>
   );
 }
