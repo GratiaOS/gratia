@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className="bg-gradient-to-b from-[#F9F5EC] to-[#E5DCC5] text-black px-8 pt-24 pb-12 flex flex-col items-start justify-end text-left">
+    <header className="bg-linear-to-b from-[#F9F5EC] to-[#E5DCC5] text-black px-8 pt-24 pb-12 flex flex-col items-start justify-end text-left">
       <GratiaLogo className="w-48 h-auto mb-8 animate-pulse-slow" />
 
       <div className="text-sm uppercase tracking-widest text-gray-500 mb-2">1 Surface Layer</div>
