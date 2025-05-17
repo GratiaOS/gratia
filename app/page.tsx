@@ -11,7 +11,7 @@ export default function Home() {
           <GratiaLogo className="text-accent animate-pulse-slow mb-8 inline h-auto w-48" />
         </div>
         <h1 className="text-title-gratia text-accent text-4xl">The First Gratia Note</h1>
-        <div className="mx-auto mt-4 mb-6 h-0.5 w-24" />
+        <div className="bg-accent mx-auto mt-4 mb-6 h-0.5 w-24" />
       </div>
 
       {/* Note Content */}
