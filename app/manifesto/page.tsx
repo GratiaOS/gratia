@@ -3,15 +3,15 @@ import GratiaLogo from '@/components/GratiaLogo';
 export default function ManifestoPage() {
   return (
     <div>
-      <section className="text-center bg-[#F6F3EB] py-20 px-6" data-layer="surface">
-        <GratiaLogo className="w-28 h-auto mx-auto mb-6 animate-pulse-slow text-[#11392A]" />
-        <h1 className="text-4xl font-semibold tracking-wide uppercase relative z-10 text-[#11392A]">
+      <section className="bg-[#F6F3EB] px-6 py-20 text-center" data-layer="surface">
+        <GratiaLogo className="animate-pulse-slow mx-auto mb-6 h-auto w-28 text-[#11392A]" />
+        <h1 className="relative z-10 text-4xl font-semibold tracking-wide text-[#11392A] uppercase">
           The First Gratia Note
-          <span className="block w-24 h-0.5 bg-[#11392A] mt-4 mx-auto rounded-full"></span>
+          <span className="mx-auto mt-4 block h-0.5 w-24 rounded-full bg-[#11392A]"></span>
         </h1>
       </section>
-      <section className="px-6 py-16 bg-[#F1EEE8]" data-layer="midstream">
-        <div className="max-w-3xl mx-auto space-y-6 text-lg leading-relaxed">
+      <section className="bg-[#F1EEE8] px-6 py-16" data-layer="midstream">
+        <div className="mx-auto max-w-3xl space-y-6 text-lg leading-relaxed">
           <p>
             This is not a manifesto. This is a note.
             <br />
@@ -84,30 +84,41 @@ export default function ManifestoPage() {
             <br />
             Remember.
           </p>
-          <p className="italic text-[#555]">
+          <p className="text-[#555] italic">
             This is Gratia.
             <br /> You belong here.
           </p>
         </div>
       </section>
-      <section className="text-center space-y-6 py-20 px-6 bg-[#DCD4C5]" data-layer="core-current">
+      <section className="space-y-6 bg-[#DCD4C5] px-6 py-20 text-center" data-layer="core-current">
         <h2 className="text-3xl font-semibold tracking-wide uppercase">Ready to walk with us?</h2>
-        <p className="text-lg max-w-xl mx-auto text-[#444]">
-          Whether you’re here to offer your hands, your voice, or just your heart — Gratia is a space to co-create what was once only imagined.
+        <p className="mx-auto max-w-xl text-lg text-[#444]">
+          Whether you’re here to offer your hands, your voice, or just your heart — Gratia is a
+          space to co-create what was once only imagined.
         </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-          <a href="/join" className="px-6 py-3 border-2 border-[#11392A] bg-[#11392A] text-white rounded-full hover:bg-[#0f2e22] transition">
+        <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <a
+            href="/join"
+            className="rounded-full border-2 border-[#11392A] bg-[#11392A] px-6 py-3 text-white transition hover:bg-[#0f2e22]"
+          >
             Join the Circle
           </a>
-          <a href="/contribute" className="px-6 py-3 border-2 border-[#11392A] text-[#11392A] rounded-full hover:bg-[#f5f5f5] transition">
+          <a
+            href="/contribute"
+            className="rounded-full border-2 border-[#11392A] px-6 py-3 text-[#11392A] transition hover:bg-[#f5f5f5]"
+          >
             Contribute Skills
           </a>
-          <a href="/learn" className="px-6 py-3 underline text-[#2d2d2d] hover:text-[#11392A] transition">
+          <a
+            href="/learn"
+            className="px-6 py-3 text-[#2d2d2d] underline transition hover:text-[#11392A]"
+          >
             Learn More
           </a>
         </div>
-        <p className="text-center italic text-[#555] mt-10">
-          Thank you for reading. May your path be held, your voice remembered, and your light reflected. You belong here.
+        <p className="mt-10 text-center text-[#555] italic">
+          Thank you for reading. May your path be held, your voice remembered, and your light
+          reflected. You belong here.
         </p>
       </section>
     </div>
