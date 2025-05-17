@@ -4,10 +4,10 @@ export default function ContributePage() {
   return (
     <div className="px-6 py-24">
       <section className="mx-auto max-w-3xl text-center">
-        <GratiaLogo className="animate-pulse-slow mx-auto mb-6 h-auto w-28 text-[#11392A]" />
-        <h1 className="relative z-10 mb-6 text-4xl font-semibold tracking-wide text-[#11392A] uppercase">
+        <GratiaLogo className="animate-pulse-slow text-accent mx-auto mb-6 h-auto w-28" />
+        <h1 className="text-title-gratia text-accent relative z-10 mb-6 text-4xl">
           Contribute to Gratia
-          <span className="mx-auto mt-4 block h-0.5 w-24 rounded-full bg-[#11392A]"></span>
+          <span className="bg-accent mx-auto mt-4 block h-0.5 w-24 rounded-full"></span>
         </h1>
 
         <p className="mb-8 text-lg">
@@ -19,7 +19,7 @@ export default function ContributePage() {
         </p>
 
         <div className="mx-auto mb-12 max-w-xl space-y-6 text-left">
-          <p className="font-semibold text-[#11392A]">Things we welcome:</p>
+          <p className="text-accent font-semibold">Things we welcome:</p>
           <ul className="list-disc space-y-2 pl-6">
             <li>Design (quiet, thoughtful, grounded)</li>
             <li>Frontend dev (React, Next, Tailwind — you know the vibe)</li>
@@ -30,14 +30,11 @@ export default function ContributePage() {
           </ul>
         </div>
 
-        <a
-          href="mailto:razvan.tirboaca@gmail.com"
-          className="rounded-full border-2 border-[#11392A] bg-[#11392A] px-6 py-3 text-[#fdfaf3] transition hover:bg-[#0f2e22]"
-        >
+        <a href="mailto:razvan.tirboaca@gmail.com" className="btn-primary">
           Offer Your Gifts
         </a>
 
-        <p className="mt-20 text-[#555] italic">
+        <p className="text-muted mt-20 italic">
           Offer only what you love. The field doesn't need more hustle — it needs wholeness.
         </p>
       </section>

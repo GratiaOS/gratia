@@ -1,16 +1,17 @@
+import Link from 'next/link';
 import GratiaLogo from '@/components/GratiaLogo';
 
 export default function ManifestoPage() {
   return (
     <div>
-      <section className="bg-[#F6F3EB] px-6 py-20 text-center" data-layer="surface">
-        <GratiaLogo className="animate-pulse-slow mx-auto mb-6 h-auto w-28 text-[#11392A]" />
-        <h1 className="relative z-10 text-4xl font-semibold tracking-wide text-[#11392A] uppercase">
+      <section className="bg-surface px-6 py-20 text-center" data-layer="surface">
+        <GratiaLogo className="animate-pulse-slow text-accent mx-auto mb-6 h-auto w-28" />
+        <h1 className="text-title-gratia text-accent relative z-10 text-4xl">
           The First Gratia Note
-          <span className="mx-auto mt-4 block h-0.5 w-24 rounded-full bg-[#11392A]"></span>
+          <span className="bg-accent mx-auto mt-4 block h-0.5 w-24 rounded-full"></span>
         </h1>
       </section>
-      <section className="bg-[#F1EEE8] px-6 py-16" data-layer="midstream">
+      <section className="bg-midstream px-6 py-16" data-layer="midstream">
         <div className="mx-auto max-w-3xl space-y-6 text-lg leading-relaxed">
           <p>
             This is not a manifesto. This is a note.
@@ -84,39 +85,33 @@ export default function ManifestoPage() {
             <br />
             Remember.
           </p>
-          <p className="text-[#555] italic">
+          <p className="text-muted italic">
             This is Gratia.
             <br /> You belong here.
           </p>
         </div>
       </section>
-      <section className="space-y-6 bg-[#DCD4C5] px-6 py-20 text-center" data-layer="core-current">
-        <h2 className="text-3xl font-semibold tracking-wide uppercase">Ready to walk with us?</h2>
-        <p className="mx-auto max-w-xl text-lg text-[#444]">
+      <section
+        className="bg-core-current space-y-6 px-6 py-20 text-center"
+        data-layer="core-current"
+      >
+        <h2 className="text-title-gratia text-3xl">Ready to walk with us?</h2>
+        <p className="text-muted mx-auto max-w-xl">
           Whether you’re here to offer your hands, your voice, or just your heart — Gratia is a
           space to co-create what was once only imagined.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-          <a
-            href="/join"
-            className="rounded-full border-2 border-[#11392A] bg-[#11392A] px-6 py-3 text-white transition hover:bg-[#0f2e22]"
-          >
+          <Link href="/join" className="btn-primary">
             Join the Circle
-          </a>
-          <a
-            href="/contribute"
-            className="rounded-full border-2 border-[#11392A] px-6 py-3 text-[#11392A] transition hover:bg-[#f5f5f5]"
-          >
+          </Link>
+          <Link href="/contribute" className="btn-outline">
             Contribute Skills
-          </a>
-          <a
-            href="/learn"
-            className="px-6 py-3 text-[#2d2d2d] underline transition hover:text-[#11392A]"
-          >
+          </Link>
+          <Link href="/learn" className="link-default px-6 py-3">
             Learn More
-          </a>
+          </Link>
         </div>
-        <p className="mt-10 text-center text-[#555] italic">
+        <p className="text-muted mt-10 text-center italic">
           Thank you for reading. May your path be held, your voice remembered, and your light
           reflected. You belong here.
         </p>

@@ -1,13 +1,14 @@
+import Link from 'next/link';
 import GratiaLogo from '@/components/GratiaLogo';
 
 export default function JoinPage() {
   return (
     <div className="px-6 py-24">
       <section className="mx-auto max-w-3xl text-center">
-        <GratiaLogo className="animate-pulse-slow mx-auto mb-6 h-auto w-28 text-[#11392A]" />
-        <h1 className="relative z-10 mb-6 text-4xl font-semibold tracking-wide text-[#11392A] uppercase">
+        <GratiaLogo className="animate-pulse-slow text-accent mx-auto mb-6 h-auto w-28" />
+        <h1 className="text-title-gratia text-accent relative z-10 mb-6 text-4xl">
           Join the Circle
-          <span className="mx-auto mt-4 block h-0.5 w-24 rounded-full bg-[#11392A]"></span>
+          <span className="bg-accent mx-auto mt-4 block h-0.5 w-24 rounded-full"></span>
         </h1>
         <p className="mb-8 text-lg">
           You don’t need credentials, followers, or a pitch. You only need presence.
@@ -17,22 +18,16 @@ export default function JoinPage() {
           presence matters.
         </p>
 
-        <div className="space-y-6">
-          <a
-            href="mailto:razvan.tirboaca@gmail.com"
-            className="mx-auto block w-full rounded-full border-2 border-[#11392A] bg-[#11392A] px-6 py-3 text-[#fdfaf3] transition hover:bg-[#0f2e22] sm:w-auto"
-          >
+        <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <a href="mailto:razvan.tirboaca@gmail.com" className="btn-primary">
             Email Us to Join
           </a>
-          <a
-            href="/contribute"
-            className="mx-auto block w-full rounded-full border-2 border-[#11392A] px-6 py-3 text-[#11392A] transition hover:bg-[#f5f5f5] sm:w-auto"
-          >
+          <Link href="/contribute" className="btn-outline">
             I Want to Offer Skills
-          </a>
+          </Link>
         </div>
 
-        <p className="mt-20 text-[#555] italic">
+        <p className="text-muted mt-20 italic">
           No rush. No pressure. The field knows when it’s time.
         </p>
       </section>
