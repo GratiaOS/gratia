@@ -30,7 +30,7 @@ export default function ContributePage() {
           </ul>
         </div>
 
-        <a href="mailto:razvan.tirboaca@gmail.com" className="btn-primary">
+        <a href="mailto:razvan@gratia.space" className="btn-primary">
           Offer Your Gifts
         </a>
 
