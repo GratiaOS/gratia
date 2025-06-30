@@ -1,22 +1,22 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #f6f3eb;
-  --foreground: #2d2d2d;
-  --color-bg: #fdfaf3;
-  --color-text: #2d2d2d;
-  --color-accent: #11392a;
-  --color-muted: #555;
+  --background: var(--theme-forest-mystic-background-light);
+  --foreground: var(--theme-forest-mystic-foreground-light);
+  --color-bg: var(--theme-forest-mystic-background-light);
+  --color-text: var(--theme-forest-mystic-foreground-light);
+  --color-accent: var(--theme-forest-mystic-accent-leaf);
+  --color-muted: #6b7b6c; /* earthy-muted upgrade */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #2d2d2d;
-    --foreground: #f6f3eb;
-    --color-bg: #0f1612;
-    --color-text: #f5f3eb;
-    --color-accent: #d2f0ce;
-    --color-muted: #aaa;
+    --background: var(--theme-forest-mystic-background);
+    --foreground: var(--theme-forest-mystic-foreground);
+    --color-bg: var(--theme-forest-mystic-background);
+    --color-text: var(--theme-forest-mystic-foreground);
+    --color-accent: var(--theme-forest-mystic-glow-accent);
+    --color-muted: #8ea79b; /* glowing fog-level muted */
   }
 }
 
@@ -30,6 +30,20 @@
   --font-gratia: var(--font-gratia);
   --font-selari: var(--font-selari);
   --font-bilute: var(--font-bilute);
+  --theme-forest-mystic-background: #0d1a1a;
+  --theme-forest-mystic-foreground: #f3f7f5;
+  --theme-forest-mystic-leaf: #3b6343;
+  --theme-forest-mystic-leaf-light: #6fa37c;
+  --theme-forest-mystic-glow-blue: #7ae1e4;
+  --theme-forest-mystic-mushroom: #6bd0c6;
+  --theme-forest-mystic-amber: #d9a766;
+  --theme-forest-mystic-fruit-gold: #d5b75a;
+  --theme-forest-mystic-background-light: #f3f7f5;
+  --theme-forest-mystic-foreground-light: #2d2d2d;
+  --theme-forest-mystic-accent-leaf: #4d7f5f;
+  --theme-forest-mystic-glow-accent: #4acbcc;
+  --theme-forest-mystic-flower-warm: #c68b4d;
+  --theme-forest-mystic-berry-gold: #d5c379;
 }
 
 body {

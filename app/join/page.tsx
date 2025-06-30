@@ -27,7 +27,7 @@ export default function JoinPage() {
           </Link>
         </div>
 
-        <p className="text-muted mt-20 italic">
+        <p className="text-subtle-bilute mt-20 px-4 text-center text-sm">
           No rush. No pressure. The field knows when it’s time.
         </p>
       </section>

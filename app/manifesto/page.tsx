@@ -107,11 +107,11 @@ export default function ManifestoPage() {
           <Link href="/contribute" className="btn-outline">
             Contribute Skills
           </Link>
-          <Link href="/learn" className="link-default px-6 py-3">
+          <Link href="/learn" className="link-default px-6 py-2.5">
             Learn More
           </Link>
         </div>
-        <p className="text-muted mt-10 text-center italic">
+        <p className="text-subtle-bilute mt-10 px-4 text-center text-sm">
           Thank you for reading. May your path be held, your voice remembered, and your light
           reflected. You belong here.
         </p>

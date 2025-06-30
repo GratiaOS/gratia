@@ -34,7 +34,7 @@ export default function ContributePage() {
           Offer Your Gifts
         </a>
 
-        <p className="text-muted mt-20 italic">
+        <p className="text-subtle-bilute mt-20 px-4 text-center text-sm">
           Offer only what you love. The field doesn't need more hustle — it needs wholeness.
         </p>
       </section>
