@@ -1,42 +1,38 @@
-import './globals.css';
 import type { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/next';
-
-// Import fonts via next/font/google
 import { Inter, Nunito, Domine } from 'next/font/google';
-
-const inter = Inter({
-  weight: ['400', '500'],
-  subsets: ['latin'],
-  variable: '--font-selari',
-  display: 'swap',
-});
-
-const nunito = Nunito({
-  weight: ['400', '700'],
-  subsets: ['latin'],
-  variable: '--font-bilute',
-  display: 'swap',
-});
-
-const playfair = Domine({
-  weight: ['400'],
-  subsets: ['latin'],
-  variable: '--font-gratia',
-  display: 'swap',
-});
+import './globals.css';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
-  title: 'gratia.',
-  description: 'A sacred pulse of reciprocity',
+  metadataBase: new URL('https://www.gratia.space'),
+  title: {
+    default: 'Gratia — A sacred pulse of reciprocity',
+    template: '%s — Gratia',
+  },
+  description:
+    'Gratia is a living garden of protocols, notes, and invitations. A sacred pulse of reciprocity.',
+  openGraph: {
+    title: 'Gratia — A sacred pulse of reciprocity',
+    description: 'Gratia is a living garden of protocols, notes, and invitations.',
+    url: 'https://www.gratia.space',
+    siteName: 'Gratia',
+    type: 'website',
+  },
+  robots: { index: true, follow: true },
 };
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-selari' });
+const nunito = Nunito({ subsets: ['latin'], variable: '--font-bilute' });
+const domine = Domine({ subsets: ['latin'], variable: '--font-gratia' });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${nunito.variable} ${playfair.variable}`}>
-      <body>
-        <main className="bg-surface text-body min-h-screen">{children}</main>
-        <Analytics />
+    <html lang="en" className={`${inter.variable} ${nunito.variable} ${domine.variable}`}>
+      <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)] antialiased">
+        <SiteHeader />
+        <main className="mx-auto max-w-5xl px-6">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );

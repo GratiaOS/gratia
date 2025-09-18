@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+/* Tailwind v4 tokens + CSS variables
+   - @theme: design tokens (palette, fonts)
+   - :root: runtime mapping for light/dark
+   - utilities: thin helpers consuming the variables
+*/
+:root {
+  color-scheme: light dark;
+}
+
 :root {
   --background: var(--theme-forest-mystic-background-light);
   --foreground: var(--theme-forest-mystic-foreground-light);
@@ -7,6 +16,7 @@
   --color-text: var(--theme-forest-mystic-foreground-light);
   --color-accent: var(--theme-forest-mystic-accent-leaf);
   --color-muted: #6b7b6c; /* earthy-muted upgrade */
+  --color-border: #d5e0d7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,13 +27,8 @@
     --color-text: var(--theme-forest-mystic-foreground);
     --color-accent: var(--theme-forest-mystic-glow-accent);
     --color-muted: #8ea79b; /* glowing fog-level muted */
+    --color-border: #34524a;
   }
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-selari);
 }
 
 @theme {
@@ -47,8 +52,8 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-bg);
+  color: var(--color-text);
   font-family: var(--font-selari);
 }
 
@@ -160,6 +165,10 @@ body {
     background-color: var(--color-accent);
     color: var(--color-bg);
   }
+
+  .border-default {
+    border-color: var(--color-border);
+  }
 }
 
 @layer base {
@@ -167,6 +176,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border-color: var(--color-border);
   }
 
   a {
