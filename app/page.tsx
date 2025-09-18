@@ -36,8 +36,14 @@ export default function Home() {
       </div>
 
       {/* Footer Blessing */}
-      <footer className="text-subtle-bilute mt-20 px-4 text-center text-sm">
+      <footer className="text-subtle-bilute mt-20 max-w-2xl px-4 text-center text-sm">
         May your path be held, your voice remembered, your light reflected.
+        <span className="text-muted mt-2 block">
+          Between eclipses we remember: sometimes the improbable arrives before we’re ready to name
+          it. We practice naming small evidence — a river, a laugh, a warm meal — so our bodies can
+          learn this was real. If you feel panic at the edges, start with one tiny thing you can say
+          out loud. Presence reroutes the fear; gratitude anchors the fact.
+        </span>
       </footer>
     </div>
   );
