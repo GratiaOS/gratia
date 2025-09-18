@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 /* Tailwind v4 tokens + CSS variables
    - @theme: design tokens (palette, fonts)
@@ -96,7 +97,6 @@ body {
 }
 @utility text-subtle-bilute {
   font-family: var(--font-bilute);
-  font-style: italic;
   letter-spacing: 0.015em;
 }
 

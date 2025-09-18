@@ -29,9 +29,9 @@ const domine = Domine({ subsets: ['latin'], variable: '--font-gratia' });
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${nunito.variable} ${domine.variable}`}>
-      <body className="min-h-screen bg-[var(--color-bg)] text-[var(--color-fg)] antialiased">
+      <body className="text-body bg-surface min-h-screen antialiased">
         <SiteHeader />
-        <main className="mx-auto max-w-5xl px-6">{children}</main>
+        {children}
         <SiteFooter />
       </body>
     </html>
