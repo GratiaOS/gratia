@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 
 // Import fonts via next/font/google
-import { Inter, Nunito, Playfair_Display } from 'next/font/google';
+import { Inter, Nunito, Domine } from 'next/font/google';
 
 const inter = Inter({
   weight: ['400', '500'],
@@ -19,9 +19,8 @@ const nunito = Nunito({
   display: 'swap',
 });
 
-const playfair = Playfair_Display({
-  weight: ['400', '500'],
-  style: ['normal', 'italic'],
+const playfair = Domine({
+  weight: ['400'],
   subsets: ['latin'],
   variable: '--font-gratia',
   display: 'swap',
