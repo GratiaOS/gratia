@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import GratiaLogo from '@/components/GratiaLogo';
+import GratiaMark from '@/components/GratiaMark';
 
 export const metadata: Metadata = {
   title: "Splinter's Gift | Gratia",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function SplintersGiftProtocol() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
-      <GratiaLogo className="animate-pulse-slow text-accent mx-auto mb-6 h-auto w-28" />
+      <GratiaMark className="text-accent mx-auto mb-6 h-20 w-auto" />
       <h1 className="text-title-gratia text-accent mb-4 text-4xl">Splinter's Gift</h1>
       <p className="text-muted mb-8 text-lg">
         A protocol for recognizing, honoring, and integrating transmissions from unlikely

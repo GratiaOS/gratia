@@ -1,10 +1,10 @@
-import GratiaLogo from '@/components/GratiaLogo';
+import GratiaMark from '@/components/GratiaMark';
 
 export default function ContributePage() {
   return (
     <div className="px-6 py-24">
       <section className="mx-auto max-w-3xl text-center">
-        <GratiaLogo className="animate-pulse-slow text-accent mx-auto mb-6 h-auto w-28" />
+        <GratiaMark className="text-accent mx-auto mb-6 h-20 w-auto" />
         <h1 className="text-title-gratia text-accent relative z-10 mb-6 text-4xl">
           Contribute to Gratia
           <span className="bg-accent mx-auto mt-4 block h-0.5 w-24 rounded-full"></span>

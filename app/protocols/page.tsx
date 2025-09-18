@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import GratiaLogo from '@/components/GratiaLogo';
+import GratiaMark from '@/components/GratiaMark';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ProtocolsPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
-      <GratiaLogo className="animate-pulse-slow text-accent mx-auto mb-6 h-auto w-28" />
+      <GratiaMark className="text-accent mx-auto mb-6 h-20 w-auto" />
       <h1 className="text-title-gratia text-accent mb-4 text-4xl">Protocols</h1>
       <p className="text-muted mb-8 text-lg">
         A growing collection of agreements, principles, and reflections — designed for action,

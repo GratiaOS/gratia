@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import GratiaLogo from '@/components/GratiaLogo';
+import GratiaMark from '@/components/GratiaMark';
 
 export default function ManifestoPage() {
   return (
     <div>
       <section className="bg-surface px-6 py-20 text-center" data-layer="surface">
-        <GratiaLogo className="animate-pulse-slow text-accent mx-auto mb-6 h-auto w-28" />
+        <GratiaMark className="text-accent mx-auto mb-6 h-20 w-auto" />
         <h1 className="text-title-gratia text-accent relative z-10 text-4xl">
           The First Gratia Note
           <span className="bg-accent mx-auto mt-4 block h-0.5 w-24 rounded-full"></span>

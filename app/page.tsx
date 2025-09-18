@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import GratiaLogo from '@/components/GratiaLogo';
+import GratiaMark from '@/components/GratiaMark';
 import Link from 'next/link';
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
       {/* Logo & Title */}
       <div className="mb-12 text-center">
         <div className="mb-4">
-          <GratiaLogo className="text-accent animate-pulse-slow mb-8 inline h-auto w-48" />
+          <GratiaMark className="text-accent mb-8 inline h-32 w-auto" />
         </div>
         <h1 className="text-title-gratia text-accent text-4xl">The First Gratia Note</h1>
         <div className="bg-accent mx-auto mt-4 mb-6 h-0.5 w-24" />
