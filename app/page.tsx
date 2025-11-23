@@ -33,8 +33,11 @@ function resolveLang(raw?: string): LangCode {
   return (languages.find((l) => l.code === lower)?.code as LangCode) ?? 'en';
 }
 
-export default function Home({ searchParams }: { searchParams?: { lang?: string } }) {
-  const activeLang = resolveLang(searchParams?.lang);
+type HomeSearchParams = { lang?: string };
+
+export default async function Home({ searchParams }: { searchParams?: Promise<HomeSearchParams> }) {
+  const params = (await searchParams) ?? {};
+  const activeLang = resolveLang(params.lang);
   const t = messages[activeLang];
 
   return (
