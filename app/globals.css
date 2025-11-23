@@ -8,9 +8,8 @@
 */
 :root {
   color-scheme: light dark;
-}
 
-:root {
+  /* Light theme wiring (day / spring) */
   --background: var(--theme-forest-mystic-background-light);
   --foreground: var(--theme-forest-mystic-foreground-light);
   --color-bg: var(--theme-forest-mystic-background-light);
@@ -53,9 +52,19 @@
 }
 
 body {
-  background: var(--color-bg);
+  min-height: 100vh;
+  background: radial-gradient(
+    circle at top,
+    color-mix(in srgb, var(--color-bg) 85%, #ffffff 15%),
+    var(--color-bg)
+  );
   color: var(--color-text);
   font-family: var(--font-selari);
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 180ms ease-out,
+    background 180ms ease-out,
+    color 180ms ease-out;
 }
 
 @utility bg-surface {
@@ -98,6 +107,41 @@ body {
 @utility text-subtle-bilute {
   font-family: var(--font-bilute);
   letter-spacing: 0.015em;
+}
+
+@utility prose-gratia {
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-accent);
+  --tw-prose-lead: var(--color-muted);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-counters: var(--color-accent);
+  --tw-prose-bullets: var(--color-accent);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-text);
+  --tw-prose-quote-borders: var(--color-border);
+  --tw-prose-captions: var(--color-muted);
+  --tw-prose-code: var(--color-text);
+  --tw-prose-pre-code: var(--color-text);
+  --tw-prose-pre-bg: var(--color-bg);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
+  --tw-prose-invert-body: var(--color-text);
+  --tw-prose-invert-headings: var(--color-accent);
+  --tw-prose-invert-lead: var(--color-muted);
+  --tw-prose-invert-links: var(--color-accent);
+  --tw-prose-invert-bold: var(--color-text);
+  --tw-prose-invert-counters: var(--color-accent);
+  --tw-prose-invert-bullets: var(--color-accent);
+  --tw-prose-invert-hr: var(--color-border);
+  --tw-prose-invert-quotes: var(--color-text);
+  --tw-prose-invert-quote-borders: var(--color-border);
+  --tw-prose-invert-captions: var(--color-muted);
+  --tw-prose-invert-code: var(--color-text);
+  --tw-prose-invert-pre-code: var(--color-text);
+  --tw-prose-invert-pre-bg: var(--color-bg);
+  --tw-prose-invert-th-borders: var(--color-border);
+  --tw-prose-invert-td-borders: var(--color-border);
 }
 
 @layer components {
@@ -215,5 +259,16 @@ body {
     outline: none;
     border-color: var(--color-accent);
     background-color: var(--color-bg);
+  }
+
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    transition-property: background-color, border-color, color, box-shadow;
+    transition-duration: 160ms;
+    transition-timing-function: ease-out;
   }
 }
