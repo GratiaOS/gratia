@@ -1,6 +1,17 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+@font-face {
+  font-family: 'NG Funkhaus';
+  src:
+    url('/fonts/NG-Funkhaus.woff2') format('woff2'),
+    url('/fonts/NG-Funkhaus.woff') format('woff'),
+    url('/fonts/NG-Funkhaus.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Tailwind v4 tokens + CSS variables
    - @theme: design tokens (palette, fonts)
    - :root: runtime mapping for light/dark
@@ -8,6 +19,7 @@
 */
 :root {
   color-scheme: light dark;
+  --font-funkhaus: 'NG Funkhaus', system-ui, -apple-system, 'SF Pro Text', sans-serif;
 
   /* Light theme wiring (day / spring) */
   --background: var(--theme-forest-mystic-background-light);

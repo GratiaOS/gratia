@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/join',
     '/contribute',
     '/vortex',
+    '/codex/vienna',
   ];
   const now = new Date().toISOString();
 
