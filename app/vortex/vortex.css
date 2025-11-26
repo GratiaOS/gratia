@@ -30,6 +30,29 @@
   color: color-mix(in oklab, var(--tone-ink) 92%, #f1e6d8 8%);
 }
 
+.vortex-shell[data-pad-mood='bom-bhole'] {
+  background:
+    radial-gradient(
+      circle at 20% 0%,
+      color-mix(in oklab, var(--tone-surface) 85%, white 15%) 0%,
+      var(--tone-surface) 40%,
+      color-mix(in oklab, var(--tone-surface) 96%, black 4%) 100%
+    );
+  backdrop-filter: blur(32px) saturate(115%);
+}
+
+.vortex-shell[data-pad-mood='bom-bhole']::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 0 transparent,
+    0 0 140px 40px rgb(0 0 0 / 0.22);
+  opacity: 0.5;
+}
+
 .vortex-stage {
   position: relative;
   width: min(1040px, 96vw);
@@ -109,6 +132,10 @@
   animation-duration: 1100ms;
 }
 
+.vortex-shell[data-pad-mood='bom-bhole'] .vortex-image {
+  filter: brightness(0.96) saturate(0.94);
+}
+
 .vortex-image {
   width: min(700px, 90vw);
   max-height: 560px;
@@ -183,6 +210,15 @@
 
 .vortex-whisper {
   animation: vortex-whisper 900ms ease-out;
+}
+
+.vortex-shell[data-pad-mood='bom-bhole'] .vortex-title,
+.vortex-shell[data-pad-mood='bom-bhole'] .vortex-whisper,
+.vortex-shell[data-pad-mood='bom-bhole'] .vortex-echo {
+  color: var(--text-subtle);
+}
+.vortex-shell[data-pad-mood='bom-bhole'] .vortex-whisper-aux {
+  color: var(--text-faint);
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-whisper {
