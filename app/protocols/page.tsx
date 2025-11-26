@@ -24,6 +24,14 @@ export default function ProtocolsPage() {
           The quiet legacy of a little friend, encoded in courage, peace, and presence.
         </p>
       </div>
+      <div className="mt-8 space-y-4 border-t border-current/10 pt-6">
+        <Link href="/protocols/frequency-first" className="link-default block text-lg">
+          Frequency-First
+        </Link>
+        <p className="text-muted text-sm italic">
+          A protocol for tuning presence beyond appearances.
+        </p>
+      </div>
     </div>
   );
 }

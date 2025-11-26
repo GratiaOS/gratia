@@ -14,7 +14,7 @@ export default function ProtocolLayout({
       </header>
 
       <div className="grid gap-10 md:grid-cols-[1fr_280px]">
-        <article className="prose prose-invert max-w-none">{children}</article>
+        <article className="prose prose-gratia max-w-none">{children}</article>
         <aside className="hidden md:block">{aside}</aside>
       </div>
     </main>

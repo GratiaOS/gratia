@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/protocols/splinters-gift',
     '/join',
     '/contribute',
+    '/vortex',
   ];
   const now = new Date().toISOString();
 

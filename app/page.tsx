@@ -97,6 +97,10 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
           <a href="mailto:contact@gratia.space" className="underline-offset-4 hover:underline">
             Email
           </a>
+          <span>·</span>
+          <a href="/vortex" className="underline-offset-4 hover:underline">
+            ✺ Vortex
+          </a>
         </div>
 
         <p className="text-xs tracking-[0.18em] uppercase opacity-60">{t.footer}</p>

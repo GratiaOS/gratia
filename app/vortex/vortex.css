@@ -1,0 +1,504 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Space+Grotesk:wght@400;500;600&display=swap');
+
+:root {
+  --vortex-serif: 'Playfair Display', 'Georgia', serif;
+  --vortex-grotesk: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.vortex-shell {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(1.6rem, 3vw, 3rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(1200px 780px at 14% 16%, rgba(95, 255, 198, 0.14), transparent 58%),
+    radial-gradient(880px 720px at 86% 14%, rgba(123, 164, 255, 0.16), transparent 64%),
+    radial-gradient(1200px 860px at 50% 92%, rgba(214, 186, 110, 0.12), transparent 70%),
+    #050705;
+  color: #ecf2ed;
+  overflow: hidden;
+}
+
+.vortex-shell[data-soft-night='true'] {
+  background:
+    radial-gradient(1200px 820px at 16% 18%, rgba(95, 255, 198, 0.18), transparent 62%),
+    radial-gradient(900px 760px at 82% 12%, rgba(190, 156, 98, 0.16), transparent 64%),
+    radial-gradient(1200px 880px at 50% 90%, rgba(168, 122, 62, 0.14), transparent 68%),
+    #020308;
+  color: #e8e1d7;
+}
+
+.vortex-stage {
+  position: relative;
+  width: min(1040px, 96vw);
+  display: grid;
+  justify-items: center;
+  gap: 1.35rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.vortex-meta {
+  width: 100%;
+  max-width: 880px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(236, 242, 237, 0.78);
+  letter-spacing: clamp(0.12em, 0.5vw, 0.2em);
+  text-transform: uppercase;
+  font-size: clamp(0.72rem, 0.5vw + 0.6rem, 0.9rem);
+}
+
+.vortex-kicker {
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(236, 242, 237, 0.72);
+}
+
+.vortex-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(236, 242, 237, 0.18);
+  background: color-mix(in oklab, #080b08 78%, rgba(95, 255, 198, 0.22));
+  color: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition:
+    border-color 200ms ease,
+    color 200ms ease,
+    background 240ms ease,
+    transform 200ms ease;
+}
+
+.vortex-chip:hover,
+.vortex-chip:focus-visible {
+  border-color: rgba(236, 242, 237, 0.36);
+  color: #ffffff;
+  outline: none;
+  transform: translateY(-1px);
+  background: color-mix(in oklab, #0c100c 72%, rgba(123, 164, 255, 0.24));
+}
+
+.vortex-frame {
+  position: relative;
+  padding: clamp(1.15rem, 2vw, 1.6rem);
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+  border-radius: 30px;
+  background: linear-gradient(140deg, rgba(10, 13, 11, 0.9), rgba(7, 9, 11, 0.82));
+  border: 1px solid rgba(236, 242, 237, 0.08);
+  box-shadow:
+    0 32px 90px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 0 60px rgba(95, 255, 198, 0.08);
+  overflow: hidden;
+  animation: vortex-rise 900ms ease-out forwards;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-frame {
+  background: linear-gradient(160deg, rgba(7, 7, 9, 0.94), rgba(10, 9, 8, 0.88));
+  border-color: rgba(232, 225, 215, 0.12);
+  box-shadow:
+    0 36px 96px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 0 72px rgba(214, 186, 110, 0.16);
+  animation-duration: 1100ms;
+}
+
+.vortex-image {
+  width: min(700px, 90vw);
+  max-height: 560px;
+  object-fit: cover;
+  border-radius: 22px;
+  border: 1px solid rgba(236, 242, 237, 0.08);
+  background: radial-gradient(circle at 50% 30%, rgba(123, 164, 255, 0.14), rgba(10, 11, 12, 0.88));
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+  display: block;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-image {
+  background: radial-gradient(circle at 50% 28%, rgba(168, 122, 62, 0.18), rgba(10, 11, 10, 0.9));
+  border-color: rgba(232, 225, 215, 0.12);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.72),
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 0 60px rgba(95, 255, 198, 0.12);
+}
+
+.vortex-image--intro {
+  animation: vortex-soften 1300ms ease-out forwards;
+  opacity: 0.72;
+  filter: blur(12px);
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-image--intro {
+  animation-duration: 1500ms;
+}
+
+.vortex-placeholder {
+  width: min(700px, 90vw);
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  gap: 0.4rem;
+  border-radius: 22px;
+  border: 1px dashed rgba(236, 242, 237, 0.32);
+  color: rgba(236, 242, 237, 0.86);
+  background:
+    linear-gradient(135deg, rgba(95, 255, 198, 0.08), rgba(123, 164, 255, 0.08)),
+    rgba(8, 9, 10, 0.9);
+}
+
+.vortex-placeholder-title {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.vortex-placeholder-copy {
+  max-width: 380px;
+  opacity: 0.8;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.vortex-text {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+  max-width: 760px;
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.vortex-title {
+  font-family: var(--vortex-serif);
+  font-size: clamp(2.1rem, 5vw, 3rem);
+  line-height: 1.2;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  text-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.vortex-whisper {
+  animation: vortex-whisper 900ms ease-out;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-whisper {
+  animation-duration: 1100ms;
+}
+
+.vortex-echo {
+  font-family: var(--vortex-grotesk);
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  opacity: 0.8;
+  letter-spacing: 0.012em;
+  max-width: 640px;
+}
+
+.vortex-mister {
+  margin-top: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 0.9rem;
+  width: 100%;
+  max-width: 760px;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgba(236, 242, 237, 0.14);
+  background: rgba(7, 9, 9, 0.74);
+  color: rgba(236, 242, 237, 0.88);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+  font-family: var(--vortex-grotesk);
+}
+
+.vortex-mister::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(95, 255, 198, 0.85), rgba(123, 164, 255, 0.45));
+  box-shadow: 0 0 14px rgba(95, 255, 198, 0.85);
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-mister::after {
+  animation-name: breathe-soft;
+  animation-duration: 3.8s;
+}
+
+.vortex-mister-icon {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 0 10px rgba(123, 164, 255, 0.4));
+}
+
+.vortex-mister-copy {
+  letter-spacing: 0.02em;
+  font-size: 0.98rem;
+}
+
+.vortex-ring {
+  position: absolute;
+  width: min(660px, 90vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px solid rgba(236, 242, 237, 0.12);
+  inset: auto;
+  top: 42%;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 0 22px rgba(123, 164, 255, 0.32));
+  animation: spin 26s linear infinite;
+  opacity: 0.36;
+  z-index: 0;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-ring {
+  border-color: rgba(232, 225, 215, 0.18);
+  filter: drop-shadow(0 0 18px rgba(168, 122, 62, 0.28));
+  animation-duration: 32s;
+}
+
+.vortex-ring--inner {
+  width: min(460px, 80vw);
+  animation-duration: 32s;
+  animation-direction: reverse;
+  opacity: 0.3;
+  filter: drop-shadow(0 0 16px rgba(95, 255, 198, 0.35));
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-ring--inner {
+  animation-duration: 40s;
+  filter: drop-shadow(0 0 16px rgba(190, 156, 98, 0.32));
+}
+.vortex-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.vortex-orb--emerald {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(95, 255, 198, 0.68), transparent 62%);
+  top: 16%;
+  left: 8%;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-orb--emerald {
+  background: radial-gradient(circle, rgba(95, 255, 198, 0.6), transparent 64%);
+}
+
+.vortex-orb--violet {
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(123, 164, 255, 0.62), transparent 64%);
+  top: 12%;
+  right: 10%;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-orb--violet {
+  background: radial-gradient(circle, rgba(150, 180, 220, 0.36), transparent 66%);
+}
+
+.vortex-orb--amber {
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, rgba(214, 186, 110, 0.38), transparent 66%);
+  bottom: -8%;
+  left: 26%;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-orb--amber {
+  background: radial-gradient(circle, rgba(214, 186, 110, 0.46), transparent 68%);
+}
+
+.vortex-grain {
+  position: absolute;
+  inset: -18%;
+  background-image: repeating-conic-gradient(rgba(255, 255, 255, 0.02) 0 7deg, transparent 9deg 18deg);
+  mix-blend-mode: soft-light;
+  opacity: 0.16;
+  filter: contrast(140%);
+  animation: grain 18s linear infinite;
+  pointer-events: none;
+}
+
+.vortex-shell[data-soft-night='true'] .vortex-grain {
+  opacity: 0.12;
+  animation-duration: 22s;
+}
+
+.vortex-toggle {
+  margin-top: 0.35rem;
+  background: transparent;
+  border: 1px solid rgba(232, 225, 215, 0.14);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  width: fit-content;
+  color: inherit;
+  font-family: var(--vortex-grotesk);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    background 220ms ease,
+    color 200ms ease,
+    opacity 200ms ease;
+  opacity: 0.84;
+}
+
+.vortex-toggle:hover,
+.vortex-toggle:focus-visible {
+  outline: none;
+  opacity: 1;
+  border-color: rgba(232, 225, 215, 0.24);
+  background: color-mix(in oklab, #0c0c0d 72%, rgba(214, 186, 110, 0.16));
+}
+
+@keyframes spin {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes grain {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-3%, 2%, 0);
+  }
+}
+
+@keyframes breathe-soft {
+  0%,
+  100% {
+    transform: scale(0.88);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(0.82);
+    opacity: 0.74;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes vortex-soften {
+  from {
+    opacity: 0.72;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes vortex-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes vortex-whisper {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 760px) {
+  .vortex-shell {
+    padding: 1.15rem;
+  }
+  .vortex-meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+  }
+  .vortex-chip {
+    width: fit-content;
+  }
+  .vortex-ring {
+    width: 82vw;
+  }
+  .vortex-ring--inner {
+    width: 68vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .vortex-stage {
+    gap: 1.1rem;
+  }
+  .vortex-chip,
+  .vortex-kicker {
+    letter-spacing: 0.1em;
+  }
+  .vortex-toggle {
+    letter-spacing: 0.12em;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .vortex-toggle {
+    letter-spacing: 0.12em;
+    font-size: 10px;
+    padding-inline: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vortex-grain,
+  .vortex-ring,
+  .vortex-mister::after,
+  .vortex-frame,
+  .vortex-image--intro,
+  .vortex-whisper {
+    animation: none;
+  }
+}

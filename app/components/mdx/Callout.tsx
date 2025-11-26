@@ -22,7 +22,7 @@ export default function Callout({
   return (
     <div className={`my-6 rounded-md border px-4 py-3 ${tone[kind]}`}>
       {title ? <p className="mb-2 font-medium">{title}</p> : null}
-      <div className="prose prose-sm dark:prose-invert max-w-none">{children}</div>
+      <div className="prose prose-gratia prose-sm max-w-none">{children}</div>
     </div>
   );
 }
