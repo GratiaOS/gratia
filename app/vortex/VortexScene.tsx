@@ -35,7 +35,7 @@ export default function VortexScene() {
           <Link href="/" className="vortex-chip">
             ← Înapoi la Gratia
           </Link>
-          <span className="vortex-kicker">LightFrog · Portal</span>
+          <span className="vortex-kicker">Antonio · El abuelo</span>
         </div>
         <div className="vortex-frame">
           {!loopMissing ? (
@@ -63,7 +63,7 @@ export default function VortexScene() {
             <span className="vortex-mister-icon" aria-hidden="true">
               🐸
             </span>
-            <span className="vortex-mister-copy">Mister respiră cu tine. Glow blând, pulse viu. 🐸</span>
+            <span className="vortex-mister-copy">Antonio pulsa contigo. Glow blând, pulse viu. 🐸</span>
           </div>
           <p className="text-[0.7rem] text-[color:var(--text-subtle)]">Bom Bhole mode</p>
           <button
