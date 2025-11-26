@@ -265,6 +265,29 @@ body {
 }
 
 @layer base {
+  /* Bom Bhole mood — soft spring, warm leaf, honey dust */
+  :root[data-pad-mood='bom-bhole'],
+  [data-pad-mood='bom-bhole'] {
+    --tone-surface: oklch(96% 0.02 95); /* Spring Cream */
+    --tone-ink: color-mix(in oklab, oklch(34% 0.03 140) 85%, white 15%); /* Soft Moss Shadow */
+    --tone-accent: oklch(72% 0.08 145); /* Warm Leaf */
+    --accent-strength: 0.7;
+    --ring-alpha: 0.14;
+    --glow-intensity: 0.06;
+    --grain-size: 180px;
+    --track-glow: color-mix(in oklab, var(--tone-accent) 42%, transparent);
+    --track-shadow: color-mix(in oklab, var(--tone-accent) 18%, transparent);
+    --scene-highlight: color-mix(in oklab, var(--tone-accent) 55%, transparent);
+    --presence-dot-color: color-mix(in oklab, var(--tone-accent) 68%, white 12%);
+    --ghost-trail-color: color-mix(in oklab, var(--tone-accent) 18%, transparent);
+    --pad-hero-start: color-mix(in oklab, var(--tone-accent) 12%, var(--tone-surface));
+    --pad-hero-end: color-mix(in oklab, var(--tone-accent) 4%, var(--tone-surface));
+    --scene-enter-duration: 420ms;
+    --scene-exit-duration: 360ms;
+    --scene-enter-ease: var(--ease-soft);
+    --scene-exit-ease: var(--ease-soft);
+  }
+
   * {
     margin: 0;
     padding: 0;
