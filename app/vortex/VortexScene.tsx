@@ -23,7 +23,7 @@ export default function VortexScene() {
   }, []);
 
   return (
-    <main className="vortex-shell" data-soft-night={softNight} data-pad-mood={softNight ? 'soft' : 'focused'}>
+    <main className="vortex-shell" data-soft-night={softNight} data-pad-mood={softNight ? 'bom-bhole' : 'focused'}>
       <div className="vortex-grain" aria-hidden="true" />
       <div className="vortex-orb vortex-orb--emerald" aria-hidden="true" />
       <div className="vortex-orb vortex-orb--violet" aria-hidden="true" />
@@ -65,6 +65,7 @@ export default function VortexScene() {
             </span>
             <span className="vortex-mister-copy">Mister respiră cu tine. Glow blând, pulse viu. 🐸</span>
           </div>
+          <p className="text-[0.7rem] text-[color:var(--text-subtle)]">Bom Bhole mode</p>
           <button
             type="button"
             className="vortex-toggle"
@@ -73,6 +74,11 @@ export default function VortexScene() {
           >
             modo suave de noche <span aria-hidden="true">{softNight ? '●' : '○'}</span>
           </button>
+          {softNight && (
+            <p className="mt-2 text-[0.7rem] text-[color:var(--text-faint)]">
+              Bom Bhole — breathe without hurry. Light doesn’t rush anything.
+            </p>
+          )}
         </div>
       </div>
     </main>
