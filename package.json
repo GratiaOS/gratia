@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
-    "@gratiaos/presence-kernel": "file:../garden-core/packages/presence-kernel",
-    "@gratiaos/signal": "file:../garden-core/packages/signal",
-    "@gratiaos/tokens": "file:../garden-core/packages/tokens",
-    "@gratiaos/ui": "file:../garden-core/packages/ui",
+    "@gratiaos/presence-kernel": "^1.1.3",
+    "@gratiaos/signal": "^1.0.3",
+    "@gratiaos/tokens": "^1.0.5",
+    "@gratiaos/ui": "^1.1.0",
     "next": "15.5.3",
     "postcss": "^8.5.6",
     "react": "^19.1.1",
@@ -39,6 +39,12 @@
     "remark-mdx-frontmatter": "^5.2.0",
     "tailwindcss": "^4.1.13",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@gratiaos/signal": "^1.0.3",
+      "@gratiaos/presence-kernel": "^1.1.3"
+    }
   },
   "packageManager": "pnpm@9.15.9+sha512.68046141893c66fad01c079231128e9afb89ef87e2691d69e4d40eee228988295fd4682181bae55b58418c3a253bde65a505ec7c5f9403ece5cc3cd37dcf2531"
 }

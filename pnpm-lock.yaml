@@ -4,22 +4,26 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@gratiaos/signal': ^1.0.3
+  '@gratiaos/presence-kernel': ^1.1.3
+
 importers:
 
   .:
     dependencies:
       '@gratiaos/presence-kernel':
-        specifier: file:../garden-core/packages/presence-kernel
-        version: file:../garden-core/packages/presence-kernel(react@19.1.1)
+        specifier: ^1.1.3
+        version: 1.1.3(react@19.1.1)
       '@gratiaos/signal':
-        specifier: file:../garden-core/packages/signal
-        version: link:../garden-core/packages/signal
+        specifier: ^1.0.3
+        version: 1.0.3
       '@gratiaos/tokens':
-        specifier: file:../garden-core/packages/tokens
-        version: file:../garden-core/packages/tokens(tailwindcss@4.1.13)
+        specifier: ^1.0.5
+        version: 1.0.5(tailwindcss@4.1.13)
       '@gratiaos/ui':
-        specifier: file:../garden-core/packages/ui
-        version: file:../garden-core/packages/ui(react@19.1.1)
+        specifier: ^1.1.0
+        version: 1.1.0(react@19.1.1)
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(next@15.5.3(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
@@ -91,93 +95,6 @@ importers:
         specifier: ^5
         version: 5.9.2
 
-  ../garden-core/packages/icons:
-    devDependencies:
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.7
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.1.2
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../garden-core/packages/pad-core:
-    dependencies:
-      '@gratiaos/presence-kernel':
-        specifier: workspace:*
-        version: link:../presence-kernel
-    devDependencies:
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.7
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.1.2
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../garden-core/packages/presence-kernel:
-    dependencies:
-      '@gratiaos/signal':
-        specifier: workspace:*
-        version: link:../signal
-    devDependencies:
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.7
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.1.2
-      typescript:
-        specifier: ^5.9.2
-        version: 5.9.3
-
-  ../garden-core/packages/signal:
-    devDependencies:
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.1.2
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../garden-core/packages/tokens:
-    devDependencies:
-      tailwindcss:
-        specifier: ^4.1.16
-        version: 4.1.17
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../garden-core/packages/ui:
-    dependencies:
-      '@gratiaos/presence-kernel':
-        specifier: workspace:*
-        version: link:../presence-kernel
-    devDependencies:
-      '@types/react':
-        specifier: ^19.2.2
-        version: 19.2.7
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
 packages:
 
   '@alloc/quick-lru@5.2.0':
@@ -187,18 +104,21 @@ packages:
   '@emnapi/runtime@1.5.0':
     resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
 
-  '@gratiaos/presence-kernel@file:../garden-core/packages/presence-kernel':
-    resolution: {directory: ../garden-core/packages/presence-kernel, type: directory}
+  '@gratiaos/presence-kernel@1.1.3':
+    resolution: {integrity: sha512-ysiiCJt6WbgQXF03SoQhuq6jN1wEAp5ie40cwTNJinNnZ1btfXMePezIzZssd0pXOkNbjoMaeShucOAUtDnGAA==}
     peerDependencies:
       react: ^18 || ^19
 
-  '@gratiaos/tokens@file:../garden-core/packages/tokens':
-    resolution: {directory: ../garden-core/packages/tokens, type: directory}
+  '@gratiaos/signal@1.0.3':
+    resolution: {integrity: sha512-fESNzwkBHByYMoPBUcOfTlAyceG2gpjDEFYEJn0FGzEP8Er6txsQcT6tbf4qWGRtGTcFoi3AUkLw9O+yD7mqOA==}
+
+  '@gratiaos/tokens@1.0.5':
+    resolution: {integrity: sha512-P5Jltt9TWjmiMlUSNxQK0In7R8e3cnlP61EHurT7D7WXJev1O9YqXXYSThy0O4v+FvCtt7vZ4SwI7LjGQM0NGg==}
     peerDependencies:
       tailwindcss: ^4.0.0
 
-  '@gratiaos/ui@file:../garden-core/packages/ui':
-    resolution: {directory: ../garden-core/packages/ui, type: directory}
+  '@gratiaos/ui@1.1.0':
+    resolution: {integrity: sha512-ZOPZMCqKdkFNUE1fO+VC+R9hOxrY45aWHThtGRnKy3NWYvDSJ3XhSDazT1NiYLmqwbXg6NbglD1Rq/0AVAnX6Q==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -327,14 +247,6 @@ packages:
     engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
     cpu: [x64]
     os: [win32]
-
-  '@isaacs/balanced-match@4.0.1':
-    resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
-    engines: {node: 20 || >=22}
-
-  '@isaacs/brace-expansion@5.0.0':
-    resolution: {integrity: sha512-ZT55BDLV0yv0RBm2czMiZ+SqCGO7AvmOM3G/w2xhVPH+te0aKgFjmBvGlL1dH+ql2tgGO3MVrbb3jCKyvpgnxA==}
-    engines: {node: 20 || >=22}
 
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
@@ -563,9 +475,6 @@ packages:
   '@types/react@19.1.13':
     resolution: {integrity: sha512-hHkbU/eoO3EG5/MZkuFSKmYqPbSVk5byPFa3e7y/8TybHiLMACgI8seVYlicwk7H5K/rI2px9xrQp/C+AUDTiQ==}
 
-  '@types/react@19.2.7':
-    resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
-
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
 
@@ -657,9 +566,6 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
-  csstype@3.2.3:
-    resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
-
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
     engines: {node: '>=6.0'}
@@ -733,10 +639,6 @@ packages:
 
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
-
-  glob@13.0.0:
-    resolution: {integrity: sha512-tvZgpqk6fz4BaNZ66ZsRaZnbHvP/jG3uKJvAZOwEVUL4RTA5nJeeLYfyN9/VA8NX/V3IBG+hkeuGpKjvELkVhA==}
-    engines: {node: 20 || >=22}
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -857,10 +759,6 @@ packages:
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
-
-  lru-cache@11.2.2:
-    resolution: {integrity: sha512-F9ODfyqML2coTIsQpSkRHnLSZMtkU8Q+mSfcaIyKwy58u+8k5nvAYeiNhsyMARvzNcXJ9QfWVrcPsC9e9rAxtg==}
-    engines: {node: 20 || >=22}
 
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
@@ -1031,10 +929,6 @@ packages:
   micromark@4.0.2:
     resolution: {integrity: sha512-zpe98Q6kvavpCr1NPVSCMebCKfD7CA2NqZ+rykeNhONIJBpc1tFKt9hucLGwha3jNTNI8lHpctWJWoimVF4PfA==}
 
-  minimatch@10.1.1:
-    resolution: {integrity: sha512-enIvLvRAFZYXJzkCYG5RKmPfrFArdLv+R+lbQ53BmIMLIry74bjKzX6iHAm8WYamJkhSSEabrWN5D97XnKObjQ==}
-    engines: {node: 20 || >=22}
-
   minipass@7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -1077,15 +971,8 @@ packages:
       sass:
         optional: true
 
-  package-json-from-dist@1.0.1:
-    resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
-
   parse-entities@4.0.2:
     resolution: {integrity: sha512-GG2AQYWoLgL877gQIKeRPGO1xF9+eG1ujIb5soS5gPvLQ1y2o8FL90w2QWNdf9I361Mpp7726c+lj3U0qK1uGw==}
-
-  path-scurry@2.0.1:
-    resolution: {integrity: sha512-oWyT4gICAu+kaA7QWk/jvCHWarMKNs6pXOGWKDTr7cw4IGcUbW+PeTfbaQiLGheFRpjo6O9J0PmyMfQPjH71oA==}
-    engines: {node: 20 || >=22}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -1180,10 +1067,6 @@ packages:
     resolution: {integrity: sha512-w8nqGImo45dmMIfljjMwOGtbmC/mk4CMYhWIicdSflH91J9TyCyczcPFXJzrZ/ZXcgGRFeP6BU0BEJTw6tZdfQ==}
     engines: {node: '>=0.10.0'}
 
-  react@19.2.0:
-    resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
-    engines: {node: '>=0.10.0'}
-
   recma-build-jsx@1.0.0:
     resolution: {integrity: sha512-8GtdyqaBcDfva+GUKDr3nev3VpKAhup1+RvkMvUxURHpW7QyIvk9F5wz7Vzo06CEMSilw6uArgRqhpiUcWp8ew==}
 
@@ -1227,11 +1110,6 @@ packages:
 
   remark-stringify@11.0.0:
     resolution: {integrity: sha512-1OSmLd3awB/t8qdoEOMazZkNsfVTeY4fTsgzcQFdXNq8ToTN4ZGwrMnlda4K6smTFKD+GRV6O48i6Z4iKgPPpw==}
-
-  rimraf@6.1.2:
-    resolution: {integrity: sha512-cFCkPslJv7BAXJsYlK1dZsbP8/ZNLkCAQ0bi1hf5EKX2QHegmDFEFA6QhuYJlk7UDdc+02JjO80YSOrWPpw06g==}
-    engines: {node: 20 || >=22}
-    hasBin: true
 
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
@@ -1281,9 +1159,6 @@ packages:
   tailwindcss@4.1.13:
     resolution: {integrity: sha512-i+zidfmTqtwquj4hMEwdjshYYgMbOrPzb9a0M3ZgNa0JMoZeFC6bxZvO8yr8ozS6ix2SDz0+mvryPeBs2TFE+w==}
 
-  tailwindcss@4.1.17:
-    resolution: {integrity: sha512-j9Ee2YjuQqYT9bbRTfTZht9W/ytp5H+jJpZKiYdP/bpnXARAuELt9ofP0lPnmHjbga7SNQIxdTAXCmtKVYjN+Q==}
-
   tapable@2.2.3:
     resolution: {integrity: sha512-ZL6DDuAlRlLGghwcfmSn9sK3Hr6ArtyudlSAiCqQ6IfE+b+HHbydbYDIG15IfS5do+7XQQBdBiubF/cV2dnDzg==}
     engines: {node: '>=6'}
@@ -1306,11 +1181,6 @@ packages:
 
   typescript@5.9.2:
     resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -1371,18 +1241,20 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@gratiaos/presence-kernel@file:../garden-core/packages/presence-kernel(react@19.1.1)':
+  '@gratiaos/presence-kernel@1.1.3(react@19.1.1)':
     dependencies:
-      '@gratiaos/signal': link:../garden-core/packages/signal
+      '@gratiaos/signal': 1.0.3
       react: 19.1.1
 
-  '@gratiaos/tokens@file:../garden-core/packages/tokens(tailwindcss@4.1.13)':
+  '@gratiaos/signal@1.0.3': {}
+
+  '@gratiaos/tokens@1.0.5(tailwindcss@4.1.13)':
     dependencies:
       tailwindcss: 4.1.13
 
-  '@gratiaos/ui@file:../garden-core/packages/ui(react@19.1.1)':
+  '@gratiaos/ui@1.1.0(react@19.1.1)':
     dependencies:
-      '@gratiaos/presence-kernel': link:../garden-core/packages/presence-kernel
+      '@gratiaos/presence-kernel': 1.1.3(react@19.1.1)
       react: 19.1.1
 
   '@img/colour@1.0.0':
@@ -1473,12 +1345,6 @@ snapshots:
 
   '@img/sharp-win32-x64@0.34.4':
     optional: true
-
-  '@isaacs/balanced-match@4.0.1': {}
-
-  '@isaacs/brace-expansion@5.0.0':
-    dependencies:
-      '@isaacs/balanced-match': 4.0.1
 
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
@@ -1697,10 +1563,6 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
-  '@types/react@19.2.7':
-    dependencies:
-      csstype: 3.2.3
-
   '@types/unist@2.0.11': {}
 
   '@types/unist@3.0.3': {}
@@ -1745,8 +1607,6 @@ snapshots:
   cssesc@3.0.0: {}
 
   csstype@3.1.3: {}
-
-  csstype@3.2.3: {}
 
   debug@4.4.3:
     dependencies:
@@ -1831,12 +1691,6 @@ snapshots:
   format@0.2.2: {}
 
   github-slugger@2.0.0: {}
-
-  glob@13.0.0:
-    dependencies:
-      minimatch: 10.1.1
-      minipass: 7.1.2
-      path-scurry: 2.0.1
 
   graceful-fs@4.2.11: {}
 
@@ -1966,8 +1820,6 @@ snapshots:
   lodash.merge@4.6.2: {}
 
   longest-streak@3.1.0: {}
-
-  lru-cache@11.2.2: {}
 
   magic-string@0.30.19:
     dependencies:
@@ -2422,10 +2274,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  minimatch@10.1.1:
-    dependencies:
-      '@isaacs/brace-expansion': 5.0.0
-
   minipass@7.1.2: {}
 
   minizlib@3.0.2:
@@ -2461,8 +2309,6 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  package-json-from-dist@1.0.1: {}
-
   parse-entities@4.0.2:
     dependencies:
       '@types/unist': 2.0.11
@@ -2472,11 +2318,6 @@ snapshots:
       is-alphanumerical: 2.0.1
       is-decimal: 2.0.1
       is-hexadecimal: 2.0.1
-
-  path-scurry@2.0.1:
-    dependencies:
-      lru-cache: 11.2.2
-      minipass: 7.1.2
 
   picocolors@1.1.1: {}
 
@@ -2511,8 +2352,6 @@ snapshots:
       scheduler: 0.26.0
 
   react@19.1.1: {}
-
-  react@19.2.0: {}
 
   recma-build-jsx@1.0.0:
     dependencies:
@@ -2627,11 +2466,6 @@ snapshots:
       mdast-util-to-markdown: 2.1.2
       unified: 11.0.5
 
-  rimraf@6.1.2:
-    dependencies:
-      glob: 13.0.0
-      package-json-from-dist: 1.0.1
-
   scheduler@0.26.0: {}
 
   semver@7.7.2:
@@ -2693,8 +2527,6 @@ snapshots:
 
   tailwindcss@4.1.13: {}
 
-  tailwindcss@4.1.17: {}
-
   tapable@2.2.3: {}
 
   tar@7.4.3:
@@ -2715,8 +2547,6 @@ snapshots:
   tslib@2.8.1: {}
 
   typescript@5.9.2: {}
-
-  typescript@5.9.3: {}
 
   undici-types@7.12.0: {}
 
