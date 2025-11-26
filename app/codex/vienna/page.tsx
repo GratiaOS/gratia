@@ -196,7 +196,7 @@ function ArchivePreview() {
 
 function SupportBlock() {
   return (
-    <section className="mt-14 space-y-4">
+    <section className="mt-14 space-y-4 border-t border-[color:var(--border)] pt-8">
       <h2
         className="text-xs uppercase tracking-[0.25em] text-[color:var(--text-subtle)]"
         style={{ fontFamily: 'var(--font-funkhaus)' }}
@@ -207,9 +207,12 @@ function SupportBlock() {
         If this garden of signals feels like home, you can send a slice of love back to the studio in Vienna — a symbolic pizza party
         to keep the lights on and the antennas humming.
       </p>
-      <button className="mt-2 inline-flex items-center justify-center rounded-full bg-[color:var(--accent)] px-5 py-2 text-xs font-medium uppercase tracking-[0.18em] text-[color:var(--on-accent)] shadow-depth-1 transition-shadow hover:shadow-depth-2">
-        Support the archive
-      </button>
+      <Link href="https://nguyengobber.gumroad.com/l/funkhaus" target="_blank" rel="noreferrer">
+        <span className="inline-flex items-center justify-center rounded-full bg-[color:var(--accent)] px-6 py-2 text-sm font-medium uppercase tracking-[0.16em] text-[color:var(--on-accent)] shadow-depth-1 transition-shadow whisper-ring mood-glow hover:shadow-depth-2">
+          Support the archive
+        </span>
+      </Link>
+      <p className="text-xs text-[color:var(--text-faint)]">Redirects to Funkhaus on Gumroad · pay what you want.</p>
     </section>
   );
 }
