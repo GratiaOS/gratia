@@ -1,5 +1,6 @@
 packages:
   - '.'
+  - '../garden-core/packages/*'
 ignoredBuiltDependencies:
   - '@tailwindcss/oxide'
   - sharp

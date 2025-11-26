@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
-    "garden-core": "file:../garden-core",
+    "@gratiaos/presence-kernel": "file:../garden-core/packages/presence-kernel",
+    "@gratiaos/signal": "file:../garden-core/packages/signal",
+    "@gratiaos/tokens": "file:../garden-core/packages/tokens",
+    "@gratiaos/ui": "file:../garden-core/packages/ui",
     "next": "15.5.3",
     "postcss": "^8.5.6",
     "react": "^19.1.1",
