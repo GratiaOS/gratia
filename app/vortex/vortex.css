@@ -13,21 +13,21 @@
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(1200px 780px at 14% 16%, rgba(95, 255, 198, 0.14), transparent 58%),
-    radial-gradient(880px 720px at 86% 14%, rgba(123, 164, 255, 0.16), transparent 64%),
-    radial-gradient(1200px 860px at 50% 92%, rgba(214, 186, 110, 0.12), transparent 70%),
-    #050705;
-  color: #ecf2ed;
+    radial-gradient(1200px 780px at 14% 16%, color-mix(in oklab, var(--tone-accent) 28%, transparent), transparent 58%),
+    radial-gradient(880px 720px at 86% 14%, color-mix(in oklab, var(--tone-accent) 18%, transparent), transparent 64%),
+    radial-gradient(1200px 860px at 50% 92%, color-mix(in oklab, var(--tone-accent) 12%, transparent), transparent 70%),
+    color-mix(in oklab, var(--tone-surface) 92%, #050705 8%);
+  color: var(--tone-ink);
   overflow: hidden;
 }
 
 .vortex-shell[data-soft-night='true'] {
   background:
-    radial-gradient(1200px 820px at 16% 18%, rgba(95, 255, 198, 0.18), transparent 62%),
-    radial-gradient(900px 760px at 82% 12%, rgba(190, 156, 98, 0.16), transparent 64%),
-    radial-gradient(1200px 880px at 50% 90%, rgba(168, 122, 62, 0.14), transparent 68%),
-    #020308;
-  color: #e8e1d7;
+    radial-gradient(1200px 820px at 16% 18%, color-mix(in oklab, var(--tone-accent) 26%, transparent), transparent 62%),
+    radial-gradient(900px 760px at 82% 12%, color-mix(in oklab, var(--tone-accent) 18%, #2a1a0f), transparent 64%),
+    radial-gradient(1200px 880px at 50% 90%, color-mix(in oklab, var(--tone-accent) 16%, #120908), transparent 68%),
+    color-mix(in oklab, var(--tone-surface) 82%, #020308 18%);
+  color: color-mix(in oklab, var(--tone-ink) 92%, #f1e6d8 8%);
 }
 
 .vortex-stage {
@@ -47,7 +47,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.75rem;
-  color: rgba(236, 242, 237, 0.78);
+  color: var(--text-subtle);
   letter-spacing: clamp(0.12em, 0.5vw, 0.2em);
   text-transform: uppercase;
   font-size: clamp(0.72rem, 0.5vw + 0.6rem, 0.9rem);
@@ -57,7 +57,7 @@
   font-size: 0.82rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(236, 242, 237, 0.72);
+  color: var(--text-faint);
 }
 
 .vortex-chip {
@@ -66,9 +66,9 @@
   gap: 0.4rem;
   padding: 0.45rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid rgba(236, 242, 237, 0.18);
-  background: color-mix(in oklab, #080b08 78%, rgba(95, 255, 198, 0.22));
-  color: inherit;
+  border: 1px solid color-mix(in oklab, var(--color-border) 78%, transparent);
+  background: color-mix(in oklab, var(--tone-surface) 82%, var(--tone-accent) 18%);
+  color: var(--tone-ink);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   text-decoration: none;
@@ -81,11 +81,11 @@
 
 .vortex-chip:hover,
 .vortex-chip:focus-visible {
-  border-color: rgba(236, 242, 237, 0.36);
-  color: #ffffff;
+  border-color: color-mix(in oklab, var(--tone-accent) 42%, var(--color-border));
+  color: var(--tone-ink);
   outline: none;
   transform: translateY(-1px);
-  background: color-mix(in oklab, #0c100c 72%, rgba(123, 164, 255, 0.24));
+  background: color-mix(in oklab, var(--tone-surface) 78%, var(--tone-accent) 22%);
 }
 
 .vortex-frame {
@@ -95,23 +95,17 @@
   max-width: 760px;
   margin-inline: auto;
   border-radius: 30px;
-  background: linear-gradient(140deg, rgba(10, 13, 11, 0.9), rgba(7, 9, 11, 0.82));
-  border: 1px solid rgba(236, 242, 237, 0.08);
-  box-shadow:
-    0 32px 90px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 0 60px rgba(95, 255, 198, 0.08);
+  background: color-mix(in oklab, var(--tone-surface) 92%, #050505 8%);
+  border: 1px solid color-mix(in oklab, var(--color-border) 82%, transparent);
+  box-shadow: var(--shadow-depth-2);
   overflow: hidden;
   animation: vortex-rise 900ms ease-out forwards;
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-frame {
-  background: linear-gradient(160deg, rgba(7, 7, 9, 0.94), rgba(10, 9, 8, 0.88));
-  border-color: rgba(232, 225, 215, 0.12);
-  box-shadow:
-    0 36px 96px rgba(0, 0, 0, 0.72),
-    0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 0 72px rgba(214, 186, 110, 0.16);
+  background: color-mix(in oklab, var(--tone-surface) 88%, #050505 12%);
+  border-color: color-mix(in oklab, var(--color-border) 90%, transparent);
+  box-shadow: var(--shadow-depth-3);
   animation-duration: 1100ms;
 }
 
@@ -120,21 +114,16 @@
   max-height: 560px;
   object-fit: cover;
   border-radius: 22px;
-  border: 1px solid rgba(236, 242, 237, 0.08);
-  background: radial-gradient(circle at 50% 30%, rgba(123, 164, 255, 0.14), rgba(10, 11, 12, 0.88));
-  box-shadow:
-    0 22px 70px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.03);
+  border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
+  background: radial-gradient(circle at 50% 30%, color-mix(in oklab, var(--tone-accent) 22%, transparent), color-mix(in oklab, #0a0b0c 90%, var(--tone-surface) 10%));
+  box-shadow: var(--shadow-depth-2);
   display: block;
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-image {
-  background: radial-gradient(circle at 50% 28%, rgba(168, 122, 62, 0.18), rgba(10, 11, 10, 0.9));
-  border-color: rgba(232, 225, 215, 0.12);
-  box-shadow:
-    0 24px 72px rgba(0, 0, 0, 0.72),
-    0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 0 60px rgba(95, 255, 198, 0.12);
+  background: radial-gradient(circle at 50% 28%, color-mix(in oklab, var(--tone-accent) 18%, #0c0a08), color-mix(in oklab, #0a0b0c 94%, var(--tone-surface) 6%));
+  border-color: color-mix(in oklab, var(--color-border) 86%, transparent);
+  box-shadow: var(--shadow-depth-3);
 }
 
 .vortex-image--intro {
@@ -154,11 +143,11 @@
   place-items: center;
   gap: 0.4rem;
   border-radius: 22px;
-  border: 1px dashed rgba(236, 242, 237, 0.32);
-  color: rgba(236, 242, 237, 0.86);
+  border: 1px dashed color-mix(in oklab, var(--color-border) 88%, transparent);
+  color: color-mix(in oklab, var(--tone-ink) 90%, white 10%);
   background:
-    linear-gradient(135deg, rgba(95, 255, 198, 0.08), rgba(123, 164, 255, 0.08)),
-    rgba(8, 9, 10, 0.9);
+    linear-gradient(135deg, color-mix(in oklab, var(--tone-accent) 14%, transparent), color-mix(in oklab, var(--tone-accent) 10%, transparent)),
+    color-mix(in oklab, var(--tone-surface) 82%, #08090a 18%);
 }
 
 .vortex-placeholder-title {
@@ -218,12 +207,10 @@
   max-width: 760px;
   justify-content: center;
   border-radius: 999px;
-  border: 1px solid rgba(236, 242, 237, 0.14);
-  background: rgba(7, 9, 9, 0.74);
-  color: rgba(236, 242, 237, 0.88);
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(255, 255, 255, 0.02);
+  border: 1px solid color-mix(in oklab, var(--color-border) 78%, transparent);
+  background: color-mix(in oklab, var(--tone-surface) 82%, #070909 18%);
+  color: color-mix(in oklab, var(--tone-ink) 90%, white 10%);
+  box-shadow: var(--shadow-depth-2);
   font-family: var(--vortex-grotesk);
 }
 
@@ -232,8 +219,8 @@
   width: 9px;
   height: 9px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(95, 255, 198, 0.85), rgba(123, 164, 255, 0.45));
-  box-shadow: 0 0 14px rgba(95, 255, 198, 0.85);
+  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 88%, white 12%), color-mix(in oklab, var(--tone-accent) 42%, transparent));
+  box-shadow: 0 0 14px color-mix(in oklab, var(--tone-accent) 82%, transparent);
   animation: breathe 3s ease-in-out infinite;
 }
 
@@ -257,19 +244,19 @@
   width: min(660px, 90vw);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border: 1px solid rgba(236, 242, 237, 0.12);
+  border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
   inset: auto;
   top: 42%;
   transform: translateY(-50%);
-  filter: drop-shadow(0 0 22px rgba(123, 164, 255, 0.32));
+  filter: drop-shadow(0 0 22px color-mix(in oklab, var(--tone-accent) 32%, transparent));
   animation: spin 26s linear infinite;
   opacity: 0.36;
   z-index: 0;
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-ring {
-  border-color: rgba(232, 225, 215, 0.18);
-  filter: drop-shadow(0 0 18px rgba(168, 122, 62, 0.28));
+  border-color: color-mix(in oklab, var(--color-border) 86%, transparent);
+  filter: drop-shadow(0 0 18px color-mix(in oklab, var(--tone-accent) 28%, #a87a3e));
   animation-duration: 32s;
 }
 
@@ -278,12 +265,12 @@
   animation-duration: 32s;
   animation-direction: reverse;
   opacity: 0.3;
-  filter: drop-shadow(0 0 16px rgba(95, 255, 198, 0.35));
+  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--tone-accent) 35%, transparent));
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-ring--inner {
   animation-duration: 40s;
-  filter: drop-shadow(0 0 16px rgba(190, 156, 98, 0.32));
+  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--tone-accent) 24%, #be9c62));
 }
 .vortex-orb {
   position: absolute;
@@ -297,37 +284,37 @@
 .vortex-orb--emerald {
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(95, 255, 198, 0.68), transparent 62%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 68%, transparent), transparent 62%);
   top: 16%;
   left: 8%;
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-orb--emerald {
-  background: radial-gradient(circle, rgba(95, 255, 198, 0.6), transparent 64%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 60%, transparent), transparent 64%);
 }
 
 .vortex-orb--violet {
   width: 340px;
   height: 340px;
-  background: radial-gradient(circle, rgba(123, 164, 255, 0.62), transparent 64%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 28%, #6d8df0), transparent 64%);
   top: 12%;
   right: 10%;
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-orb--violet {
-  background: radial-gradient(circle, rgba(150, 180, 220, 0.36), transparent 66%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 22%, #96b4dc), transparent 66%);
 }
 
 .vortex-orb--amber {
   width: 440px;
   height: 440px;
-  background: radial-gradient(circle, rgba(214, 186, 110, 0.38), transparent 66%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 18%, #d6ba6e), transparent 66%);
   bottom: -8%;
   left: 26%;
 }
 
 .vortex-shell[data-soft-night='true'] .vortex-orb--amber {
-  background: radial-gradient(circle, rgba(214, 186, 110, 0.46), transparent 68%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 24%, #d6ba6e), transparent 68%);
 }
 
 .vortex-grain {
@@ -349,11 +336,11 @@
 .vortex-toggle {
   margin-top: 0.35rem;
   background: transparent;
-  border: 1px solid rgba(232, 225, 215, 0.14);
+  border: 1px solid color-mix(in oklab, var(--color-border) 74%, transparent);
   border-radius: 999px;
   padding: 0.35rem 0.75rem;
   width: fit-content;
-  color: inherit;
+  color: var(--text-subtle);
   font-family: var(--vortex-grotesk);
   letter-spacing: 0.08em;
   text-transform: lowercase;
@@ -370,8 +357,8 @@
 .vortex-toggle:focus-visible {
   outline: none;
   opacity: 1;
-  border-color: rgba(232, 225, 215, 0.24);
-  background: color-mix(in oklab, #0c0c0d 72%, rgba(214, 186, 110, 0.16));
+  border-color: color-mix(in oklab, var(--tone-accent) 28%, var(--color-border));
+  background: color-mix(in oklab, var(--tone-surface) 82%, var(--tone-accent) 18%);
 }
 
 @keyframes spin {

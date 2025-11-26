@@ -23,7 +23,7 @@ export default function VortexScene() {
   }, []);
 
   return (
-    <main className="vortex-shell" data-soft-night={softNight}>
+    <main className="vortex-shell" data-soft-night={softNight} data-pad-mood={softNight ? 'soft' : 'focused'}>
       <div className="vortex-grain" aria-hidden="true" />
       <div className="vortex-orb vortex-orb--emerald" aria-hidden="true" />
       <div className="vortex-orb vortex-orb--violet" aria-hidden="true" />
