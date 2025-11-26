@@ -1,4 +1,6 @@
-@import '../../garden-core/packages/tokens/theme.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 @plugin '@tailwindcss/typography';
 
 @font-face {
@@ -20,6 +22,20 @@
 :root {
   color-scheme: light dark;
   --font-funkhaus: 'NG Funkhaus', system-ui, -apple-system, 'SF Pro Text', sans-serif;
+  /* Garden-lite fallbacks */
+  --tone-surface: var(--color-bg);
+  --tone-ink: var(--color-text);
+  --tone-accent: var(--color-accent);
+  --accent: var(--color-accent);
+  --on-accent: var(--color-bg);
+  --surface: var(--color-bg);
+  --elev: var(--color-bg);
+  --text: var(--color-text);
+  --border: var(--color-border);
+  --shadow-depth-0: 0 0 0 0 rgb(0 0 0 / 0);
+  --shadow-depth-1: 0 2px 6px rgb(0 0 0 / 0.08), 0 8px 16px -8px rgb(0 0 0 / 0.18);
+  --shadow-depth-2: 0 2px 6px rgb(0 0 0 / 0.07), 0 12px 26px -12px rgb(0 0 0 / 0.2);
+  --shadow-depth-3: 0 6px 16px rgb(0 0 0 / 0.12), 0 22px 48px -18px rgb(0 0 0 / 0.3);
 
   /* Light theme wiring (day / spring) */
   --background: var(--theme-forest-mystic-background-light);
@@ -224,6 +240,41 @@ body {
 
   .border-default {
     border-color: var(--color-border);
+  }
+}
+
+@layer utilities {
+  .shadow-depth-0 {
+    box-shadow: var(--shadow-depth-0);
+  }
+  .shadow-depth-1 {
+    box-shadow: var(--shadow-depth-1);
+  }
+  .shadow-depth-2 {
+    box-shadow: var(--shadow-depth-2);
+  }
+  .shadow-depth-3 {
+    box-shadow: var(--shadow-depth-3);
+  }
+  .depth-ambient {
+    box-shadow: var(--shadow-depth-1);
+  }
+  .mood-glow {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--tone-accent) 35%, transparent),
+      0 18px 40px color-mix(in oklab, var(--tone-accent) 18%, transparent);
+  }
+  .whisper-ring {
+    transition:
+      box-shadow 200ms ease,
+      transform 200ms ease;
+  }
+  .whisper-ring:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 1.5px color-mix(in oklab, var(--tone-accent) 65%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--tone-accent) 20%, transparent);
+    transform: translateY(-1px);
   }
 }
 
