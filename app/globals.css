@@ -1,6 +1,5 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+@import 'garden-core/packages/tokens/theme.css';
 @plugin '@tailwindcss/typography';
 
 @font-face {
