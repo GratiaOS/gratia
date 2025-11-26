@@ -63,7 +63,7 @@ export default function VortexScene() {
             <span className="vortex-mister-icon" aria-hidden="true">
               🐸
             </span>
-            <span className="vortex-mister-copy">Antonio pulsa contigo. Glow blând, pulse viu. 🐸</span>
+            <span className="vortex-mister-copy">Antonio respiră cu tine. Glow blând, pulso vivo. 🐸</span>
           </div>
           <p className="text-[0.7rem] text-[color:var(--text-subtle)]">Bom Bhole mode</p>
           <button
