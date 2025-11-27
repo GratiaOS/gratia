@@ -22,7 +22,13 @@ export default function VortexScene() {
   };
 
   return (
-    <main className="vortex-root" data-pad-mood="bom-bhole" data-vortex-mode={mode}>
+    <main className="vortex-root" data-pad-mood="bom-bhole" data-vortex-mode={mode} data-show-continue={showContinue ? 'true' : 'false'}>
+      <header className="vortex-chrome">
+        <button type="button" className="vortex-panic" onClick={handlePanic}>
+          Panică / Înapoi
+        </button>
+      </header>
+
       <section className="vortex-portal">
         <div className={`vortex-portal-frame ${isRitual ? 'is-ritual' : ''}`}>
           <div className="vortex-portal-gif">
@@ -36,21 +42,15 @@ export default function VortexScene() {
           </div>
           <div className="vortex-portal-overlay">{isRitual && <OrbOverlay />}</div>
         </div>
+
+        <p className="vortex-mantra">Doar respiră. Portalul are grijă de tine.</p>
       </section>
 
-      <p className="vortex-mantra">Doar respiră. Portalul are grijă de tine.</p>
-
-      <div className="vortex-chrome vortex-chrome--top">
-        <button type="button" className="vortex-panic" onClick={handlePanic}>
-          Panică / Înapoi
-        </button>
-      </div>
-
-      <div className="vortex-chrome vortex-chrome--bottom">
-        <Link href="/codex/vienna" className={`vortex-continue ${showContinue ? 'is-visible' : ''}`}>
+      <footer className="vortex-footer">
+        <Link href="/codex/vienna" className="vortex-continue">
           Continuă în Codex :: Vienna →
         </Link>
-      </div>
+      </footer>
     </main>
   );
 }
