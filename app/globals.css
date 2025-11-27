@@ -265,6 +265,19 @@ body {
 }
 
 @layer base {
+  :root[data-spirit='bear'] {
+    --grain-strength: 0.09;
+    --glow-intensity: 0.08;
+  }
+  :root[data-spirit='wolf'] {
+    --grain-strength: 0.12;
+    --glow-intensity: 0.11;
+  }
+  :root[data-spirit='lion'] {
+    --grain-strength: 0.14;
+    --glow-intensity: 0.16;
+  }
+
   /* Bom Bhole mood — soft spring, warm leaf, honey dust */
   :root[data-pad-mood='bom-bhole'],
   [data-pad-mood='bom-bhole'] {

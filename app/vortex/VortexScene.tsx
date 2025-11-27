@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { SpiritModeSwitch } from '@/components/SpiritModeSwitch';
 
 const whispers = ['Eres vista.', 'Y el momento te responde suave.', 'Déjate caer. El portal te sostiene.'];
 
@@ -79,6 +80,7 @@ export default function VortexScene() {
               Bom Bhole — breathe without hurry. Light doesn’t rush anything.
             </p>
           )}
+          <SpiritModeSwitch />
         </div>
       </div>
     </main>
