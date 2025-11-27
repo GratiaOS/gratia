@@ -1,10 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { SpiritModeSwitch } from '@/components/SpiritModeSwitch';
-import vortexGif from '@/public/lightfrog-vortex.gif';
 
 type VortexSceneProps = {
   softNight?: boolean;
@@ -40,7 +38,7 @@ export default function VortexScene({ softNight = false }: VortexSceneProps) {
 
         <section className="vortex-hero">
           <div className="vortex-portal-frame mood-glow shadow-depth-2">
-            <Image src={vortexGif} alt="Antonio · LightFrog în vortex" className="vortex-portal-image" priority />
+            <img src="/lightfrog-vortex.gif" alt="Antonio · LightFrog în vortex" className="vortex-portal-image" />
             {isBreathing && <BreathOverlay />}
           </div>
         </section>
