@@ -46,29 +46,33 @@ export default function VortexScene() {
 
         <header className="vortex-copy">
           <h1 className="vortex-title">Déjate caer. El portal te sostiene.</h1>
-          <p className="vortex-subtitle">Ritual lent, puls Gratia în jurul tău. Portalul rămâne deschis.</p>
           <p className="vortex-whisper">🐸 Antonio respiră cu tine. Glow blând, pulso vivo.</p>
           <button type="button" onClick={handlePrimaryClick} className="vortex-primary-btn">
-            {mode === 'idle' ? 'Respiră 1 minut cu Antonio' : ritualDone ? 'Mulțumesc, Antonio' : 'Oprim ritualul'}
+            {mode === 'idle'
+              ? 'Respiră 1 minut cu Antonio'
+              : ritualDone
+                ? 'Mulțumesc, Antonio'
+                : 'Oprim ritualul'}
           </button>
           <p className="vortex-help-text">
-            Nu trebuie să faci nimic în plus. Doar urmărește ritmul: <strong>inspiră 4 · ține 4 · expiră 6</strong>.
+            Nu trebuie să faci nimic în plus. Doar urmărește ritmul:{' '}
+            <strong>inspiră 4 · ține 4 · expiră 6</strong>.
           </p>
         </header>
       </section>
 
       <section className="vortex-section">
-        <h2 className="vortex-section-title">Spirit mode</h2>
+        <h2 className="vortex-section-title">După ritual</h2>
         <p className="vortex-section-copy">
-          Pentru când vrei să te joci mai mult după ritual. Alege cine ține spațiul cu tine în Gratia.
+          Dacă vrei să rămâi puțin după ritual, alege cine ține spațiul cu tine în Gratia.
         </p>
         <SpiritModeSwitch />
       </section>
 
       <section className="vortex-section">
-        <h2 className="vortex-section-title">După portal</h2>
+        <h2 className="vortex-section-title">Mai departe în Gratia</h2>
         <p className="vortex-section-copy">
-          Vrei să duci senzația mai departe? Poți deschide arhiva sau trimite portalul unui prieten.
+          Când vrei să duci senzația mai departe, poți deschide arhiva sau trimite portalul unui prieten.
         </p>
         <div className="vortex-after-actions">
           <a href="/codex/vienna" className="vortex-secondary-btn">
@@ -80,7 +84,13 @@ export default function VortexScene() {
             onClick={() => {
               const url = typeof window !== 'undefined' ? `${window.location.origin}/vortex` : '';
               if (navigator?.share) {
-                navigator.share({ title: 'LightFrog · Vortex', text: 'Antonio ține portalul. Hai 1 minut.', url }).catch(() => {});
+                navigator
+                  .share({
+                    title: 'LightFrog · Vortex',
+                    text: 'Antonio ține portalul. Hai 1 minut.',
+                    url,
+                  })
+                  .catch(() => {});
               } else {
                 navigator?.clipboard?.writeText(url).catch(() => {});
               }
@@ -104,7 +114,9 @@ function OrbOverlay() {
         <p className="vortex-orb-label-main">
           Inspiră <strong>4</strong> · ține <strong>4</strong> · expiră <strong>6</strong>.
         </p>
-        <p className="vortex-orb-label-sub">Dacă e prea mult, fă-l mai scurt. Portalul nu se supără.</p>
+        <p className="vortex-orb-label-sub">
+          Dacă e prea mult, fă-l mai scurt. Portalul nu se supără.
+        </p>
       </div>
     </div>
   );

@@ -1,6 +1,9 @@
 .vortex-root {
   min-height: 100vh;
-  padding: clamp(3rem, 6vh, 4.5rem) 1.5rem 4rem;
+  padding: clamp(2rem, 5vh, 3rem) clamp(1.5rem, 6vw, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
   background:
     radial-gradient(1200px 780px at 14% 16%, color-mix(in oklab, var(--tone-accent) 24%, transparent), transparent 58%),
     radial-gradient(880px 720px at 86% 14%, color-mix(in oklab, var(--tone-accent) 14%, transparent), transparent 64%),
@@ -10,8 +13,8 @@
 }
 
 .vortex-hero {
-  max-width: 1040px;
-  margin-inline: auto;
+  max-width: 1120px;
+  margin: 0 auto 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
@@ -19,19 +22,25 @@
 
 .vortex-hero-frame {
   position: relative;
-  border-radius: 1.75rem;
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  background: radial-gradient(circle at 20% 0%, #0e3a4a, #041822);
-  box-shadow: var(--shadow-depth-3);
+  width: 100%;
+  border-radius: 32px;
   overflow: hidden;
+  box-shadow: var(--shadow-depth-3, 0 24px 60px rgba(0, 0, 0, 0.55));
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), transparent 55%),
+    radial-gradient(circle at 0% 100%, rgba(0, 0, 0, 0.45), transparent 60%);
 }
 
 .vortex-hero-gif {
   position: relative;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  isolation: isolate;
-  min-height: 280px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: inherit;
+}
+
+.vortex-hero-gif > span,
+.vortex-hero-gif img {
+  border-radius: inherit !important;
 }
 
 .vortex-hero-gif img {
@@ -48,11 +57,12 @@
 }
 
 .vortex-hero-overlay {
-  pointer-events: none;
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
 .vortex-orb-shell {
