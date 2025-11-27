@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import lightfrogVortex from '@/public/lightfrog-vortex.gif';
 import { SpiritModeSwitch } from '@/components/SpiritModeSwitch';
 
 type VortexMode = 'idle' | 'ritual';
@@ -35,7 +34,7 @@ export default function VortexScene() {
         <div className={`vortex-hero-frame ${isRitual ? 'is-ritual' : ''}`}>
           <div className="vortex-hero-gif">
             <Image
-              src={lightfrogVortex}
+              src="/lightfrog-vortex.gif"
               alt="Antonio ține portalul deschis."
               priority
               fill
