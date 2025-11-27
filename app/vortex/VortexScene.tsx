@@ -4,13 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 
-type BreathPhase = 'in' | 'hold' | 'out';
+type BreathPhase = 'inhale' | 'hold' | 'exhale';
 type VortexMode = 'idle' | 'ritual';
 
-const pattern: { phase: BreathPhase; label: string; duration: number }[] = [
-  { phase: 'in', label: 'Inspiră', duration: 4 },
-  { phase: 'hold', label: 'Ține', duration: 4 },
-  { phase: 'out', label: 'Expiră', duration: 6 },
+const pattern: { phase: BreathPhase; label: string; durationMs: number }[] = [
+  { phase: 'inhale', label: 'Inspiră', durationMs: 4000 },
+  { phase: 'hold', label: 'Ține', durationMs: 4000 },
+  { phase: 'exhale', label: 'Expiră', durationMs: 6000 },
 ];
 
 export default function VortexScene() {
@@ -21,7 +21,10 @@ export default function VortexScene() {
   const step = useMemo(() => pattern[stepIndex % pattern.length], [stepIndex]);
 
   useEffect(() => {
-    if (!isBreathing) return;
+    if (!isBreathing) {
+      setShowContinue(false);
+      return;
+    }
     const t = window.setTimeout(() => setShowContinue(true), 60_000);
     return () => clearTimeout(t);
   }, [isBreathing]);
@@ -31,7 +34,7 @@ export default function VortexScene() {
     const current = step;
     const id = window.setTimeout(() => {
       setStepIndex((prev) => (prev + 1) % pattern.length);
-    }, current.duration * 1000);
+    }, current.durationMs);
     return () => clearTimeout(id);
   }, [isBreathing, step]);
 
@@ -56,6 +59,7 @@ export default function VortexScene() {
       className="respira-root"
       data-pad-mood="bom-bhole"
       data-breathing={isBreathing ? 'true' : 'false'}
+      data-breath-phase={step.phase}
       data-show-continue={showContinue ? 'true' : 'false'}
     >
       <header className="respira-chrome">
@@ -97,15 +101,17 @@ export default function VortexScene() {
   );
 }
 
-function BreathOverlay({ step }: { step: { label: string; duration: number } }) {
+function BreathOverlay({ step }: { step: { label: string; durationMs: number; phase: BreathPhase } }) {
   return (
     <div className="respira-breath-layer">
-      <div className="respira-orb-shell">
-        <div className="respira-orb" />
-        <div className="respira-orb-ring" />
-        <div>
-          <div className="respira-breath-label-main">{step.label}</div>
-          <div className="respira-breath-label-sub">4 · 4 · 6 — doar urmează ritmul.</div>
+      <div className="respira-flower">
+        <div className="respira-flower-aura" />
+        <div className="respira-flower-petals" />
+        <div className="respira-flower-core" />
+        <div className="respira-labels">
+          <div className="respira-label-phase">{step.label}</div>
+          <div className="respira-label-sub">4 · 4 · 6 — doar urmează ritmul.</div>
+          <div className="respira-label-abuelo">Antonio respiră cu tine. 🌸</div>
         </div>
       </div>
     </div>
