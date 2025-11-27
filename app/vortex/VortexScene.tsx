@@ -1,88 +1,119 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { SpiritModeSwitch } from '@/components/SpiritModeSwitch';
+import vortexGif from '@/public/lightfrog-vortex.gif';
 
-const whispers = ['Eres vista.', 'Y el momento te responde suave.', 'Déjate caer. El portal te sostiene.'];
+type VortexSceneProps = {
+  softNight?: boolean;
+};
 
-export default function VortexScene() {
-  const [line, setLine] = useState(0);
-  const [loopMissing, setLoopMissing] = useState(false);
-  const [softNight, setSoftNight] = useState(false);
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setLine((prev) => (prev + 1) % whispers.length);
-    }, 3800);
-    return () => window.clearInterval(id);
-  }, []);
+export default function VortexScene({ softNight = false }: VortexSceneProps) {
+  const [isBreathing, setIsBreathing] = useState(false);
+  const [hasCompletedBreath, setHasCompletedBreath] = useState(false);
 
   useEffect(() => {
-    const hour = new Date().getHours();
-    if (hour >= 22 || hour < 5) setSoftNight(true);
-  }, []);
+    if (!isBreathing) return;
+    const t = setTimeout(() => {
+      setIsBreathing(false);
+      setHasCompletedBreath(true);
+    }, 60_000);
+    return () => clearTimeout(t);
+  }, [isBreathing]);
+
+  function handleStartBreath() {
+    setHasCompletedBreath(false);
+    setIsBreathing(true);
+  }
 
   return (
-    <main className="vortex-shell" data-soft-night={softNight} data-pad-mood={softNight ? 'bom-bhole' : 'focused'}>
-      <div className="vortex-grain" aria-hidden="true" />
-      <div className="vortex-orb vortex-orb--emerald" aria-hidden="true" />
-      <div className="vortex-orb vortex-orb--violet" aria-hidden="true" />
-      <div className="vortex-orb vortex-orb--amber" aria-hidden="true" />
-      <div className="vortex-ring" aria-hidden="true" />
-      <div className="vortex-ring vortex-ring--inner" aria-hidden="true" />
-      <div className="vortex-stage">
-        <div className="vortex-meta">
-          <Link href="/" className="vortex-chip">
+    <main className="vortex-page" data-pad-mood={softNight ? 'bom-bhole' : 'focused'} data-spirit-scope="vortex">
+      <div className="vortex-shell">
+        <header className="vortex-header">
+          <Link href="/" className="vortex-back">
             ← Înapoi la Gratia
           </Link>
-          <span className="vortex-kicker">Antonio · El abuelo</span>
-        </div>
-        <div className="vortex-frame">
-          {!loopMissing ? (
-            <img
-              src="/lightfrog-vortex.gif"
-              alt="LightFrog Vortex loop"
-              className="vortex-image vortex-image--intro"
-              onError={() => setLoopMissing(true)}
-            />
-          ) : (
-            <div className="vortex-placeholder" role="status">
-              <span className="vortex-placeholder-title">Loop missing</span>
-              <span className="vortex-placeholder-copy">
-                Place `lightfrog-vortex.gif` in `/public` or point the source to the repo asset.
-              </span>
-            </div>
-          )}
-        </div>
-        <div className="vortex-text" aria-live="polite">
-          <p key={whispers[line]} className="vortex-title vortex-whisper">
-            {whispers[line]}
-          </p>
-          <p className="vortex-echo">Ritual lent, puls Gratia în jurul tău. Portalul rămâne deschis.</p>
-          <div className="vortex-mister" aria-label="Mister breathing softly">
-            <span className="vortex-mister-icon" aria-hidden="true">
-              🐸
-            </span>
-            <span className="vortex-mister-copy">Antonio respiră cu tine. Glow blând, pulso vivo. 🐸</span>
+          <div className="vortex-meta">ANTONIO · EL ABUELO</div>
+        </header>
+
+        <section className="vortex-hero">
+          <div className="vortex-portal-frame mood-glow shadow-depth-2">
+            <Image src={vortexGif} alt="Antonio · LightFrog în vortex" className="vortex-portal-image" priority />
+            {isBreathing && <BreathOverlay />}
           </div>
-          <p className="text-[0.7rem] text-[color:var(--text-subtle)]">Bom Bhole mode</p>
-          <button
-            type="button"
-            className="vortex-toggle"
-            aria-pressed={softNight}
-            onClick={() => setSoftNight((prev) => !prev)}
-          >
-            modo suave de noche <span aria-hidden="true">{softNight ? '●' : '○'}</span>
+        </section>
+
+        <section className="vortex-copy">
+          <h1 className="vortex-title">Déjate caer. El portal te sostiene.</h1>
+          <p className="vortex-subtitle">Ritual lent, puls Gratia în jurul tău. Portalul rămâne deschis.</p>
+          <p className="vortex-whisper">🐸 Antonio respiră cu tine. Glow blând, pulso vivo.</p>
+
+          <button type="button" onClick={handleStartBreath} className="vortex-cta" disabled={isBreathing}>
+            {isBreathing ? 'Respirăm împreună…' : 'Respiră 1 minut cu Antonio'}
           </button>
-          {softNight && (
-            <p className="mt-2 text-[0.7rem] text-[color:var(--text-faint)]">
-              Bom Bhole — breathe without hurry. Light doesn’t rush anything.
-            </p>
-          )}
+          <p className="vortex-cta-note">
+            Nu trebuie să faci nimic în plus. Doar urmărește ritmul: <strong>inspir 4 · ține 4 · expir 6</strong>.
+          </p>
+        </section>
+
+        <section className="vortex-spirit-section" aria-labelledby="spirit-mode-title">
+          <h2 id="spirit-mode-title" className="vortex-section-title">
+            Spirit mode
+          </h2>
+          <p className="vortex-spirit-intro">Pentru când vrei să te joci mai mult după ritual. Alege cine ține spațiul cu tine în Gratia.</p>
           <SpiritModeSwitch />
-        </div>
+        </section>
+
+        {hasCompletedBreath && (
+          <section className="vortex-next-section" aria-labelledby="vortex-next-title">
+            <h2 id="vortex-next-title" className="vortex-section-title">
+              După portal
+            </h2>
+            <p className="vortex-next-text">Vrei să duci senzația mai departe?</p>
+            <div className="vortex-next-actions">
+              <Link href="/codex/vienna" className="vortex-next-link">
+                Deschide Codex :: Vienna
+              </Link>
+              <button
+                type="button"
+                className="vortex-next-link vortex-next-secondary"
+                onClick={() => {
+                  if (typeof navigator === 'undefined') return;
+                  const href = window?.location?.href ?? '';
+                  if (navigator.share) {
+                    navigator
+                      .share({ title: 'LightFrog · Vortex', text: 'Un minut de respirație cu Antonio.', url: href })
+                      .catch(() => {});
+                  } else {
+                    navigator.clipboard?.writeText(href).catch(() => {});
+                  }
+                }}
+              >
+                Trimite portalul unui prieten
+              </button>
+            </div>
+          </section>
+        )}
       </div>
     </main>
+  );
+}
+
+function BreathOverlay() {
+  return (
+    <div className="vortex-breath-overlay">
+      <div className="vortex-breath-orbit whisper-ring">
+        <div className="vortex-breath-pulse" />
+      </div>
+      <div className="vortex-breath-copy">
+        <p className="vortex-breath-label">Ritual de 1 minut</p>
+        <p className="vortex-breath-steps">
+          Inspiră <strong>4</strong> · ține <strong>4</strong> · expiră <strong>6</strong>.
+        </p>
+        <p className="vortex-breath-note">Dacă e prea mult, fă-l mai scurt. Portalul nu se supără.</p>
+      </div>
+    </div>
   );
 }

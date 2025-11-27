@@ -1,527 +1,228 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Space+Grotesk:wght@400;500;600&display=swap');
-
-:root {
-  --vortex-serif: 'Playfair Display', 'Georgia', serif;
-  --vortex-grotesk: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+.vortex-page {
+  min-height: 100vh;
+  padding: 3rem 1.5rem 4rem;
+  display: flex;
+  justify-content: center;
+  background:
+    radial-gradient(1200px 780px at 14% 16%, color-mix(in oklab, var(--tone-accent) 24%, transparent), transparent 58%),
+    radial-gradient(880px 720px at 86% 14%, color-mix(in oklab, var(--tone-accent) 14%, transparent), transparent 64%),
+    radial-gradient(1200px 860px at 50% 92%, color-mix(in oklab, var(--tone-accent) 10%, transparent), transparent 70%),
+    color-mix(in oklab, var(--tone-surface) 94%, #050705 6%);
+  color: var(--tone-ink);
 }
 
 .vortex-shell {
-  position: relative;
-  min-height: 100vh;
-  padding: clamp(1.6rem, 3vw, 3rem);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(1200px 780px at 14% 16%, color-mix(in oklab, var(--tone-accent) 28%, transparent), transparent 58%),
-    radial-gradient(880px 720px at 86% 14%, color-mix(in oklab, var(--tone-accent) 18%, transparent), transparent 64%),
-    radial-gradient(1200px 860px at 50% 92%, color-mix(in oklab, var(--tone-accent) 12%, transparent), transparent 70%),
-    color-mix(in oklab, var(--tone-surface) 92%, #050705 8%);
-  color: var(--tone-ink);
-  overflow: hidden;
-}
-
-.vortex-shell[data-soft-night='true'] {
-  background:
-    radial-gradient(1200px 820px at 16% 18%, color-mix(in oklab, var(--tone-accent) 26%, transparent), transparent 62%),
-    radial-gradient(900px 760px at 82% 12%, color-mix(in oklab, var(--tone-accent) 18%, #2a1a0f), transparent 64%),
-    radial-gradient(1200px 880px at 50% 90%, color-mix(in oklab, var(--tone-accent) 16%, #120908), transparent 68%),
-    color-mix(in oklab, var(--tone-surface) 82%, #020308 18%);
-  color: color-mix(in oklab, var(--tone-ink) 92%, #f1e6d8 8%);
-}
-
-.vortex-shell[data-pad-mood='bom-bhole'] {
-  background:
-    radial-gradient(
-      circle at 20% 0%,
-      color-mix(in oklab, var(--tone-surface) 85%, white 15%) 0%,
-      var(--tone-surface) 40%,
-      color-mix(in oklab, var(--tone-surface) 96%, black 4%) 100%
-    );
-  backdrop-filter: blur(32px) saturate(115%);
-}
-
-.vortex-shell[data-pad-mood='bom-bhole']::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow:
-    0 0 0 0 transparent,
-    0 0 140px 40px rgb(0 0 0 / 0.22);
-  opacity: 0.5;
-}
-
-.vortex-stage {
-  position: relative;
-  width: min(1040px, 96vw);
-  display: grid;
-  justify-items: center;
-  gap: 1.35rem;
-  text-align: center;
-  z-index: 1;
-}
-
-.vortex-meta {
   width: 100%;
-  max-width: 880px;
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.vortex-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
-  color: var(--text-subtle);
-  letter-spacing: clamp(0.12em, 0.5vw, 0.2em);
+  margin-bottom: 2.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-size: clamp(0.72rem, 0.5vw + 0.6rem, 0.9rem);
+  opacity: 0.9;
 }
 
-.vortex-kicker {
-  font-size: 0.82rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-
-.vortex-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.9rem;
+.vortex-back {
   border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--color-border) 78%, transparent);
-  background: color-mix(in oklab, var(--tone-surface) 82%, var(--tone-accent) 18%);
-  color: var(--tone-ink);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  padding: 0.4rem 1.2rem;
+  border: 1px solid var(--tone-border-soft, rgba(255, 255, 255, 0.12));
   text-decoration: none;
-  transition:
-    border-color 200ms ease,
-    color 200ms ease,
-    background 240ms ease,
-    transform 200ms ease;
+  font-size: 0.75rem;
 }
 
-.vortex-chip:hover,
-.vortex-chip:focus-visible {
-  border-color: color-mix(in oklab, var(--tone-accent) 42%, var(--color-border));
-  color: var(--tone-ink);
-  outline: none;
-  transform: translateY(-1px);
-  background: color-mix(in oklab, var(--tone-surface) 78%, var(--tone-accent) 22%);
+.vortex-meta {
+  opacity: 0.8;
 }
 
-.vortex-frame {
+.vortex-hero {
+  display: flex;
+  justify-content: center;
+}
+
+.vortex-portal-frame {
   position: relative;
-  padding: clamp(1.15rem, 2vw, 1.6rem);
-  width: 100%;
-  max-width: 760px;
-  margin-inline: auto;
-  border-radius: 30px;
-  background: color-mix(in oklab, var(--tone-surface) 92%, #050505 8%);
-  border: 1px solid color-mix(in oklab, var(--color-border) 82%, transparent);
-  box-shadow: var(--shadow-depth-2);
+  border-radius: 1.75rem;
   overflow: hidden;
-  animation: vortex-rise 900ms ease-out forwards;
+  max-width: 720px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
 }
 
-.vortex-shell[data-soft-night='true'] .vortex-frame {
-  background: color-mix(in oklab, var(--tone-surface) 88%, #050505 12%);
-  border-color: color-mix(in oklab, var(--color-border) 90%, transparent);
-  box-shadow: var(--shadow-depth-3);
-  animation-duration: 1100ms;
-}
-
-.vortex-shell[data-pad-mood='bom-bhole'] .vortex-image {
-  filter: brightness(0.96) saturate(0.94);
-}
-
-.vortex-image {
-  width: min(700px, 90vw);
-  max-height: 560px;
+.vortex-portal-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 22px;
-  border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
-  background: radial-gradient(circle at 50% 30%, color-mix(in oklab, var(--tone-accent) 22%, transparent), color-mix(in oklab, #0a0b0c 90%, var(--tone-surface) 10%));
-  box-shadow: var(--shadow-depth-2);
   display: block;
 }
 
-.vortex-shell[data-soft-night='true'] .vortex-image {
-  background: radial-gradient(circle at 50% 28%, color-mix(in oklab, var(--tone-accent) 18%, #0c0a08), color-mix(in oklab, #0a0b0c 94%, var(--tone-surface) 6%));
-  border-color: color-mix(in oklab, var(--color-border) 86%, transparent);
-  box-shadow: var(--shadow-depth-3);
+.vortex-breath-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  background: radial-gradient(circle at 50% 30%, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.7));
 }
 
-.vortex-image--intro {
-  animation: vortex-soften 1300ms ease-out forwards;
-  opacity: 0.72;
-  filter: blur(12px);
+.vortex-breath-orbit {
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
-.vortex-shell[data-soft-night='true'] .vortex-image--intro {
-  animation-duration: 1500ms;
+.vortex-breath-pulse {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1));
+  animation: vortex-breath 4s ease-in-out infinite;
 }
 
-.vortex-placeholder {
-  width: min(700px, 90vw);
-  min-height: 320px;
-  display: grid;
-  place-items: center;
-  gap: 0.4rem;
-  border-radius: 22px;
-  border: 1px dashed color-mix(in oklab, var(--color-border) 88%, transparent);
-  color: color-mix(in oklab, var(--tone-ink) 90%, white 10%);
-  background:
-    linear-gradient(135deg, color-mix(in oklab, var(--tone-accent) 14%, transparent), color-mix(in oklab, var(--tone-accent) 10%, transparent)),
-    color-mix(in oklab, var(--tone-surface) 82%, #08090a 18%);
+@keyframes vortex-breath {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
 }
 
-.vortex-placeholder-title {
-  font-weight: 600;
-  letter-spacing: 0.08em;
+.vortex-breath-copy {
+  text-align: center;
+  color: var(--tone-ink);
 }
 
-.vortex-placeholder-copy {
-  max-width: 380px;
+.vortex-breath-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   opacity: 0.8;
-  line-height: 1.5;
-  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
 }
 
-.vortex-text {
-  display: grid;
-  gap: 0.35rem;
-  width: 100%;
-  max-width: 760px;
-  justify-items: center;
-  margin-inline: auto;
+.vortex-breath-steps {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.vortex-breath-note {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.vortex-copy {
+  max-width: 720px;
+  margin: 2.5rem auto 2rem;
   text-align: center;
 }
 
 .vortex-title {
-  font-family: var(--vortex-serif);
-  font-size: clamp(2.1rem, 5vw, 3rem);
-  line-height: 1.2;
+  font-family: var(--font-serif, 'Georgia', 'Times New Roman', serif);
+  font-size: clamp(2.1rem, 4vw, 2.6rem);
   font-style: italic;
-  letter-spacing: 0.03em;
-  text-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.vortex-subtitle {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  opacity: 0.8;
 }
 
 .vortex-whisper {
-  animation: vortex-whisper 900ms ease-out;
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
 }
 
-.vortex-shell[data-pad-mood='bom-bhole'] .vortex-title,
-.vortex-shell[data-pad-mood='bom-bhole'] .vortex-whisper,
-.vortex-shell[data-pad-mood='bom-bhole'] .vortex-echo {
-  color: var(--text-subtle);
-}
-.vortex-shell[data-pad-mood='bom-bhole'] .vortex-whisper-aux {
-  color: var(--text-faint);
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-whisper {
-  animation-duration: 1100ms;
-}
-
-.vortex-echo {
-  font-family: var(--vortex-grotesk);
-  font-size: clamp(1rem, 2.4vw, 1.35rem);
-  opacity: 0.8;
-  letter-spacing: 0.012em;
-  max-width: 640px;
-}
-
-.vortex-mister {
-  margin-top: 0.7rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.6rem 0.9rem;
-  width: 100%;
-  max-width: 760px;
-  justify-content: center;
+.vortex-cta {
+  margin-top: 1.6rem;
+  padding: 0.85rem 1.8rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--color-border) 78%, transparent);
-  background: color-mix(in oklab, var(--tone-surface) 82%, #070909 18%);
-  color: color-mix(in oklab, var(--tone-ink) 90%, white 10%);
-  box-shadow: var(--shadow-depth-2);
-  font-family: var(--vortex-grotesk);
-}
-
-.vortex-mister::after {
-  content: '';
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 88%, white 12%), color-mix(in oklab, var(--tone-accent) 42%, transparent));
-  box-shadow: 0 0 14px color-mix(in oklab, var(--tone-accent) 82%, transparent);
-  animation: breathe 3s ease-in-out infinite;
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-mister::after {
-  animation-name: breathe-soft;
-  animation-duration: 3.8s;
-}
-
-.vortex-mister-icon {
-  font-size: 1.1rem;
-  filter: drop-shadow(0 0 10px rgba(123, 164, 255, 0.4));
-}
-
-.vortex-mister-copy {
-  letter-spacing: 0.02em;
-  font-size: 0.98rem;
-}
-
-.vortex-ring {
-  position: absolute;
-  width: min(660px, 90vw);
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
-  inset: auto;
-  top: 42%;
-  transform: translateY(-50%);
-  filter: drop-shadow(0 0 22px color-mix(in oklab, var(--tone-accent) 32%, transparent));
-  animation: spin 26s linear infinite;
-  opacity: 0.36;
-  z-index: 0;
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-ring {
-  border-color: color-mix(in oklab, var(--color-border) 86%, transparent);
-  filter: drop-shadow(0 0 18px color-mix(in oklab, var(--tone-accent) 28%, #a87a3e));
-  animation-duration: 32s;
-}
-
-.vortex-ring--inner {
-  width: min(460px, 80vw);
-  animation-duration: 32s;
-  animation-direction: reverse;
-  opacity: 0.3;
-  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--tone-accent) 35%, transparent));
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-ring--inner {
-  animation-duration: 40s;
-  filter: drop-shadow(0 0 16px color-mix(in oklab, var(--tone-accent) 24%, #be9c62));
-}
-.vortex-orb {
-  position: absolute;
-  border-radius: 999px;
-  filter: blur(80px);
-  opacity: 0.42;
-  mix-blend-mode: screen;
-  z-index: 0;
-}
-
-.vortex-orb--emerald {
-  width: 380px;
-  height: 380px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 68%, transparent), transparent 62%);
-  top: 16%;
-  left: 8%;
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-orb--emerald {
-  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 60%, transparent), transparent 64%);
-}
-
-.vortex-orb--violet {
-  width: 340px;
-  height: 340px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 28%, #6d8df0), transparent 64%);
-  top: 12%;
-  right: 10%;
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-orb--violet {
-  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 22%, #96b4dc), transparent 66%);
-}
-
-.vortex-orb--amber {
-  width: 440px;
-  height: 440px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 18%, #d6ba6e), transparent 66%);
-  bottom: -8%;
-  left: 26%;
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-orb--amber {
-  background: radial-gradient(circle, color-mix(in oklab, var(--tone-accent) 24%, #d6ba6e), transparent 68%);
-}
-
-.vortex-grain {
-  position: absolute;
-  inset: -18%;
-  background-image: repeating-conic-gradient(rgba(255, 255, 255, 0.02) 0 7deg, transparent 9deg 18deg);
-  mix-blend-mode: soft-light;
-  opacity: 0.16;
-  filter: contrast(140%);
-  animation: grain 18s linear infinite;
-  pointer-events: none;
-}
-
-.vortex-shell[data-soft-night='true'] .vortex-grain {
-  opacity: 0.12;
-  animation-duration: 22s;
-}
-
-.vortex-toggle {
-  margin-top: 0.35rem;
-  background: transparent;
-  border: 1px solid color-mix(in oklab, var(--color-border) 74%, transparent);
-  border-radius: 999px;
-  padding: 0.35rem 0.75rem;
-  width: fit-content;
-  color: var(--text-subtle);
-  font-family: var(--vortex-grotesk);
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
+  border: none;
   cursor: pointer;
-  transition:
-    border-color 200ms ease,
-    background 220ms ease,
-    color 200ms ease,
-    opacity 200ms ease;
-  opacity: 0.84;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: var(--tone-accent-soft, color-mix(in oklab, var(--tone-accent) 80%, white 20%));
+  color: var(--tone-ink-on-accent, #012218);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 
-.vortex-toggle:hover,
-.vortex-toggle:focus-visible {
-  outline: none;
-  opacity: 1;
-  border-color: color-mix(in oklab, var(--tone-accent) 28%, var(--color-border));
-  background: color-mix(in oklab, var(--tone-surface) 82%, var(--tone-accent) 18%);
+.vortex-cta:disabled {
+  opacity: 0.8;
+  cursor: default;
 }
 
-@keyframes spin {
-  from {
-    transform: translateY(-50%) rotate(0deg);
-  }
-  to {
-    transform: translateY(-50%) rotate(360deg);
-  }
+.vortex-cta-note {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  opacity: 0.8;
 }
 
-@keyframes grain {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-3%, 2%, 0);
-  }
+.vortex-spirit-section,
+.vortex-next-section {
+  max-width: 720px;
+  margin: 2.5rem auto 0;
 }
 
-@keyframes breathe-soft {
-  0%,
-  100% {
-    transform: scale(0.88);
-    opacity: 0.72;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
+.vortex-section-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  opacity: 0.85;
+  margin-bottom: 0.7rem;
 }
 
-@keyframes breathe {
-  0%,
-  100% {
-    transform: scale(0.82);
-    opacity: 0.74;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
+.vortex-spirit-intro,
+.vortex-next-text {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 1rem;
 }
 
-@keyframes vortex-soften {
-  from {
-    opacity: 0.72;
-    filter: blur(12px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0px);
-  }
+.vortex-next-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
-@keyframes vortex-rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.vortex-next-link {
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 0.85rem;
+  text-decoration: none;
 }
 
-@keyframes vortex-whisper {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.vortex-next-secondary {
+  background: transparent;
 }
 
-@media (max-width: 760px) {
-  .vortex-shell {
-    padding: 1.15rem;
+@media (max-width: 768px) {
+  .vortex-page {
+    padding-inline: 1rem;
   }
-  .vortex-meta {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.35rem;
-    text-align: center;
-  }
-  .vortex-chip {
-    width: fit-content;
-  }
-  .vortex-ring {
-    width: 82vw;
-  }
-  .vortex-ring--inner {
-    width: 68vw;
-  }
-}
 
-@media (max-width: 480px) {
-  .vortex-stage {
-    gap: 1.1rem;
-  }
-  .vortex-chip,
-  .vortex-kicker {
-    letter-spacing: 0.1em;
-  }
-  .vortex-toggle {
-    letter-spacing: 0.12em;
-    font-size: 0.65rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .vortex-toggle {
-    letter-spacing: 0.12em;
-    font-size: 10px;
-    padding-inline: 0.9rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vortex-grain,
-  .vortex-ring,
-  .vortex-mister::after,
-  .vortex-frame,
-  .vortex-image--intro,
-  .vortex-whisper {
-    animation: none;
+  .vortex-portal-frame {
+    border-radius: 1.25rem;
   }
 }
