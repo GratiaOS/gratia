@@ -1,20 +1,20 @@
 const messages = {
   en: {
     title: 'Gratia is a gentle space of memory and presence.',
-    line1: 'A free space where creation feels safe again.',
-    line2: 'Soft as light. Warm as spring',
+    line1: 'A place where creation remembers it is safe.',
+    line2: 'Soft as light. Warm as spring. 🌿',
     footer: 'Offer only what you love.',
   },
   es: {
     title: 'Gratia es un espacio vivo de memoria y presencia.',
-    line1: 'Un espacio libre donde la creación vuelve a sentirse segura.',
-    line2: 'Suave como la luz. Cálido como la primavera',
+    line1: 'Un lugar donde la creación recuerda que está a salvo.',
+    line2: 'Suave como la luz. Cálida como la primavera. 🌿',
     footer: 'Ofrece solo lo que amas.',
   },
   ro: {
     title: 'Gratia este un spațiu blând de memorie și prezență.',
-    line1: 'Un spațiu liber în care creația se poate simți din nou în siguranță.',
-    line2: 'Moale ca lumina. Caldă ca primăvara',
+    line1: 'Un loc în care creația își amintește siguranța.',
+    line2: 'Moale ca lumina. Caldă ca primăvara. 🌿',
     footer: 'Oferă doar ceea ce iubești.',
   },
 } as const;
