@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Button } from '@gratiaos/ui';
 
 type BreathPhase = 'inhale' | 'hold' | 'exhale';
 type VortexMode = 'idle' | 'ritual';
@@ -16,7 +17,7 @@ export default function VortexScene() {
   const [mode, setMode] = useState<VortexMode>('idle');
   const [showContinue, setShowContinue] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   const isBreathing = mode === 'ritual';
   const step = useMemo(() => sequence[stepIndex % sequence.length], [stepIndex]);
@@ -35,18 +36,18 @@ export default function VortexScene() {
     const advance = () => setStepIndex((prev) => (prev + 1) % sequence.length);
     timerRef.current = window.setTimeout(advance, step.durationMs);
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (timerRef.current !== null) clearTimeout(timerRef.current);
     };
   }, [isBreathing, step]);
 
   const startRitual = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
+    if (timerRef.current !== null) clearTimeout(timerRef.current);
     setMode('ritual');
     setStepIndex(0);
   };
 
   const handlePanic = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
+    if (timerRef.current !== null) clearTimeout(timerRef.current);
     setMode('idle');
     setStepIndex(0);
     window.location.href = '/';
@@ -60,59 +61,57 @@ export default function VortexScene() {
       data-breath-phase={step.phase}
       data-show-continue={showContinue ? 'true' : 'false'}
     >
-      <header className="respira-chrome">
-        <button type="button" className="respira-panic" onClick={handlePanic}>
-          Panică / Înapoi
-        </button>
-      </header>
-
       <section className="respira-portal">
-        <div className={`respira-portal-frame ${isBreathing ? 'is-ritual' : ''}`}>
-          <div className="respira-portal-gif">
-            {!isBreathing && (
-              <Image
-                src="/lightfrog-vortex.gif"
-                alt="Antonio ține portalul deschis."
-                priority
-                fill
-                sizes="(min-width: 1024px) 1120px, 100vw"
-              />
-            )}
-          </div>
-          <div className="respira-portal-overlay">{isBreathing && <BreathOverlay step={step} />}</div>
-        </div>
-
-        {!isBreathing && (
+        {!isBreathing ? (
           <>
+            <div className="respira-hero">
+              <div className="respira-hero-media">
+                <Image
+                  src="/lightfrog-vortex.gif"
+                  alt="Antonio ține portalul deschis."
+                  priority
+                  fill
+                  sizes="(min-width: 1024px) 1120px, 100vw"
+                />
+              </div>
+            </div>
             <p className="respira-mantra">Doar respiră. Portalul are grijă de tine.</p>
             <button type="button" className="respira-mountain-btn" onClick={startRitual}>
               Respiră cu Antonio
             </button>
           </>
+        ) : (
+          <BreathOverlay step={step} />
         )}
       </section>
 
       <footer className="respira-footer">
-        <a href="/codex/vienna" className="respira-continue">
-          Continuă în Codex :: Vienna →
-        </a>
+        <Button asChild className="respira-continue whisper-ring mood-glow">
+          <a href="/codex/vienna">Continuă în Codex :: Vienna →</a>
+        </Button>
       </footer>
     </main>
   );
 }
 
-function BreathOverlay({ step }: { step: { label: string; durationMs: number; phase: BreathPhase } }) {
+function BreathOverlay({
+  step,
+}: {
+  step: { label: string; durationMs: number; phase: BreathPhase };
+}) {
   return (
     <div className="respira-breath-layer">
-      <div className="respira-flower">
-        <div className="respira-flower-aura" />
-        <div className="respira-flower-petals" />
-        <div className="respira-flower-core" />
-        <div className="respira-labels">
-          <div className="respira-label-phase">{step.label}</div>
-          <div className="respira-label-sub">4 · 4 · 6 — doar urmează ritmul.</div>
-          <div className="respira-label-abuelo">Antonio respiră cu tine. 🌸</div>
-        </div>
+      <div className="respira-tree">
+        <div className="respira-tree-aura" />
+        <div className="respira-tree-canopy" />
+        <div className="respira-tree-trunk" />
+        <div className="respira-tree-roots" />
+      </div>
+
+      <div className="respira-labels">
+        <div className="respira-label-phase">{step.label}</div>
+        <div className="respira-label-sub">Doar urmează ritmul.</div>
+        <div className="respira-label-abuelo">🐸 Antonio respiră cu tine. 🌲</div>
       </div>
     </div>
   );
