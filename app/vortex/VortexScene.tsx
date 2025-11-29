@@ -101,6 +101,13 @@ function BreathOverlay({
 }) {
   return (
     <div className="respira-breath-layer">
+      <div className="respira-bands">
+        <div className="band band-1" />
+        <div className="band band-2" />
+        <div className="band band-3" />
+        <div className="band band-4" />
+        <div className="band band-5" />
+      </div>
       <div className="respira-tree">
         <div className="respira-tree-aura" />
         <div className="respira-tree-canopy" />

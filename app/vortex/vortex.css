@@ -27,6 +27,12 @@
     color-mix(in oklab, var(--accent) 16%, #9ac3ae 84%) 0%,
     transparent 60%
   );
+  /* Winamp Tranquility bands */
+  --band-1: color-mix(in oklab, var(--color-accent, var(--accent)) 60%, var(--tone-surface) 40%);
+  --band-2: color-mix(in oklab, var(--theme-forest-mystic-amber, #d9a566) 55%, var(--tone-surface) 45%);
+  --band-3: color-mix(in oklab, var(--theme-forest-mystic-leaf, #5f7f6b) 65%, var(--tone-surface) 35%);
+  --band-4: color-mix(in oklab, var(--theme-forest-mystic-mushroom, #7d7466) 55%, var(--tone-surface) 45%);
+  --band-5: color-mix(in oklab, var(--theme-forest-mystic-glow-blue, #6da7c2) 45%, var(--tone-surface) 55%);
 }
 
 .respira-root[data-breathing='true'] {
@@ -189,6 +195,53 @@
   z-index: 2;
 }
 
+.respira-bands {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 260px;
+  height: 260px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+  opacity: 0.65;
+  filter: blur(40px) saturate(0.85);
+}
+
+.respira-bands .band {
+  flex: 1;
+  border-radius: 40px;
+  transition: transform 2s ease-in-out, opacity 1.5s ease-in-out;
+}
+
+.band-1 {
+  background: var(--band-1);
+}
+.band-2 {
+  background: var(--band-2);
+}
+.band-3 {
+  background: var(--band-3);
+}
+.band-4 {
+  background: var(--band-4);
+}
+.band-5 {
+  background: var(--band-5);
+}
+
+.respira-bands::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in oklab, var(--band-3) 50%, transparent) 0%, transparent 70%);
+  filter: blur(50px);
+  opacity: 0.3;
+}
+
 .respira-tree {
   position: relative;
   width: min(280px, 60vw);
@@ -337,6 +390,10 @@
 .respira-root[data-breath-phase='inhale'] .respira-tree-roots {
   opacity: 0.9;
 }
+.respira-root[data-breath-phase='inhale'] .respira-bands .band {
+  transform: scaleY(1.6);
+  opacity: 0.85;
+}
 
 .respira-root[data-breath-phase='hold'] .respira-tree-canopy {
   transform: translateY(-6px) scale(1.07);
@@ -348,6 +405,10 @@
 }
 .respira-root[data-breath-phase='hold'] .respira-tree-trunk {
   transform: translate(-50%, -3px) scaleY(1.05);
+}
+.respira-root[data-breath-phase='hold'] .respira-bands .band {
+  transform: scaleY(1.2);
+  opacity: 0.95;
 }
 
 .respira-root[data-breath-phase='exhale'] .respira-tree-canopy {
@@ -363,6 +424,10 @@
 }
 .respira-root[data-breath-phase='exhale'] .respira-tree-trunk {
   transform: translate(-50%, 1px) scaleY(0.98);
+}
+.respira-root[data-breath-phase='exhale'] .respira-bands .band {
+  transform: scaleY(0.6);
+  opacity: 0.45;
 }
 
 .respira-root[data-breath-phase='inhale'] {
