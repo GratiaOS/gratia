@@ -20,7 +20,6 @@ export default function VortexScene() {
   const [stepIndex, setStepIndex] = useState(0);
   const [theme, setTheme] = useState<VortexTheme>('aurora-orb');
   const [transitioning, setTransitioning] = useState(false);
-  const isThemeDebug = process.env.NEXT_PUBLIC_VORTEX_THEME_DEBUG === '1';
   const timerRef = useRef<number | null>(null);
 
   const isBreathing = mode === 'ritual';
@@ -96,18 +95,16 @@ export default function VortexScene() {
       data-show-continue={showContinue ? 'true' : 'false'}
       data-transitioning={transitioning ? 'true' : 'false'}
     >
-      {isThemeDebug && (
-        <div className="respira-theme-switch">
-          <button
-            type="button"
-            className="respira-theme-dot"
-            onClick={cycleTheme}
-            aria-label="Schimbă tema Respira"
-          >
-            ●
-          </button>
-        </div>
-      )}
+      <div className="respira-theme-switch">
+        <button
+          type="button"
+          className="respira-theme-dot"
+          onClick={cycleTheme}
+          aria-label="Schimbă tema Respira"
+        >
+          ●
+        </button>
+      </div>
       <section className="respira-portal">
         {!isBreathing ? (
           <>
