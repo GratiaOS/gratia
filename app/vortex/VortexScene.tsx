@@ -124,7 +124,7 @@ export default function VortexScene() {
             </div>
             <p className="respira-mantra">Doar respiră. Portalul are grijă de tine.</p>
             <button type="button" className="respira-mountain-btn" onClick={startRitual}>
-              Respiră cu Antonio
+              Atme mit Antonio
             </button>
           </>
         ) : (
