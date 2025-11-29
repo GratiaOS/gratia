@@ -18,7 +18,7 @@ export default function VortexScene() {
   const [mode, setMode] = useState<VortexMode>('idle');
   const [showContinue, setShowContinue] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
-  const [theme, setTheme] = useState<VortexTheme>('forest-winamp');
+  const [theme, setTheme] = useState<VortexTheme>('aurora-orb');
   const [transitioning, setTransitioning] = useState(false);
   const isThemeDebug = process.env.NEXT_PUBLIC_VORTEX_THEME_DEBUG === '1';
   const timerRef = useRef<number | null>(null);
