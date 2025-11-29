@@ -1,14 +1,19 @@
 .respira-root {
   position: relative;
   min-height: 100vh;
+  color-scheme: dark;
   padding: clamp(2rem, 5vh, 3rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
+  /* Forțează paleta pe night garden, indiferent de tema de sistem */
+  --accent: var(--theme-forest-mystic-glow-accent, var(--accent));
+  --tone-surface: var(--theme-forest-mystic-background, var(--tone-surface));
+  --tone-ink: var(--theme-forest-mystic-foreground, var(--tone-ink));
   background:
     radial-gradient(circle at 50% -10%, color-mix(in oklab, var(--tone-surface) 90%, #ffffff 10%) 0, transparent 55%),
-    radial-gradient(circle at 10% 120%, color-mix(in oklab, var(--accent) 12%, #0b1814 88%) 0, transparent 60%),
+    radial-gradient(circle at 5% 120%, color-mix(in oklab, var(--accent) 6%, var(--tone-surface) 94%) 0, transparent 60%),
     var(--tone-surface);
   color: var(--tone-ink);
   transition:
@@ -37,8 +42,8 @@
 
 .respira-root[data-breathing='true'] {
   background:
-    radial-gradient(circle at 50% 0%, color-mix(in oklab, var(--accent) 12%, #0b1814 88%) 0, transparent 60%),
-    color-mix(in oklab, var(--tone-surface) 45%, #020809 55%);
+    radial-gradient(circle at 50% 0%, color-mix(in oklab, var(--accent) 10%, #fbe3b4 5%, var(--tone-surface) 85%) 0, transparent 55%),
+    radial-gradient(circle at 50% 130%, #020910 0, #020910 70%);
   filter: saturate(0.82) brightness(0.98);
 }
 
@@ -331,6 +336,17 @@
   opacity: 0.7;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+.respira-continue-button {
+  background: color-mix(in oklab, var(--tone-surface) 85%, #000000 15%);
+  border: 1px solid color-mix(in oklab, var(--accent) 26%, transparent);
+  color: var(--tone-ink);
+}
+
+.respira-continue-button:hover {
+  background: color-mix(in oklab, var(--tone-surface) 78%, #000000 22%);
+  color: var(--tone-ink);
 }
 
 .respira-breath-layer {

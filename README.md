@@ -1,11 +1,28 @@
-# 🌱 Gratia.space
+# 🌱 Gratia
 
 <p>
   <img src="docs/assets/mark/gratia-mark.png" alt="Gratia Mark" width="90px" />
 </p>
 
-Gratia is a living garden — an open space for protocols, whispers, and shared experiments.  
-It holds the **OS overview** and seeds for things that may grow: M3, Firegate, Firecircle, and beyond.
+Gratia is a living garden – a quiet OS for presence, creation, and shared experiments.
+It holds the seeds and protocols for things that grow around it: M3, Firegate, Firecircle, Codex :: Vienna, and beyond.
+
+This repo contains the **web app** at [https://gratia.space](https://gratia.space), built as a gentle, token‑driven Next.js playground for Gratia.
+
+---
+
+## Identity
+
+Gratia is in the process of becoming a non‑profit association.
+
+**Public identity:**
+
+- **Name:** Gratia (Asociación en formación)
+- **Place:** Casbas de Huesca · España
+- **Web:** https://gratia.space
+- **Contact:** contact@gratia.space
+
+No physical street address is published in this repo. Privacy is part of the garden.
 
 ---
 
@@ -39,29 +56,40 @@ Edit any page inside `app/` — the site will auto‑update.
 
 ---
 
+## Stack & Styling
+
+Gratia uses a small, opinionated stack:
+
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind v4 utilities + `@gratiaos/tokens` + `@gratiaos/ui`
+- **Design tokens:** Garden‑core palette and typography wired through `globals.css`
+- **Type:** custom Gratia typefaces (Gratia, Selari, Bilute) with system fallbacks
+
+Pages like `/vortex` and `/codex/vienna` use the same token system for mood, motion, and depth.
+
+---
+
 ## Deploy
 
-This repo is set up for **Vercel**.  
+This repo is set up for **Vercel**.
+
 Push to `main` → deploys to [gratia.space](https://www.gratia.space).
 
 No analytics, no trackers — this garden is private by default.
 
 ---
 
-## Notes
-
-- Fonts: [Inter](https://fonts.google.com/specimen/Inter), [Nunito](https://fonts.google.com/specimen/Nunito), [Domine](https://fonts.google.com/specimen/Domine).
-- Styling: [Tailwind v4](https://tailwindcss.com/docs/installation) + custom theme in `globals.css`.
-
----
-
 ## Contributing
 
-This is a shared garden. Fork, branch, and propose — but remember:  
-every commit should carry a **whisper**.
+This is a shared garden. Fork, branch, and propose — but remember:
+
+- every commit should carry a **whisper** (a small line of intent in the message)
+- changes should respect calm, clarity, and lower noise, not higher
+
+If you’re unsure, open an issue or draft PR and describe the feeling you’re aiming for.
 
 ---
 
 ## Whisper
 
-🌬 whisper: _“paths open where attention flows.”_
+🌬 whisper: _"creation remembers it is safe here."_

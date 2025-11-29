@@ -133,7 +133,7 @@ export default function VortexScene() {
       </section>
 
       <footer className="respira-footer">
-        <Button asChild className="respira-continue whisper-ring mood-glow">
+        <Button asChild className="respira-continue respira-continue-button whisper-ring mood-glow" variant="ghost">
           <a href="/codex/vienna">Continuă în Codex :: Vienna →</a>
         </Button>
       </footer>
