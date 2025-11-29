@@ -19,10 +19,28 @@ export default function VortexScene() {
   const [showContinue, setShowContinue] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [theme, setTheme] = useState<VortexTheme>('forest-winamp');
+  const isThemeDebug = process.env.NEXT_PUBLIC_VORTEX_THEME_DEBUG === '1';
   const timerRef = useRef<number | null>(null);
 
   const isBreathing = mode === 'ritual';
   const step = useMemo(() => sequence[stepIndex % sequence.length], [stepIndex]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const stored = window.localStorage.getItem('gratia.vortex.theme');
+    if (
+      stored === 'forest-winamp' ||
+      stored === 'mushroom-orchard' ||
+      stored === 'aurora-orb'
+    ) {
+      setTheme(stored);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem('gratia.vortex.theme', theme);
+  }, [theme]);
 
   const cycleTheme = () => {
     setTheme((prev) => {
@@ -72,16 +90,18 @@ export default function VortexScene() {
       data-breath-phase={step.phase}
       data-show-continue={showContinue ? 'true' : 'false'}
     >
-      <div className="respira-theme-switch">
-        <button
-          type="button"
-          className="respira-theme-dot"
-          onClick={cycleTheme}
-          aria-label="Schimbă tema Respira"
-        >
-          ●
-        </button>
-      </div>
+      {isThemeDebug && (
+        <div className="respira-theme-switch">
+          <button
+            type="button"
+            className="respira-theme-dot"
+            onClick={cycleTheme}
+            aria-label="Schimbă tema Respira"
+          >
+            ●
+          </button>
+        </div>
+      )}
       <section className="respira-portal">
         {!isBreathing ? (
           <>
