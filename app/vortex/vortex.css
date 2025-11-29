@@ -42,6 +42,13 @@
   filter: saturate(0.82) brightness(0.98);
 }
 
+/* idle -> ritual transition */
+.respira-root[data-transitioning='true'] {
+  transition: backdrop-filter 400ms ease, background-color 400ms ease;
+  backdrop-filter: blur(1.5px);
+  background-color: color-mix(in oklab, var(--tone-surface) 85%, black 15%);
+}
+
 /* ---------- Themes (Zen Garden) ---------- */
 
 /* Tema 1: forest-winamp (default vibe) */
@@ -244,6 +251,8 @@
   background:
     radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.12), transparent 55%),
     radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.7), transparent 60%);
+  opacity: 1;
+  transition: opacity 250ms ease-out;
 }
 
 .respira-hero-media {
@@ -331,6 +340,8 @@
   place-items: center;
   pointer-events: none;
   z-index: 2;
+  opacity: 0;
+  transition: opacity 300ms ease-out 200ms;
 }
 
 .respira-bands {
@@ -378,6 +389,14 @@
   background: radial-gradient(circle, color-mix(in oklab, var(--band-3) 50%, transparent) 0%, transparent 70%);
   filter: blur(50px);
   opacity: 0.3;
+}
+
+.respira-root[data-transitioning='true'] .respira-hero {
+  opacity: 0;
+}
+
+.respira-root[data-breathing='true'] .respira-breath-layer {
+  opacity: 1;
 }
 
 .respira-tree {
@@ -489,11 +508,17 @@
   color: color-mix(in oklab, var(--accent) 70%, var(--tone-ink) 30%);
 }
 
-.respira-label-sub {
-  font-size: 0.68rem;
-  text-transform: none;
-  letter-spacing: 0.08em;
-  opacity: 0.8;
+.respira-label-rhythm {
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+  margin-top: 0.25rem;
+}
+
+.respira-label-steps {
+  font-size: 0.85rem;
+  opacity: 0.55;
+  margin-top: -2px;
 }
 
 .respira-label-abuelo {
@@ -502,7 +527,6 @@
   text-transform: none;
   opacity: 0.9;
 }
-
 .respira-tree-canopy,
 .respira-tree-aura,
 .respira-tree-trunk,

@@ -19,6 +19,7 @@ export default function VortexScene() {
   const [showContinue, setShowContinue] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   const [theme, setTheme] = useState<VortexTheme>('forest-winamp');
+  const [transitioning, setTransitioning] = useState(false);
   const isThemeDebug = process.env.NEXT_PUBLIC_VORTEX_THEME_DEBUG === '1';
   const timerRef = useRef<number | null>(null);
 
@@ -69,9 +70,13 @@ export default function VortexScene() {
   }, [isBreathing, step]);
 
   const startRitual = () => {
-    if (timerRef.current !== null) clearTimeout(timerRef.current);
-    setMode('ritual');
-    setStepIndex(0);
+    setTransitioning(true);
+    window.setTimeout(() => {
+      if (timerRef.current !== null) clearTimeout(timerRef.current);
+      setMode('ritual');
+      setStepIndex(0);
+      setTransitioning(false);
+    }, 250);
   };
 
   const handlePanic = () => {
@@ -89,6 +94,7 @@ export default function VortexScene() {
       data-breathing={isBreathing ? 'true' : 'false'}
       data-breath-phase={step.phase}
       data-show-continue={showContinue ? 'true' : 'false'}
+      data-transitioning={transitioning ? 'true' : 'false'}
     >
       {isThemeDebug && (
         <div className="respira-theme-switch">
@@ -158,7 +164,8 @@ function BreathOverlay({
 
       <div className="respira-labels">
         <div className="respira-label-phase">{step.label}</div>
-        <div className="respira-label-sub">Doar urmează ritmul.</div>
+        <div className="respira-label-rhythm">4 · 4 · 6</div>
+        <div className="respira-label-steps">Inspiră • Ține • Expiră</div>
         <div className="respira-label-abuelo">🐸 Antonio respiră cu tine. 🌲</div>
       </div>
     </div>
