@@ -6,6 +6,7 @@ import { Button } from '@gratiaos/ui';
 
 type BreathPhase = 'inhale' | 'hold' | 'exhale';
 type VortexMode = 'idle' | 'ritual';
+type VortexTheme = 'forest-winamp' | 'mushroom-orchard' | 'aurora-orb';
 
 const sequence: { phase: BreathPhase; label: string; durationMs: number }[] = [
   { phase: 'inhale', label: 'Inspiră', durationMs: 4000 },
@@ -17,10 +18,19 @@ export default function VortexScene() {
   const [mode, setMode] = useState<VortexMode>('idle');
   const [showContinue, setShowContinue] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+  const [theme, setTheme] = useState<VortexTheme>('forest-winamp');
   const timerRef = useRef<number | null>(null);
 
   const isBreathing = mode === 'ritual';
   const step = useMemo(() => sequence[stepIndex % sequence.length], [stepIndex]);
+
+  const cycleTheme = () => {
+    setTheme((prev) => {
+      if (prev === 'forest-winamp') return 'mushroom-orchard';
+      if (prev === 'mushroom-orchard') return 'aurora-orb';
+      return 'forest-winamp';
+    });
+  };
 
   useEffect(() => {
     if (!isBreathing) {
@@ -57,10 +67,21 @@ export default function VortexScene() {
     <main
       className="respira-root"
       data-pad-mood="bom-bhole"
+      data-vortex-theme={theme}
       data-breathing={isBreathing ? 'true' : 'false'}
       data-breath-phase={step.phase}
       data-show-continue={showContinue ? 'true' : 'false'}
     >
+      <div className="respira-theme-switch">
+        <button
+          type="button"
+          className="respira-theme-dot"
+          onClick={cycleTheme}
+          aria-label="Schimbă tema Respira"
+        >
+          ●
+        </button>
+      </div>
       <section className="respira-portal">
         {!isBreathing ? (
           <>

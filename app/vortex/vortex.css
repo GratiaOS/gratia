@@ -42,6 +42,112 @@
   filter: saturate(0.82) brightness(0.98);
 }
 
+/* ---------- Themes (Zen Garden) ---------- */
+
+/* Tema 1: forest-winamp (default vibe) */
+.respira-root[data-vortex-theme='forest-winamp'] {
+  filter: saturate(0.9);
+}
+.respira-root[data-vortex-theme='forest-winamp'] .respira-tree {
+  filter: saturate(0.9) contrast(0.96);
+}
+.respira-root[data-vortex-theme='forest-winamp'] .respira-tree-canopy {
+  background: radial-gradient(ellipse at center, var(--leaf-soft) 0%, var(--leaf-main) 55%, var(--leaf-shadow) 100%);
+}
+.respira-root[data-vortex-theme='forest-winamp'] .respira-bands .band-1 {
+  background: var(--band-1);
+}
+.respira-root[data-vortex-theme='forest-winamp'] .respira-bands .band-2 {
+  background: var(--band-2);
+}
+.respira-root[data-vortex-theme='forest-winamp'] .respira-bands .band-3 {
+  background: var(--band-3);
+}
+.respira-root[data-vortex-theme='forest-winamp'] .respira-bands .band-4 {
+  background: var(--band-4);
+}
+.respira-root[data-vortex-theme='forest-winamp'] .respira-bands .band-5 {
+  background: var(--band-5);
+}
+
+/* Tema 2: mushroom-orchard */
+.respira-root[data-vortex-theme='mushroom-orchard'] {
+  background:
+    radial-gradient(circle at 10% -10%, color-mix(in oklab, var(--theme-forest-mystic-mushroom, #7d7466) 16%, #000 84%) 0%, transparent 55%),
+    radial-gradient(circle at 90% 120%, color-mix(in oklab, var(--theme-forest-mystic-amber, #d9a566) 18%, #000 82%) 0%, transparent 60%),
+    #050d0b;
+  filter: saturate(0.9);
+}
+[data-vortex-theme='mushroom-orchard'] .respira-tree-canopy {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in oklab, var(--theme-forest-mystic-mushroom, #7d7466) 55%, var(--tone-surface) 45%) 0%,
+    color-mix(in oklab, var(--theme-forest-mystic-leaf, #5f7f6b) 55%, #07140d 45%) 50%,
+    #03100a 100%
+  );
+}
+[data-vortex-theme='mushroom-orchard'] .respira-tree-trunk {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, #8b6a4a 70%, var(--tone-surface) 30%),
+    #3d2a1c
+  );
+}
+[data-vortex-theme='mushroom-orchard'] .respira-bands .band-1 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-mushroom, #7d7466) 65%, var(--tone-surface) 35%);
+}
+[data-vortex-theme='mushroom-orchard'] .respira-bands .band-2 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-amber, #d9a566) 70%, #302013 30%);
+}
+[data-vortex-theme='mushroom-orchard'] .respira-bands .band-3 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-leaf, #5f7f6b) 60%, #040c07 40%);
+}
+[data-vortex-theme='mushroom-orchard'] .respira-bands .band-4 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-fruit-gold, #d1a05a) 45%, var(--tone-surface) 55%);
+}
+[data-vortex-theme='mushroom-orchard'] .respira-bands .band-5 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-glow-blue, #6da7c2) 40%, #020709 60%);
+}
+
+/* Tema 3: aurora-orb */
+.respira-root[data-vortex-theme='aurora-orb'] {
+  background:
+    radial-gradient(circle at 50% -20%, color-mix(in oklab, var(--theme-forest-mystic-glow-blue, #6da7c2) 16%, #000 84%) 0%, transparent 60%),
+    radial-gradient(circle at 0% 120%, color-mix(in oklab, var(--theme-forest-mystic-leaf-light, #7fb8a2) 14%, #000 86%) 0%, transparent 60%),
+    #020510;
+  filter: saturate(1.05);
+}
+[data-vortex-theme='aurora-orb'] .respira-tree-canopy {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in oklab, var(--theme-forest-mystic-glow-blue, #6da7c2) 70%, var(--tone-surface) 30%) 0%,
+    color-mix(in oklab, var(--theme-forest-mystic-leaf-light, #7fb8a2) 55%, #020819 45%) 55%,
+    #020614 100%
+  );
+}
+[data-vortex-theme='aurora-orb'] .respira-tree-trunk {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, #8b6a4a 40%, var(--theme-forest-mystic-glow-blue, #6da7c2) 60%),
+    #31263a
+  );
+}
+[data-vortex-theme='aurora-orb'] .respira-bands .band-1 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-glow-blue, #6da7c2) 70%, #06111c 30%);
+}
+[data-vortex-theme='aurora-orb'] .respira-bands .band-2 {
+  background: color-mix(in oklab, #d9a766 55%, #1b0815 45%);
+}
+[data-vortex-theme='aurora-orb'] .respira-bands .band-3 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-leaf-light, #7fb8a2) 60%, #030f12 40%);
+}
+[data-vortex-theme='aurora-orb'] .respira-bands .band-4 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-berry-gold, #d1966b) 50%, #120714 50%);
+}
+[data-vortex-theme='aurora-orb'] .respira-bands .band-5 {
+  background: color-mix(in oklab, var(--theme-forest-mystic-glow-blue, #6da7c2) 80%, white 20%);
+}
+
 .respira-root::after {
   content: '';
   position: absolute;
@@ -76,11 +182,43 @@
 }
 
 .respira-chrome {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  z-index: 3;
 }
 
 .respira-panic {
   display: none;
+}
+
+.respira-theme-switch {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  z-index: 3;
+}
+
+.respira-theme-dot {
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid #ffffff22;
+  background: #020a12aa;
+  font-size: 0.75rem;
+  line-height: 1;
+  opacity: 0.65;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: opacity 140ms ease-out, transform 140ms ease-out;
+}
+
+.respira-theme-dot:hover {
+  opacity: 1;
+  transform: translateY(-1px);
 }
 
 .respira-portal {
