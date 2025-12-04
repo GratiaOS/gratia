@@ -20,7 +20,10 @@ export default function VortexScene() {
   const [stepIndex, setStepIndex] = useState(0);
   const [theme, setTheme] = useState<VortexTheme>('aurora-orb');
   const [transitioning, setTransitioning] = useState(false);
+  const [prePulse, setPrePulse] = useState(false);
+  const [lightOn, setLightOn] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const continueTimerRef = useRef<number | null>(null);
 
   const isBreathing = mode === 'ritual';
   const step = useMemo(() => sequence[stepIndex % sequence.length], [stepIndex]);
@@ -51,12 +54,12 @@ export default function VortexScene() {
   };
 
   useEffect(() => {
-    if (!isBreathing) {
+    // clear delayed continue when leaving ritual
+    if (!isBreathing && continueTimerRef.current) {
+      clearTimeout(continueTimerRef.current);
+      continueTimerRef.current = null;
       setShowContinue(false);
-      return;
     }
-    const t = window.setTimeout(() => setShowContinue(true), 60_000);
-    return () => clearTimeout(t);
   }, [isBreathing]);
 
   useEffect(() => {
@@ -69,17 +72,38 @@ export default function VortexScene() {
   }, [isBreathing, step]);
 
   const startRitual = () => {
+    if (continueTimerRef.current) {
+      clearTimeout(continueTimerRef.current);
+      continueTimerRef.current = null;
+    }
+    // pre-inspir pulse
+    setPrePulse(true);
+    window.setTimeout(() => setPrePulse(false), 120);
+
     setTransitioning(true);
+
+    // aprindem lumina după micro-pulse
+    window.setTimeout(() => setLightOn(true), 120);
+
+    // intrăm în ritual după ce începe lumina să urce
     window.setTimeout(() => {
       if (timerRef.current !== null) clearTimeout(timerRef.current);
       setMode('ritual');
       setStepIndex(0);
       setTransitioning(false);
-    }, 250);
+    }, 400);
+
+    // apare call-to-action după ce lumina s-a stabilizat
+    continueTimerRef.current = window.setTimeout(() => {
+      setShowContinue(true);
+    }, 120 + 400 + 700);
   };
 
   const handlePanic = () => {
     if (timerRef.current !== null) clearTimeout(timerRef.current);
+    if (continueTimerRef.current) clearTimeout(continueTimerRef.current);
+    setLightOn(false);
+    setShowContinue(false);
     setMode('idle');
     setStepIndex(0);
     window.location.href = '/';
@@ -94,7 +118,11 @@ export default function VortexScene() {
       data-breath-phase={step.phase}
       data-show-continue={showContinue ? 'true' : 'false'}
       data-transitioning={transitioning ? 'true' : 'false'}
+      data-light-on={lightOn ? 'true' : 'false'}
+      data-pre-pulse={prePulse ? 'true' : 'false'}
     >
+      {prePulse && <div className="respira-prepulse" aria-hidden="true" />}
+
       <div className="respira-theme-switch">
         <button
           type="button"
@@ -121,7 +149,7 @@ export default function VortexScene() {
             </div>
             <p className="respira-mantra">Doar respiră. El portal te sostiene.</p>
             <button type="button" className="respira-mountain-btn" onClick={startRitual}>
-              Atme mit Antonio
+              Aprinde lumina
             </button>
           </>
         ) : (
@@ -129,10 +157,19 @@ export default function VortexScene() {
         )}
       </section>
 
-      <footer className="respira-footer">
-        <Button asChild className="respira-continue respira-continue-button whisper-ring mood-glow" variant="ghost">
-          <a href="/codex/vienna">Continue to Codex :: Vienna →</a>
-        </Button>
+      <footer className="respira-footer" data-visible={showContinue ? 'true' : 'false'}>
+        <div className="respira-continue-block">
+          <Button
+            asChild
+            className="respira-continue respira-continue-button whisper-ring mood-glow"
+            variant="ghost"
+          >
+            <a href="/codex/vienna">Continúa Codex :: Vienna →</a>
+          </Button>
+          <p className="respira-continue-whisper">
+            Pata blanca. Tú puedes imaginarte el próximo paso.
+          </p>
+        </div>
       </footer>
     </main>
   );
