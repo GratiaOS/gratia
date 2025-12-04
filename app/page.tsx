@@ -124,7 +124,7 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
           <p className="text-base leading-relaxed opacity-85 md:text-lg">
             {t.line1}
             <br />
-            {t.line2} <span>☀️</span>
+            {t.line2}
           </p>
           {t.subtitle && (
             <p className="text-sm leading-relaxed text-opacity-80 text-current md:text-base">
