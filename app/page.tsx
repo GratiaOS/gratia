@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 const messages = {
   en: {
     title: 'Gratia is a gentle space of memory and presence.',
@@ -36,6 +38,34 @@ const messages = {
   },
 } as const;
 
+const meta = {
+  en: {
+    title: 'GratiaOS · Gentle nature, memory & presence',
+    description:
+      'GratiaOS is a gentle space where nature and memory breathe together. Animals, plants and stones invite a calm way to feel the world and feel yourself.',
+  },
+  es: {
+    title: 'GratiaOS · Naturaleza, memoria y presencia suave',
+    description:
+      'GratiaOS es un espacio suave donde la naturaleza y la memoria respiran juntas. Animales, plantas y piedras invitan a sentir el mundo y a sentirte a ti mismo.',
+  },
+  fr: {
+    title: 'GratiaOS · Nature, mémoire et présence douce',
+    description:
+      'GratiaOS est un espace doux où nature et mémoire respirent ensemble. Animaux, plantes, rochers – un voyage calme pour sentir le monde et se sentir soi.',
+  },
+  ar: {
+    title: 'GratiaOS · طبيعة وذاكرة وحضور بلطف',
+    description:
+      'GratiaOS هو فضاء لطيف تُصافح فيه الطبيعة الذاكرة. حيوانات ونباتات وصخور، رحلة هادئة لاكتشاف العالم والشعور بالذات.',
+  },
+  ro: {
+    title: 'GratiaOS · Natură, memorie și prezență blândă',
+    description:
+      'GratiaOS este un spațiu blând în care natura și memoria respiră împreună. Animale, plante și pietre te invită să simți lumea și să te simți pe tine.',
+  },
+} as const;
+
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'es', label: 'Español' },
@@ -53,6 +83,20 @@ function resolveLang(raw?: string): LangCode {
 }
 
 type HomeSearchParams = { lang?: string };
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: Promise<HomeSearchParams>;
+}): Promise<Metadata> {
+  const params = (await searchParams) ?? {};
+  const activeLang = resolveLang(params.lang);
+  const entry = meta[activeLang] ?? meta.en;
+  return {
+    title: entry.title,
+    description: entry.description,
+  };
+}
 
 export default async function Home({ searchParams }: { searchParams?: Promise<HomeSearchParams> }) {
   const params = (await searchParams) ?? {};
