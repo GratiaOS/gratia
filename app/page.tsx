@@ -3,30 +3,35 @@ const messages = {
     title: 'Gratia is a gentle space of memory and presence.',
     line1: 'A place where creation remembers it is safe.',
     line2: 'Soft as light. Warm as spring. 🌿',
+    subtitle: 'A calm way to listen to nature, feel the world, and remember yourself.',
     footer: 'Offer only what you love.',
   },
   es: {
     title: 'Gratia es un espacio vivo de memoria y presencia.',
     line1: 'Un lugar donde la creación recuerda que está a salvo.',
     line2: 'Suave como la luz. Cálida como la primavera. 🌿',
+    subtitle: 'Una forma tranquila de escuchar la naturaleza, sentir el mundo y reencontrarte contigo.',
     footer: 'Ofrece solo lo que amas.',
   },
   fr: {
     title: 'Gratia est un espace doux de mémoire et de présence.',
     line1: 'Un lieu où la création se souvient qu’elle est en sécurité.',
     line2: 'Légère comme la lumière. Chaude comme le printemps. 🍃☀️',
+    subtitle: 'Une manière paisible d’écouter la nature, de sentir le monde et de te retrouver toi-même.',
     footer: 'N’offre que ce que tu aimes.',
   },
   ar: {
     title: 'Gratia فضاء لطيف للذاكرة والحضور.',
     line1: 'مكانٌ تتذكّر فيه الخليقة أنها في أمان.',
     line2: 'ناعمة كالنور، دافئة مثل الربيع. 🍃☀️',
+    subtitle: 'طريق هادئ للإصغاء إلى الطبيعة، والشعور بالعالم، والتلاقي مع ذاتك من جديد.',
     footer: 'قدّم فقط ما تحبّه.',
   },
   ro: {
     title: 'Gratia este un spațiu blând de memorie și prezență.',
     line1: 'Un loc în care creația își amintește siguranța.',
     line2: 'Moale ca lumina. Caldă ca primăvara. 🌿',
+    subtitle: 'O cale liniștită de a asculta natura, de a simți lumea și de a te regăsi pe tine.',
     footer: 'Oferă doar ceea ce iubești.',
   },
 } as const;
@@ -77,6 +82,11 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
             <br />
             {t.line2} <span>☀️</span>
           </p>
+          {t.subtitle && (
+            <p className="text-sm leading-relaxed text-opacity-80 text-current md:text-base">
+              {t.subtitle}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center justify-center gap-3 text-xs opacity-80">
