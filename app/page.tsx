@@ -11,8 +11,9 @@ const messages = {
   es: {
     title: 'Gratia es un espacio vivo de memoria y presencia.',
     line1: 'Un lugar donde la creación recuerda que está a salvo.',
-    line2: 'Suave como la luz. Cálida como la primavera. 🌿',
-    subtitle: 'Una forma tranquila de escuchar la naturaleza, sentir el mundo y reencontrarte contigo.',
+    line2: 'Cálida como la primavera. Suave como la luz de la Luna. 🌕',
+    subtitle:
+      'Una forma tranquila de sentir y escuchar la naturaleza y de volver a encontrarse con el propio ser.',
     footer: 'Ofrece solo lo que amas.',
   },
   fr: {
