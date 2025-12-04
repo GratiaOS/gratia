@@ -18,14 +18,14 @@ const messages = {
   fr: {
     title: 'Gratia est un espace doux de mémoire et de présence.',
     line1: 'Un lieu où la création se souvient qu’elle est en sécurité.',
-    line2: 'Légère comme la lumière. Chaude comme le printemps. 🍃☀️',
+    line2: 'Légère comme la lumière. Chaude comme le printemps. 🍃',
     subtitle: 'Une manière paisible d’écouter la nature, de sentir le monde et de te retrouver toi-même.',
     footer: 'N’offre que ce que tu aimes.',
   },
   ar: {
     title: 'Gratia فضاء لطيف للذاكرة والحضور.',
     line1: 'مكانٌ تتذكّر فيه الخليقة أنها في أمان.',
-    line2: 'ناعمة كالنور، دافئة مثل الربيع. 🍃☀️',
+    line2: 'ناعمة كالنور، دافئة مثل الربيع. 🍃',
     subtitle: 'طريق هادئ للإصغاء إلى الطبيعة، والشعور بالعالم، والتلاقي مع ذاتك من جديد.',
     footer: 'قدّم فقط ما تحبّه.',
   },
@@ -124,7 +124,7 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
           <p className="text-base leading-relaxed opacity-85 md:text-lg">
             {t.line1}
             <br />
-            {t.line2}
+            {t.line2} <span>☀️</span>
           </p>
           {t.subtitle && (
             <p className="text-sm leading-relaxed text-opacity-80 text-current md:text-base">
