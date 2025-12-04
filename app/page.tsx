@@ -11,6 +11,18 @@ const messages = {
     line2: 'Suave como la luz. Cálida como la primavera. 🌿',
     footer: 'Ofrece solo lo que amas.',
   },
+  fr: {
+    title: 'Gratia est un espace doux de mémoire et de présence.',
+    line1: 'Un lieu où la création se souvient qu’elle est en sécurité.',
+    line2: 'Légère comme la lumière. Chaude comme le printemps. 🍃☀️',
+    footer: 'N’offre que ce que tu aimes.',
+  },
+  ar: {
+    title: 'Gratia فضاء لطيف للذاكرة والحضور.',
+    line1: 'مكانٌ تتذكّر فيه الخليقة أنها في أمان.',
+    line2: 'ناعمة كالنور، دافئة مثل الربيع. 🍃☀️',
+    footer: 'قدّم فقط ما تحبّه.',
+  },
   ro: {
     title: 'Gratia este un spațiu blând de memorie și prezență.',
     line1: 'Un loc în care creația își amintește siguranța.',
@@ -22,6 +34,8 @@ const messages = {
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'es', label: 'Español' },
+  { code: 'fr', label: 'Français' },
+  { code: 'ar', label: 'العربية' },
   { code: 'ro', label: 'Română' },
 ] as const;
 
@@ -41,7 +55,10 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
   const t = messages[activeLang];
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-10">
+    <main
+      className="flex min-h-screen items-center justify-center px-6 py-10"
+      dir={activeLang === 'ar' ? 'rtl' : 'ltr'}
+    >
       <div className="max-w-xl space-y-8 text-center">
         <div className="flex justify-center">
           <div
