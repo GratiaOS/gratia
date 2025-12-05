@@ -104,7 +104,7 @@
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at top, color-mix(in srgb, var(--skin-bg) 85%, #ffffff 15%), var(--skin-bg));
+  background: radial-gradient(circle at top, color-mix(in srgb, var(--skin-bg) 95%, #ffffff 5%), var(--skin-bg));
   color: var(--color-text);
   font-family: var(--font-selari);
   -webkit-font-smoothing: antialiased;
@@ -189,6 +189,11 @@ body {
   --tw-prose-invert-pre-bg: var(--color-bg);
   --tw-prose-invert-th-borders: var(--color-border);
   --tw-prose-invert-td-borders: var(--color-border);
+}
+
+:root[data-skin-id='MOON'] body,
+:root[data-skin-id='STELLAR'] body {
+  background: radial-gradient(circle at top, color-mix(in srgb, var(--skin-bg) 98%, #ffffff 2%), var(--skin-bg));
 }
 
 @layer components {
