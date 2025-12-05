@@ -11,15 +11,11 @@ export const metadata: Metadata = {
 export default function VortexPage() {
   return (
     <SceneLayout
-      id="vortex"
       eyebrow="Ritual · Vortex"
       title="Aprinde lumina."
       subtitle="O pauză scurtă de respirație înainte de a intra în Codex :: Vienna."
       backHref="/"
       backLabel="Înapoi în Grădină"
-      ctaHref="/codex/vienna"
-      ctaLabel="Continúa Codex :: Vienna →"
-      whisper="Pata blanca. Tú puedes imaginarte el próximo pas."
     >
       <VortexScene />
     </SceneLayout>

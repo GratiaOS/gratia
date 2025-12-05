@@ -2,40 +2,31 @@
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { Button } from '@gratiaos/ui';
-
 type SceneLayoutProps = {
-  id: string;
+  eyebrow: string;
   title: string;
   subtitle?: string;
-  eyebrow?: string;
   backHref?: string;
   backLabel?: string;
-  ctaHref?: string;
-  ctaLabel?: string;
-  whisper?: string;
   children: ReactNode;
+  footerCta?: ReactNode;
+  footerNote?: ReactNode;
 };
 
 export default function SceneLayout({
-  id,
+  eyebrow,
   title,
   subtitle,
-  eyebrow = 'Gratia · Scene',
-  backHref = '/',
-  backLabel = 'Înapoi în Grădină',
-  ctaHref,
-  ctaLabel,
-  whisper,
+  backHref,
+  backLabel = 'Înapoi',
   children,
+  footerCta,
+  footerNote,
 }: SceneLayoutProps) {
   return (
-    <main
-      className="scene-root min-h-screen px-4 py-10 lg:py-16 flex flex-col items-center"
-      data-scene-id={id}
-    >
-      <header className="w-full max-w-5xl mb-8 lg:mb-10">
-        <div className="flex items-center justify-between gap-4 mb-4">
+    <main className="scene-root min-h-screen px-4 py-10 lg:py-16 flex flex-col items-center">
+      <header className="w-full max-w-5xl mb-8 lg:mb-10 flex flex-col gap-4">
+        <div className="flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
             <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-500/80">
               <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/10">●</span>
@@ -49,30 +40,34 @@ export default function SceneLayout({
             )}
           </div>
 
-          <div className="hidden sm:flex">
-            <Button asChild variant="ghost" className="text-xs text-stone-300 hover:text-stone-50">
-              <Link href={backHref}>← {backLabel}</Link>
-            </Button>
-          </div>
+          {backHref && (
+            <Link
+              href={backHref}
+              className="hidden sm:inline-flex text-xs text-stone-300 hover:text-stone-50 transition-colors"
+            >
+              ← {backLabel}
+            </Link>
+          )}
         </div>
 
-        <div className="sm:hidden mb-4">
-          <Button asChild variant="ghost" className="text-xs text-stone-300 hover:text-stone-50">
-            <Link href={backHref}>← {backLabel}</Link>
-          </Button>
-        </div>
+        {backHref && (
+          <Link
+            href={backHref}
+            className="sm:hidden inline-flex text-xs text-stone-300 hover:text-stone-50 transition-colors"
+          >
+            ← {backLabel}
+          </Link>
+        )}
       </header>
 
       <section className="scene-shell w-full max-w-5xl">{children}</section>
 
-      {ctaHref && ctaLabel && (
+      {(footerCta || footerNote) && (
         <footer className="mt-10 w-full max-w-5xl flex flex-col items-center gap-2">
-          <Button asChild variant="ghost" className="whisper-ring mood-glow text-sm">
-            <Link href={ctaHref}>{ctaLabel}</Link>
-          </Button>
-          {whisper && (
+          {footerCta}
+          {footerNote && (
             <p className="text-[11px] text-stone-400 text-center max-w-sm">
-              {whisper}
+              {footerNote}
             </p>
           )}
         </footer>
