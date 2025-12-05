@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useSkinField } from '../skin/SkinFieldProvider';
 
 type LightRitualButtonProps = {
   onLight?: () => void;
@@ -12,9 +13,13 @@ type LightRitualButtonProps = {
  */
 export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
   const [lit, setLit] = useState(false);
+  const { skinId, setSkinId } = useSkinField();
 
   const handleClick = () => {
     setLit(true);
+    if (skinId !== 'SUN') {
+      setSkinId('SUN');
+    }
     onLight?.();
   };
 

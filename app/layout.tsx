@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { SpiritModeProvider } from '@/components/SpiritModeProvider';
+import { SkinFieldProvider } from './skin/SkinFieldProvider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <SpiritModeProvider>{children}</SpiritModeProvider>
+        <SkinFieldProvider>
+          <SpiritModeProvider>{children}</SpiritModeProvider>
+        </SkinFieldProvider>
       </body>
     </html>
   );

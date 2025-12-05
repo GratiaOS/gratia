@@ -3,6 +3,43 @@
 @import '@gratiaos/ui/styles/base.css' layer(components);
 @plugin '@tailwindcss/typography';
 
+/* Skin field (shared across app) */
+:root {
+  --skin-bg: var(--theme-forest-mystic-background);
+  --skin-card: color-mix(in oklab, var(--theme-forest-mystic-background) 90%, black 10%);
+  --skin-accent: var(--theme-forest-mystic-glow-accent);
+}
+
+:root[data-skin-id='SUN'] {
+  --skin-bg: #fff9ed;
+  --skin-card: #fff3db;
+  --skin-accent: #f6b74b;
+}
+
+:root[data-skin-id='MOON'] {
+  --skin-bg: #050816;
+  --skin-card: #0b1024;
+  --skin-accent: #7dd3fc;
+}
+
+:root[data-skin-id='GARDEN'] {
+  --skin-bg: #f5fbf5;
+  --skin-card: #e8f3e9;
+  --skin-accent: #7cb27c;
+}
+
+:root[data-skin-id='STELLAR'] {
+  --skin-bg: #070315;
+  --skin-card: #0f0a22;
+  --skin-accent: #a855f7;
+}
+
+:root[data-skin-id='OFF'] {
+  --skin-bg: var(--theme-forest-mystic-background);
+  --skin-card: color-mix(in oklab, var(--theme-forest-mystic-background) 88%, black 12%);
+  --skin-accent: var(--theme-forest-mystic-accent-leaf);
+}
+
 @font-face {
   font-family: 'NG Funkhaus';
   src:
@@ -67,11 +104,7 @@
 
 body {
   min-height: 100vh;
-  background: radial-gradient(
-    circle at top,
-    color-mix(in srgb, var(--color-bg) 85%, #ffffff 15%),
-    var(--color-bg)
-  );
+  background: radial-gradient(circle at top, color-mix(in srgb, var(--skin-bg) 85%, #ffffff 15%), var(--skin-bg));
   color: var(--color-text);
   font-family: var(--font-selari);
   -webkit-font-smoothing: antialiased;
