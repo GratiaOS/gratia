@@ -16,9 +16,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const setInitialSkin = `
+    try {
+      const stored = window.localStorage.getItem('gratia.skinId');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const next = stored ? (prefersDark && stored === 'SUN' ? 'MOON' : stored) : prefersDark ? 'MOON' : 'SUN';
+      document.documentElement.dataset.skinId = next;
+    } catch (e) {
+      document.documentElement.dataset.skinId = 'MOON';
+    }
+  `;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+        <script dangerouslySetInnerHTML={{ __html: setInitialSkin }} />
         <SkinFieldProvider>
           <SpiritModeProvider>{children}</SpiritModeProvider>
         </SkinFieldProvider>
