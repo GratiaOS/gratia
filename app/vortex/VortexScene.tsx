@@ -6,7 +6,7 @@ import { Button } from '@gratiaos/ui';
 import LightRitualButton from './LightRitualButton';
 
 type BreathPhase = 'inhale' | 'hold' | 'exhale';
-type VortexMode = 'idle' | 'ritual';
+type VortexMode = 'idle' | 'lighting' | 'ritual' | 'closing';
 type VortexTheme = 'forest-winamp' | 'mushroom-orchard' | 'aurora-orb';
 
 const sequence: { phase: BreathPhase; label: string; durationMs: number }[] = [
@@ -82,22 +82,23 @@ export default function VortexScene() {
     window.setTimeout(() => setPrePulse(false), 120);
 
     setTransitioning(true);
+    setMode('lighting');
 
     // aprindem lumina după micro-pulse
     window.setTimeout(() => setLightOn(true), 120);
 
-    // intrăm în ritual după ce începe lumina să urce
+    // intrăm în ritual după ce începe lumina să urce (mai târziu ca să simți faza)
     window.setTimeout(() => {
       if (timerRef.current !== null) clearTimeout(timerRef.current);
       setMode('ritual');
       setStepIndex(0);
       setTransitioning(false);
-    }, 900);
+    }, 1200);
 
     // apare call-to-action după ce lumina s-a stabilizat
     continueTimerRef.current = window.setTimeout(() => {
       setShowContinue(true);
-    }, 120 + 900 + 700);
+    }, 120 + 1200 + 700);
   };
 
   const handlePanic = () => {
@@ -111,7 +112,7 @@ export default function VortexScene() {
   };
 
   return (
-    <main
+    <div
       className="respira-root"
       data-pad-mood="bom-bhole"
       data-vortex-theme={theme}
@@ -121,6 +122,7 @@ export default function VortexScene() {
       data-transitioning={transitioning ? 'true' : 'false'}
       data-light-on={lightOn ? 'true' : 'false'}
       data-pre-pulse={prePulse ? 'true' : 'false'}
+      data-vortex-mode={mode}
     >
       {prePulse && <div className="respira-prepulse" aria-hidden="true" />}
 
@@ -134,26 +136,27 @@ export default function VortexScene() {
           ●
         </button>
       </div>
-      <section className="respira-portal">
-        {!isBreathing ? (
+      <section className="respira-portal" data-vortex-mode={mode}>
+        <div className="respira-hero">
+          <div className="respira-hero-media">
+            <Image
+              src="/lightfrog-vortex.gif"
+              alt="Antonio ține portalul deschis."
+              priority
+              fill
+              sizes="(min-width: 1024px) 1120px, 100vw"
+            />
+          </div>
+        </div>
+
+        {!isBreathing && (
           <>
-            <div className="respira-hero">
-              <div className="respira-hero-media">
-                <Image
-                  src="/lightfrog-vortex.gif"
-                  alt="Antonio ține portalul deschis."
-                  priority
-                  fill
-                  sizes="(min-width: 1024px) 1120px, 100vw"
-                />
-              </div>
-            </div>
             <p className="respira-mantra">Doar respiră. El portal te sostiene.</p>
             <LightRitualButton onLight={startRitual} />
           </>
-        ) : (
-          <BreathOverlay step={step} />
         )}
+
+        {(mode === 'lighting' || isBreathing) && <BreathOverlay step={step} />}
       </section>
 
       <footer className="respira-footer" data-visible={showContinue ? 'true' : 'false'}>
@@ -163,14 +166,14 @@ export default function VortexScene() {
             className="respira-continue respira-continue-button whisper-ring mood-glow"
             variant="ghost"
           >
-            <a href="/codex/vienna">Continúa Codex :: Vienna →</a>
+            <a href="/codex/vienna">Când ești gata, continuă cu Codex :: Vienna →</a>
           </Button>
           <p className="respira-continue-whisper">
-            Pata blanca. Tú puedes imaginarte el próximo paso.
+            Poți rămâne aici cât vrei. Pata blanca: tú puedes imaginarte el próximo paso.
           </p>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
 

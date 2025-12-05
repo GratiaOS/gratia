@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import VortexScene from './VortexScene';
 import './vortex.css';
+import SceneLayout from '@/components/layouts/SceneLayout';
 
 export const metadata: Metadata = {
   title: 'Vortex · Gratia',
@@ -8,5 +9,19 @@ export const metadata: Metadata = {
 };
 
 export default function VortexPage() {
-  return <VortexScene />;
+  return (
+    <SceneLayout
+      id="vortex"
+      eyebrow="Ritual · Vortex"
+      title="Aprinde lumina."
+      subtitle="O pauză scurtă de respirație înainte de a intra în Codex :: Vienna."
+      backHref="/"
+      backLabel="Înapoi în Grădină"
+      ctaHref="/codex/vienna"
+      ctaLabel="Continúa Codex :: Vienna →"
+      whisper="Pata blanca. Tú puedes imaginarte el próximo pas."
+    >
+      <VortexScene />
+    </SceneLayout>
+  );
 }
