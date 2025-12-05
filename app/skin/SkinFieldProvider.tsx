@@ -27,9 +27,13 @@ export function SkinFieldProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const stored = window.localStorage.getItem(STORAGE_KEY) as KernelSkinId | null;
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
     if (stored) {
-      setSkinIdState(stored);
-      document.documentElement.dataset.skinId = stored;
+      // dacă sistemul e pe dark și ultimul skin era SUN, folosim MOON ca default de siguranță
+      const next = prefersDark && stored === 'SUN' ? 'MOON' : stored;
+      setSkinIdState(next);
+      document.documentElement.dataset.skinId = next;
     }
   }, []);
 
@@ -47,4 +51,3 @@ export function SkinFieldProvider({ children }: { children: React.ReactNode }) {
 
   return <SkinFieldContext.Provider value={{ skinId, setSkinId }}>{children}</SkinFieldContext.Provider>;
 }
-
