@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@gratiaos/ui';
+import LightRitualButton from './LightRitualButton';
 
 type BreathPhase = 'inhale' | 'hold' | 'exhale';
 type VortexMode = 'idle' | 'ritual';
@@ -148,9 +149,7 @@ export default function VortexScene() {
               </div>
             </div>
             <p className="respira-mantra">Doar respiră. El portal te sostiene.</p>
-            <button type="button" className="respira-mountain-btn" onClick={startRitual}>
-              Aprinde lumina
-            </button>
+            <LightRitualButton onLight={startRitual} />
           </>
         ) : (
           <BreathOverlay step={step} />
