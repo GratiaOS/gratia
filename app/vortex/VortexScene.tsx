@@ -92,12 +92,12 @@ export default function VortexScene() {
       setMode('ritual');
       setStepIndex(0);
       setTransitioning(false);
-    }, 400);
+    }, 900);
 
     // apare call-to-action după ce lumina s-a stabilizat
     continueTimerRef.current = window.setTimeout(() => {
       setShowContinue(true);
-    }, 120 + 400 + 700);
+    }, 120 + 900 + 700);
   };
 
   const handlePanic = () => {

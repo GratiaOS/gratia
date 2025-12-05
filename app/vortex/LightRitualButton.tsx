@@ -26,7 +26,7 @@ export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
     window.setTimeout(() => {
       setPhase('invite');
       onLight?.();
-    }, 1000);
+    }, 1800);
   };
 
   const lit = phase !== 'idle';
