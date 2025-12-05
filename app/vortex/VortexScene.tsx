@@ -137,17 +137,7 @@ export default function VortexScene() {
         </button>
       </div>
       <section className="respira-portal" data-vortex-mode={mode}>
-        <div className="respira-hero">
-          <div className="respira-hero-media">
-            <Image
-              src="/lightfrog-vortex.gif"
-              alt="Antonio ține portalul deschis."
-              priority
-              fill
-              sizes="(min-width: 1024px) 1120px, 100vw"
-            />
-          </div>
-        </div>
+        <div className="respira-hero" aria-hidden="true" />
 
         {!isBreathing && (
           <>
