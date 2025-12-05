@@ -7,21 +7,29 @@ type LightRitualButtonProps = {
   onLight?: () => void;
 };
 
+type RitualPhase = 'idle' | 'lighting' | 'invite';
+
 /**
  * Buton ritual „Aprinde lumina” pentru scena Vortex.
- * Simplu: arată ca o ușiță caldă; la click pornește fluxul de lumină din VortexScene.
+ * Faze: idle -> lighting -> invite, cu mică întârziere înainte să pornească ritualul.
  */
 export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
-  const [lit, setLit] = useState(false);
+  const [phase, setPhase] = useState<RitualPhase>('idle');
   const { skinId, setSkinId } = useSkinField();
 
   const handleClick = () => {
-    setLit(true);
-    if (skinId !== 'SUN') {
-      setSkinId('SUN');
-    }
-    onLight?.();
+    if (phase !== 'idle') return;
+    if (skinId !== 'SUN') setSkinId('SUN');
+    setPhase('lighting');
+
+    // după ~1s invităm mai departe și pornim ritualul din scenă
+    window.setTimeout(() => {
+      setPhase('invite');
+      onLight?.();
+    }, 1000);
   };
+
+  const lit = phase !== 'idle';
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -38,20 +46,23 @@ export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
         <button
           type="button"
           onClick={handleClick}
+          disabled={phase !== 'idle'}
           className={`relative z-[1] w-full rounded-[22px] px-5 py-3 text-sm font-semibold tracking-wide transition-all duration-400 shadow-[0_0_12px_rgba(0,0,0,0.28)] focus:outline-none focus:ring-2 focus:ring-amber-200/60 focus:ring-offset-2 focus:ring-offset-transparent ${
             lit
               ? 'bg-gradient-to-b from-amber-200 via-amber-100 to-amber-50 text-stone-900 shadow-[0_0_18px_rgba(251,191,36,0.55)]'
               : 'bg-gradient-to-b from-slate-800/80 via-slate-900/80 to-slate-950 text-amber-100/90 hover:from-slate-700 hover:to-slate-900'
           }`}
         >
-          Aprinde lumina
+          {phase === 'idle' && 'Aprinde lumina'}
+          {phase === 'lighting' && 'Lumina s-a aprins'}
+          {phase === 'invite' && 'Respiră cu Antonio'}
         </button>
       </div>
 
       <p className="text-xs text-stone-400 text-center max-w-sm leading-snug">
-        {lit
-          ? 'Pata blanca. Tú puedes imaginarte el próximo paso. Un singur pas e suficient pentru azi.'
-          : 'Doar apasă. Restul vine singur.'}
+        {phase === 'idle' && 'Doar apasă. Restul vine singur.'}
+        {phase === 'lighting' && 'Lumina se aprinde. Doar respiră.'}
+        {phase === 'invite' && 'Pata blanca. Tú puedes imaginarte el próximo pas. Un singur pas e suficient pentru azi.'}
       </p>
     </div>
   );
