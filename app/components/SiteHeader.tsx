@@ -6,8 +6,13 @@ export default function SiteHeader() {
     <header className="w-full border-b border-(--color-border) bg-(--color-bg)/80 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
-          <span className="inline-block h-8 w-8">
-            <GratiaMark />
+          <span className="relative inline-block h-8 w-8">
+            <span className="site-logo-color block h-full w-full">
+              <GratiaMark />
+            </span>
+            <span className="site-logo-outline block h-full w-full">
+              <GratiaMark variant="outline" />
+            </span>
           </span>
           <span className="font-semibold tracking-wide">Gratia</span>
         </Link>

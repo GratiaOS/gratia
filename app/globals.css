@@ -238,6 +238,27 @@ body {
     transition: transform 2400ms ease-in-out, filter 2400ms ease-in-out;
   }
 
+  /* Header logo: color on light, outline on dark */
+  .site-logo-color {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .site-logo-outline {
+    position: absolute;
+    inset: 0;
+    display: none;
+    color: var(--color-text);
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-logo-color {
+      display: none;
+    }
+    .site-logo-outline {
+      display: block;
+    }
+  }
+
   @keyframes scene-fade-in {
     from {
       opacity: 0;
