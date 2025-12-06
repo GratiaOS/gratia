@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import GratiaMark from '@/components/GratiaMark';
 
 const messages = {
   en: {
@@ -109,15 +110,9 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
       className="flex min-h-screen items-center justify-center px-6 py-10"
       dir={activeLang === 'ar' ? 'rtl' : 'ltr'}
     >
-      <div className="max-w-xl space-y-8 text-center">
-        <div className="flex justify-center">
-          <div
-            className="h-20 w-20 rounded-full shadow-lg"
-            aria-hidden="true"
-            style={{
-              background: 'radial-gradient(circle at 30% 20%, #fff7e6, var(--color-accent))',
-            }}
-          />
+      <div className="landing-hero max-w-xl space-y-8 text-center">
+        <div className="landing-hero-mark">
+          <GratiaMark variant="color" size={112} className="landing-hero-mark-inner" />
         </div>
 
         <div className="space-y-4">
@@ -125,7 +120,7 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
           <p className="text-base leading-relaxed opacity-85 md:text-lg">
             {t.line1}
             <br />
-            {t.line2} <span>☀️</span>
+            {t.line2}
           </p>
           {t.subtitle && (
             <p className="text-sm leading-relaxed text-opacity-80 text-current md:text-base">
