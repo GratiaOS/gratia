@@ -13,7 +13,7 @@ export default function VortexPage() {
     <SceneLayout
       eyebrow="Ritual · Vortex"
       title="Enciende la luz."
-      subtitle="O pauză scurtă de respirație înainte de a intra în Codex :: Vienna."
+      subtitle="Eine kurze Atempause, bevor du den Codex :: Vienna betrittst."
       backHref="/"
       backLabel="Înapoi în Grădină"
     >
