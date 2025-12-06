@@ -35,6 +35,21 @@ export function SkinFieldProvider({ children }: { children: React.ReactNode }) {
       setSkinIdState(next);
       document.documentElement.dataset.skinId = next;
     }
+
+    // ascultăm schimbarea sistemului light/dark și sincronizăm doar pentru perechea SUN/MOON
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (event: MediaQueryListEvent) => {
+      setSkinIdState((current) => {
+        // dacă userul a ales alt skin (GARDEN/STELLAR/OFF), nu-l forțăm
+        if (current !== 'SUN' && current !== 'MOON') return current;
+        const next = event.matches ? 'MOON' : 'SUN';
+        window.localStorage.setItem(STORAGE_KEY, next);
+        document.documentElement.dataset.skinId = next;
+        return next;
+      });
+    };
+    mq.addEventListener('change', handleChange);
+    return () => mq.removeEventListener('change', handleChange);
   }, []);
 
   const setSkinId = (id: KernelSkinId) => {
