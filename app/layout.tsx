@@ -13,6 +13,14 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Gratia',
   description: 'Gratia is a gentle space of memory and presence. A free space where creation feels safe again.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [{ url: '/mark/gratia-mark.svg', type: 'image/svg+xml' }],
+    other: [{ rel: 'mask-icon', url: '/mark/gratia-mark-outline.svg', color: '#F97316' }],
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

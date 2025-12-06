@@ -27,6 +27,7 @@ export default function VortexScene() {
   const continueTimerRef = useRef<number | null>(null);
 
   const isBreathing = mode === 'ritual';
+  const showAntonio = mode === 'idle' || mode === 'lighting';
   const step = useMemo(() => sequence[stepIndex % sequence.length], [stepIndex]);
 
   useEffect(() => {
@@ -137,19 +138,23 @@ export default function VortexScene() {
         </button>
       </div>
       <section className="respira-portal" data-vortex-mode={mode}>
-        {mode === 'idle' && (
-          <div className="respira-hero">
-            <div className="respira-hero-media">
-              <Image
-                src="/lightfrog-vortex.gif"
-                alt="Antonio ține portalul deschis."
-                priority
-                fill
-                sizes="(min-width: 1024px) 1120px, 100vw"
-              />
-            </div>
+        <div className="respira-hero">
+          <div className="respira-hero-media">
+            <Image
+              src="/lightfrog-vortex.gif"
+              alt="Antonio ține portalul deschis."
+              priority
+              fill
+              sizes="(min-width: 1024px) 1120px, 100vw"
+              style={{
+                opacity: showAntonio ? 1 : 0,
+                filter: showAntonio ? 'none' : 'blur(4px)',
+                transition: 'opacity 700ms ease, filter 700ms ease',
+              }}
+            />
           </div>
-        )}
+          {mode === 'ritual' && <BreathOverlay step={step} />}
+        </div>
 
         {!isBreathing && (
           <>
@@ -157,8 +162,6 @@ export default function VortexScene() {
             <LightRitualButton onLight={startRitual} />
           </>
         )}
-
-        {(mode === 'lighting' || isBreathing) && <BreathOverlay step={step} />}
       </section>
 
       <footer className="respira-footer" data-visible={showContinue ? 'true' : 'false'}>

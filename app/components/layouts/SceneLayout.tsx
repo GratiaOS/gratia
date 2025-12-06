@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 type SceneLayoutProps = {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   subtitle?: string;
   backHref?: string;
@@ -18,7 +18,7 @@ export default function SceneLayout({
   title,
   subtitle,
   backHref,
-  backLabel = 'Înapoi',
+  backLabel,
   children,
   footerCta,
   footerNote,
@@ -28,10 +28,12 @@ export default function SceneLayout({
       <header className="w-full max-w-5xl mb-8 lg:mb-10 flex flex-col gap-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex flex-col gap-1">
-            <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-500/80">
-              <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/10">●</span>
-              {eyebrow}
-            </span>
+            {eyebrow && (
+              <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-500/80">
+                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500/10">●</span>
+                {eyebrow}
+              </span>
+            )}
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-stone-50">{title}</h1>
             {subtitle && (
               <p className="mt-1 text-sm sm:text-base text-stone-300/80 max-w-2xl">
@@ -40,7 +42,7 @@ export default function SceneLayout({
             )}
           </div>
 
-          {backHref && (
+          {backHref && backLabel && (
             <Link
               href={backHref}
               className="hidden sm:inline-flex text-xs text-stone-300 hover:text-stone-50 transition-colors"
@@ -50,7 +52,7 @@ export default function SceneLayout({
           )}
         </div>
 
-        {backHref && (
+        {backHref && backLabel && (
           <Link
             href={backHref}
             className="sm:hidden inline-flex text-xs text-stone-300 hover:text-stone-50 transition-colors"

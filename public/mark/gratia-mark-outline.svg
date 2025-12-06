@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gratia Mark v0.2 — outline -->
+  <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Leaves -->
+    <g transform="translate(0,6)">
+      <ellipse cx="40" cy="78" rx="10" ry="5" />
+      <ellipse cx="60" cy="78" rx="10" ry="5" />
+    </g>
+
+    <!-- Petals (8) -->
+    <g>
+      <g transform="translate(50,42)">
+        <ellipse cx="0" cy="-18" rx="8" ry="16" />
+      </g>
+      <g transform="rotate(45 50 42)">
+        <ellipse cx="50" cy="24" rx="8" ry="16" />
+      </g>
+      <g transform="rotate(90 50 42)">
+        <ellipse cx="50" cy="24" rx="8" ry="16" />
+      </g>
+      <g transform="rotate(135 50 42)">
+        <ellipse cx="50" cy="24" rx="8" ry="16" />
+      </g>
+      <g transform="rotate(180 50 42)">
+        <ellipse cx="50" cy="24" rx="8" ry="16" />
+      </g>
+      <g transform="rotate(225 50 42)">
+        <ellipse cx="50" cy="24" rx="8" ry="16" />
+      </g>
+      <g transform="rotate(270 50 42)">
+        <ellipse cx="50" cy="24" rx="8" ry="16" />
+      </g>
+      <g transform="rotate(315 50 42)">
+        <ellipse cx="50" cy="24" rx="8" ry="16" />
+      </g>
+    </g>
+
+    <!-- Core -->
+    <circle cx="50" cy="42" r="12" />
+    <circle cx="50" cy="42" r="7" />
+  </g>
+</svg>
