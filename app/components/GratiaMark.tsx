@@ -18,3 +18,5 @@ export function GratiaMark({ variant = 'color', size = 32, className }: GratiaMa
     </span>
   );
 }
+
+export default GratiaMark;
