@@ -36,6 +36,12 @@
   --skin-bg: #f5fbf5;
   --skin-card: #e8f3e9;
   --skin-accent: #7cb27c;
+
+  /* ensure text stays readable (no accidental white on light) */
+  --color-bg: var(--skin-bg);
+  --color-text: #1f2620;
+  --color-border: color-mix(in oklab, #2f4736 18%, transparent);
+  --color-muted: color-mix(in oklab, #1f2620 65%, white 35%);
 }
 
 :root[data-skin-id='STELLAR'] {
