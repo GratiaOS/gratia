@@ -112,7 +112,7 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
     >
       <div className="landing-hero max-w-xl space-y-8 text-center">
         <div className="landing-hero-mark">
-          <GratiaMark variant="color" size={112} className="landing-hero-mark-inner" />
+          <GratiaMark variant="color" size={112} className="landing-hero-mark-inner" motion="suave" />
         </div>
 
         <div className="space-y-4">
