@@ -10,28 +10,28 @@
   <!-- Petals (Sun / Calendula) -->
   <g>
     <g transform="translate(50,42)">
-      <ellipse cx="0" cy="-18" rx="8" ry="16" fill="#F4A261" />
+      <ellipse cx="0" cy="-18" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(45 50 42)">
-      <ellipse cx="50" cy="24" rx="8" ry="16" fill="#FB8C00" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
     <g transform="rotate(90 50 42)">
-      <ellipse cx="50" cy="24" rx="8" ry="16" fill="#F4A261" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(135 50 42)">
-      <ellipse cx="50" cy="24" rx="8" ry="16" fill="#FB8C00" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
     <g transform="rotate(180 50 42)">
-      <ellipse cx="50" cy="24" rx="8" ry="16" fill="#F4A261" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(225 50 42)">
-      <ellipse cx="50" cy="24" rx="8" ry="16" fill="#FB8C00" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
     <g transform="rotate(270 50 42)">
-      <ellipse cx="50" cy="24" rx="8" ry="16" fill="#F4A261" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(315 50 42)">
-      <ellipse cx="50" cy="24" rx="8" ry="16" fill="#FB8C00" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
   </g>
 
