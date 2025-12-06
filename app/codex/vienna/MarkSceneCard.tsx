@@ -27,19 +27,12 @@ export function MarkSceneCard() {
         </div>
 
         <div className="space-y-3 text-sm leading-relaxed text-(--color-text)">
-          <p>
-            Vio la luz en el campo. Una caléndula naranja, abierta entre hierbas secas.
-            Desde entonces, ilumina el Jardín y el Establo.
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-(--color-muted)">
+            Signal / Echo / Meaning
           </p>
-          <p>
-            Su centro no es rígido. Es una gota viva: semilla, corazón, kernel.
-            Respira. Su halo pulsa apenas — suave, presente.
-          </p>
-          <p className="text-(--color-muted)">
-            El cambio también es así. Se nota cuando es leve.
-            Un guion corto en vez de uno largo. Una flor en vez de un escudo.
-            Suave Bloom marca el paso sin levantar la voz.
-          </p>
+          <p>Signal: Una flor naranja apareció en el campo. Suave. Abierta.</p>
+          <p>Echo: Pulsa apenas — semilla, corazón, kernel.</p>
+          <p className="text-(--color-muted)">Meaning: El cambio habla así: bajo, claro, vivo.</p>
         </div>
       </div>
 
