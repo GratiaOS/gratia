@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Badge } from '@gratiaos/ui';
 import GratiaMark from '@/components/GratiaMark';
 import SkinToggle from '@/components/SkinToggle';
 
@@ -36,9 +37,9 @@ export default function ScenesPage() {
                 </p>
                 <h2 className="text-lg font-semibold">Kernel Update — Mark + Next 15.5.7</h2>
               </div>
-              <span className="rounded-full bg-(--skin-accent)/15 px-3 py-1 text-[11px] font-semibold text-(--color-text)">
+              <Badge tone="accent" variant="soft" size="sm">
                 Roots
-              </span>
+              </Badge>
             </div>
             <div className="mt-4 space-y-3 text-sm leading-relaxed text-(--color-text)">
               <p>
@@ -50,9 +51,15 @@ export default function ScenesPage() {
               </p>
             </div>
             <footer className="mt-4 flex flex-wrap gap-2 text-[11px] text-(--color-muted)">
-              <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">Mark v0.2</span>
-              <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">CVE fix</span>
-              <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">Witnessed by Roots</span>
+              <Badge tone="accent" variant="subtle" size="sm">
+                Mark v0.2
+              </Badge>
+              <Badge tone="accent" variant="subtle" size="sm">
+                CVE fix
+              </Badge>
+              <Badge tone="accent" variant="subtle" size="sm">
+                Witnessed by Roots
+              </Badge>
             </footer>
           </article>
 
@@ -64,9 +71,9 @@ export default function ScenesPage() {
                 </p>
                 <h2 className="text-lg font-semibold">Cum a curs pentru mine</h2>
               </div>
-              <span className="rounded-full bg-(--skin-accent)/15 px-3 py-1 text-[11px] font-semibold text-(--color-text)">
+              <Badge tone="accent" variant="soft" size="sm">
                 Roots
-              </span>
+              </Badge>
             </div>
             <ul className="mt-4 space-y-2 text-sm text-(--color-text)">
               <li>
@@ -89,8 +96,12 @@ export default function ScenesPage() {
               </li>
             </ul>
             <footer className="mt-4 flex flex-wrap gap-2 text-[11px] text-(--color-muted)">
-              <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">Calm build</span>
-              <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">Whisper logged</span>
+              <Badge tone="accent" variant="subtle" size="sm">
+                Calm build
+              </Badge>
+              <Badge tone="accent" variant="subtle" size="sm">
+                Whisper logged
+              </Badge>
             </footer>
           </article>
         </section>
