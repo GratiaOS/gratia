@@ -12,7 +12,7 @@ export function MarkSceneCard() {
           Seed · Suave Bloom
         </p>
         <h2 className="text-lg md:text-xl font-semibold text-(--color-text)">
-          Floarea care a ales Grădina și Grajdul.
+          La flor que eligió el Jardín y el Establo.
         </h2>
       </header>
 
@@ -28,17 +28,17 @@ export function MarkSceneCard() {
 
         <div className="space-y-3 text-sm leading-relaxed text-(--color-text)">
           <p>
-            Suave Bloom nu a fost desenat la birou. A fost observat în câmp: o calendula portocalie,
-            deschisă, crescută printre ierburi uscate. De atunci ține lumina pentru Grădină și
-            Grajd, fără să ceară nimic.
+            Vio la luz en el campo. Una caléndula naranja, abierta entre hierbas secas.
+            Desde entonces, ilumina el Jardín y el Establo.
           </p>
           <p>
-            Centrul nu e un disc rigid, ci un droplet luminos: sămânță, inimă, kernel. Floarea
-            respiră – halo-ul ei pulsează abia vizibil, ca să nu domine, ci să fie martor blând.
+            Su centro no es rígido. Es una gota viva: semilla, corazón, kernel.
+            Respira. Su halo pulsa apenas — suave, presente.
           </p>
           <p className="text-(--color-muted)">
-            Whisper: schimbarea se vede și când e marcată blând. Un minus în loc de em dash; o
-            floare în loc de stemă.
+            El cambio también es así. Se nota cuando es leve.
+            Un guion corto en vez de uno largo. Una flor en vez de un escudo.
+            Suave Bloom marca el paso sin levantar la voz.
           </p>
         </div>
       </div>
