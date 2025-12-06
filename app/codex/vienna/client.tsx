@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Button } from '@gratiaos/ui';
 import { createGlyphFromSignal, type GlyphTransmission } from '../../../lib/codex/transmission';
+import MarkSceneCard from './MarkSceneCard';
 
 type ArchiveEntry = {
   id: string;
@@ -56,6 +57,7 @@ export default function CodexViennaClient() {
         <Hero />
         <InputGate signal={signal} onChange={setSignal} onGenerate={handleGenerate} canGenerate={canGenerate} />
         <OutputGlyph glyph={currentGlyph} archive={archive} />
+        <MarkSceneCard />
         <SupportBlock />
         <Footer />
       </section>
