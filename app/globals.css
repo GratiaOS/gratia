@@ -244,6 +244,42 @@ body {
     transition: transform 2400ms ease-in-out, filter 2400ms ease-in-out;
   }
 
+  /* Mark motion — Suave Bloom halo */
+  .mark-motion-suave {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mark-motion-suave::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 999px;
+    background: radial-gradient(circle, color-mix(in oklab, #fff8ee 40%, transparent), transparent);
+    opacity: 0.05;
+    filter: blur(12px);
+    animation: mark-suave-halo 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .mark-motion-suave img {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes mark-suave-halo {
+    0%,
+    100% {
+      opacity: 0.02;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.05;
+      transform: scale(1.04);
+    }
+  }
+
   /* Header logo: color on light, outline on dark */
   .site-logo-color {
     position: absolute;
