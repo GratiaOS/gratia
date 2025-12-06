@@ -62,7 +62,7 @@ export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
       <p className="text-xs text-stone-400 text-center max-w-sm leading-snug">
         {phase === 'idle' && 'Doar apasă. Restul vine singur.'}
         {phase === 'lighting' && 'Lumina se aprinde. Doar respiră.'}
-        {phase === 'invite' && 'Pata blanca. Tú puedes imaginarte el próximo pas. Un singur pas e suficient pentru azi.'}
+        {phase === 'invite' && 'Lienzo. Tú puedes imaginarte el próximo paso. Un singur pas e suficient pentru azi.'}
       </p>
     </div>
   );

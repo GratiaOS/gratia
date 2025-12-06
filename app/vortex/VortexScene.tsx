@@ -174,7 +174,7 @@ export default function VortexScene() {
             <a href="/codex/vienna">Când ești gata, continuă cu Codex :: Vienna →</a>
           </Button>
           <p className="respira-continue-whisper">
-            Poți rămâne aici cât vrei. Pata blanca: tú puedes imaginarte el próximo paso.
+            Poți rămâne aici cât vrei. Lienzo: tú puedes imaginarte el próximo paso.
           </p>
         </div>
       </footer>
