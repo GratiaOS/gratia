@@ -53,15 +53,15 @@ export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
               : 'bg-gradient-to-b from-slate-800/80 via-slate-900/80 to-slate-950 text-amber-100/90 hover:from-slate-700 hover:to-slate-900'
           }`}
         >
-          {phase === 'idle' && 'Aprinde lumina'}
-          {phase === 'lighting' && 'Lumina s-a aprins'}
-          {phase === 'invite' && 'Respiră cu Antonio'}
+          {phase === 'idle' && 'Enciende la luz'}
+          {phase === 'lighting' && 'La luz se ha encendido'}
+          {phase === 'invite' && 'Respira con Antonio'}
         </button>
       </div>
 
       <p className="text-xs text-stone-400 text-center max-w-sm leading-snug">
-        {phase === 'idle' && 'Doar apasă. Restul vine singur.'}
-        {phase === 'lighting' && 'Lumina se aprinde. Doar respiră.'}
+        {phase === 'idle' && 'Solo pulsa. Lo demás llega solo.'}
+        {phase === 'lighting' && 'La luz se enciende. Solo respira.'}
         {phase === 'invite' && 'Lienzo. Tú puedes imaginarte el próximo paso. Un singur pas e suficient pentru azi.'}
       </p>
     </div>
