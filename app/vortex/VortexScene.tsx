@@ -1,9 +1,11 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@gratiaos/ui';
 import LightRitualButton from './LightRitualButton';
+import LanguageSwitcher from '../[locale]/vortex/LanguageSwitcher';
 
 type BreathPhase = 'inhale' | 'hold' | 'exhale';
 type VortexMode = 'idle' | 'lighting' | 'ritual' | 'closing';
@@ -15,7 +17,13 @@ const sequence: { phase: BreathPhase; label: string; durationMs: number }[] = [
   { phase: 'exhale', label: 'Expiră', durationMs: 6000 },
 ];
 
-export default function VortexScene() {
+type VortexSceneProps = {
+  stayHint?: string;
+  title?: string;
+  subtitle?: string;
+};
+
+export default function VortexScene({ stayHint, title, subtitle }: VortexSceneProps) {
   const [mode, setMode] = useState<VortexMode>('idle');
   const [showContinue, setShowContinue] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
@@ -33,11 +41,7 @@ export default function VortexScene() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const stored = window.localStorage.getItem('gratia.vortex.theme');
-    if (
-      stored === 'forest-winamp' ||
-      stored === 'mushroom-orchard' ||
-      stored === 'aurora-orb'
-    ) {
+    if (stored === 'forest-winamp' || stored === 'mushroom-orchard' || stored === 'aurora-orb') {
       setTheme(stored);
     }
   }, []);
@@ -97,9 +101,12 @@ export default function VortexScene() {
     }, 1200);
 
     // apare call-to-action după ce lumina s-a stabilizat
-    continueTimerRef.current = window.setTimeout(() => {
-      setShowContinue(true);
-    }, 120 + 1200 + 700);
+    continueTimerRef.current = window.setTimeout(
+      () => {
+        setShowContinue(true);
+      },
+      120 + 1200 + 700
+    );
   };
 
   const handlePanic = () => {
@@ -127,40 +134,44 @@ export default function VortexScene() {
     >
       {prePulse && <div className="respira-prepulse" aria-hidden="true" />}
 
-      <div className="respira-theme-switch">
-        <button
-          type="button"
-          className="respira-theme-dot"
-          onClick={cycleTheme}
-          aria-label="Schimbă tema Respira"
-        >
-          ●
-        </button>
+      <div className="respira-topbar">
+        <LanguageSwitcher />
+        <div className="respira-theme-switch">
+          <button
+            type="button"
+            className="respira-theme-dot"
+            onClick={cycleTheme}
+            aria-label="Schimbă tema Respira"
+          >
+            ●
+          </button>
+        </div>
       </div>
+
       <section className="respira-portal" data-vortex-mode={mode}>
+        <header className="respira-headline text-center space-y-2">
+          {title && <h1 className="respira-title">{title}</h1>}
+          {subtitle && <p className="respira-subtitle opacity-80">{subtitle}</p>}
+        </header>
+
         <div className="respira-hero">
           <div className="respira-hero-media">
             <Image
               src="/lightfrog-vortex.gif"
-              alt="Antonio ține portalul deschis."
-              priority
-              fill
-              sizes="(min-width: 1024px) 1120px, 100vw"
-              style={{
-                opacity: showAntonio ? 1 : 0,
-                filter: showAntonio ? 'none' : 'blur(4px)',
-                transition: 'opacity 700ms ease, filter 700ms ease',
-              }}
+              alt="Lightfrog pulsando en el Vortex"
+              width={400}
+              height={400}
+              unoptimized
             />
           </div>
           {mode === 'ritual' && <BreathOverlay step={step} />}
         </div>
 
         {!isBreathing && (
-          <>
-            <p className="respira-mantra">Doar respiră. El portal te sostiene.</p>
+          <div className="respira-call column-center gap-3">
+            <p className="respira-mantra">{subtitle ?? 'Doar respiră. El portal te sostiene.'}</p>
             <LightRitualButton onLight={startRitual} />
-          </>
+          </div>
         )}
       </section>
 
@@ -171,11 +182,9 @@ export default function VortexScene() {
             className="respira-continue respira-continue-button whisper-ring mood-glow"
             variant="ghost"
           >
-            <a href="/codex/vienna">Când ești gata, continuă cu Codex :: Vienna →</a>
+            <Link href="/codex/vienna">Când ești gata, continuă cu Codex :: Vienna →</Link>
           </Button>
-          <p className="respira-continue-whisper">
-            يمكنك البقاء هنا قدر ما تشاء. Lienzo: tú puedes imaginarte el próximo paso.
-          </p>
+          {stayHint && <p className="respira-continue-whisper text-center">{stayHint}</p>}
         </div>
       </footer>
     </div>

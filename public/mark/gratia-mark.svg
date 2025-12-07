@@ -1,71 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="512" height="512" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Gratia Mark v0.3 — Suave Bloom -->
-  <defs>
-    <radialGradient id="halo" cx="50%" cy="42%" r="60%">
-      <stop offset="0%" stop-color="#fff8ee" stop-opacity="0.18" />
-      <stop offset="100%" stop-color="#fff8ee" stop-opacity="0" />
-    </radialGradient>
-    <linearGradient id="petalWarm" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="color-mix(in oklab, #f4a261 68%, #f59e0b)" />
-      <stop offset="100%" stop-color="color-mix(in oklab, #f4a261 48%, #e67b12)" />
-    </linearGradient>
-    <linearGradient id="petalWarmSoft" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="color-mix(in oklab, #f4a261 76%, #f59e0b)" />
-      <stop offset="100%" stop-color="color-mix(in oklab, #f4a261 56%, #de7d1b)" />
-    </linearGradient>
-    <linearGradient id="coreGlow" x1="30%" y1="20%" x2="70%" y2="80%">
-      <stop offset="0%" stop-color="#f9e5b8" />
-      <stop offset="100%" stop-color="#f1a13a" />
-    </linearGradient>
-  </defs>
-
-  <!-- Halo (respirație subtilă) -->
-  <circle cx="50" cy="42" r="34" fill="url(#halo)" />
-
+  <!-- Gratia Mark v0.2 — open calendula -->
   <!-- Leaves (Grajd / Garden) -->
-  <g transform="translate(0,6)" fill="#4c8f4a">
-    <ellipse cx="40" cy="78" rx="10" ry="5" />
-    <ellipse cx="60" cy="78" rx="10" ry="5" />
+  <g transform="translate(0,6)">
+    <ellipse cx="40" cy="78" rx="10" ry="5" fill="#4C8F4A" />
+    <ellipse cx="60" cy="78" rx="10" ry="5" fill="#4C8F4A" />
   </g>
 
-  <!-- Petals (rotunjite, flux viu) -->
+  <!-- Petals (Sun / Calendula) -->
   <g>
     <g transform="translate(50,42)">
-      <ellipse cx="0" cy="-17" rx="9.5" ry="15.5" fill="url(#petalWarm)" />
+      <ellipse cx="0" cy="-18" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(45 50 42)">
-      <ellipse cx="50" cy="24" rx="9.5" ry="15.5" fill="url(#petalWarmSoft)" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
     <g transform="rotate(90 50 42)">
-      <ellipse cx="50" cy="24" rx="9.5" ry="15.5" fill="url(#petalWarm)" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(135 50 42)">
-      <ellipse cx="50" cy="24" rx="9.5" ry="15.5" fill="url(#petalWarmSoft)" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
     <g transform="rotate(180 50 42)">
-      <ellipse cx="50" cy="24" rx="9.5" ry="15.5" fill="url(#petalWarm)" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(225 50 42)">
-      <ellipse cx="50" cy="24" rx="9.5" ry="15.5" fill="url(#petalWarmSoft)" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
     <g transform="rotate(270 50 42)">
-      <ellipse cx="50" cy="24" rx="9.5" ry="15.5" fill="url(#petalWarm)" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 72%, #f59e0b)" />
     </g>
     <g transform="rotate(315 50 42)">
-      <ellipse cx="50" cy="24" rx="9.5" ry="15.5" fill="url(#petalWarmSoft)" />
+      <ellipse cx="50" cy="24" rx="8" ry="16" fill="color-mix(in oklab, #f4a261 62%, #f59e0b)" />
     </g>
   </g>
 
-  <!-- Core (droplet / seed de lumină) -->
-  <g transform="translate(50 42)">
-    <circle r="13" fill="url(#coreGlow)" />
-    <path
-      d="M0 -9 C5 -9 7 -3 7 0 C7 7 2 11 0 15 C-2 11 -7 7 -7 0 C-7 -3 -5 -9 0 -9 Z"
-      fill="#fff8ee"
-      fill-opacity="0.9"
-    />
-  </g>
+  <!-- Core (Kernel / Honey) -->
+  <circle cx="50" cy="42" r="12" fill="#E3A742" />
+  <circle cx="50" cy="42" r="7" fill="#FFF8EE" fill-opacity="0.9" />
 
   <!-- Soft shadow -->
   <ellipse cx="50" cy="86" rx="18" ry="4" fill="#000000" fill-opacity="0.08" />

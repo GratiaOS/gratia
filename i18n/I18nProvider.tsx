@@ -1,40 +1,50 @@
 'use client';
 
 import React, { createContext, useContext, useMemo } from 'react';
-import { defaultLocale, locales } from './config.js';
-import { resources } from './resources.js';
+import { defaultLocale } from './config.js';
+import { resources, type Locale } from './resources';
 
-type Locale = (typeof locales)[number];
-type Namespace = keyof (typeof resources)[Locale];
+type Resources = typeof resources;
+type DefaultLocale = keyof Resources;
+type Namespaces = keyof Resources[DefaultLocale];
+
+// helper: produce "a.b.c" unions for nested objects
+type LeafPaths<T, Prefix extends string = ''> = {
+  [K in keyof T & string]: T[K] extends Record<string, any>
+    ? LeafPaths<T[K], `${Prefix}${Prefix extends '' ? '' : '.'}${K}`>
+    : `${Prefix}${Prefix extends '' ? '' : '.'}${K}`;
+}[keyof T & string];
+
+export type TranslationKey<N extends Namespaces> = LeafPaths<Resources[DefaultLocale][N]>;
 
 type I18nContextValue = {
   locale: Locale;
-  t: (namespace: Namespace, key: string) => string;
+  t: <N extends Namespaces, K extends TranslationKey<N>>(namespace: N, key: K) => string;
 };
 
 const I18nContext = createContext<I18nContextValue>({
-  locale: defaultLocale,
+  locale: defaultLocale as Locale,
   t: (_ns, key) => key,
 });
 
-function getNested(obj: any, path: string) {
+function getNested(obj: any, path: string): unknown {
   return path.split('.').reduce((acc, part) => {
     if (acc && typeof acc === 'object' && part in acc) return acc[part];
     return undefined;
   }, obj);
 }
 
-function translate(locale: Locale, namespace: Namespace, key: string) {
+function translate<N extends Namespaces, K extends TranslationKey<N>>(locale: Locale, namespace: N, key: K): string {
   const nsPack = resources[locale]?.[namespace];
-  const basePack = resources[defaultLocale]?.[namespace];
+  const basePack = resources[defaultLocale as Locale]?.[namespace];
 
-  const fromLocale = nsPack && getNested(nsPack, key);
-  if (fromLocale !== undefined) return String(fromLocale);
+  const fromLocale = nsPack && getNested(nsPack, key as string);
+  if (typeof fromLocale === 'string') return fromLocale as string;
 
-  const fromDefault = basePack && getNested(basePack, key);
-  if (fromDefault !== undefined) return String(fromDefault);
+  const fromDefault = basePack && getNested(basePack, key as string);
+  if (typeof fromDefault === 'string') return fromDefault as string;
 
-  return key;
+  return key as string;
 }
 
 type ProviderProps = {
@@ -43,12 +53,13 @@ type ProviderProps = {
 };
 
 export function I18nProvider({ locale, children }: ProviderProps) {
-  const safeLocale = locales.includes(locale as Locale) ? (locale as Locale) : defaultLocale;
+  const resourceLocales = Object.keys(resources) as Locale[];
+  const safeLocale: Locale = resourceLocales.includes(locale as Locale) ? (locale as Locale) : (defaultLocale as Locale);
 
-  const value = useMemo(
+  const value = useMemo<I18nContextValue>(
     () => ({
       locale: safeLocale,
-      t: (namespace: Namespace, key: string) => translate(safeLocale, namespace, key),
+      t: (namespace, key) => translate(safeLocale, namespace, key as any),
     }),
     [safeLocale]
   );
@@ -56,10 +67,10 @@ export function I18nProvider({ locale, children }: ProviderProps) {
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
-export function useTranslation(namespace: Namespace) {
+export function useTranslation<N extends Namespaces>(namespace: N) {
   const { locale, t } = useContext(I18nContext);
   return {
     locale,
-    t: (key: string) => t(namespace, key),
+    t: <K extends TranslationKey<N>>(key: K) => t(namespace, key),
   };
 }

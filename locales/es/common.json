@@ -1,0 +1,10 @@
+{
+  "buttons": {
+    "continue": "Continuar",
+    "back": "Volver",
+    "enterCodex": "Entrar en el Codex"
+  },
+  "links": {
+    "learnMore": "Saber más"
+  }
+}

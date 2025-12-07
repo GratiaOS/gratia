@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import VortexScene from './VortexScene';
 import './vortex.css';
-import SceneLayout from '@/components/layouts/SceneLayout';
+import { redirect } from 'next/navigation';
+import { defaultLocale } from '../../i18n/config';
+import VortexPageClient from './VortexPageClient';
 
 export const metadata: Metadata = {
   title: 'Vortex · Gratia',
@@ -9,15 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function VortexPage() {
-  return (
-    <SceneLayout
-      eyebrow="Ritual · Vortex"
-      title="Enciende la luz."
-      subtitle="Eine kurze Atempause, bevor du den Codex :: Vienna betrittst."
-      backHref="/"
-      backLabel="Înapoi în Grădină"
-    >
-      <VortexScene />
-    </SceneLayout>
-  );
+  redirect(`/${defaultLocale}/vortex`);
 }
