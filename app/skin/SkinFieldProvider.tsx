@@ -53,11 +53,14 @@ export function SkinFieldProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setSkinId = (id: KernelSkinId) => {
-    setSkinIdState(id);
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(STORAGE_KEY, id);
-      document.documentElement.dataset.skinId = id;
-    }
+    setSkinIdState((prev) => {
+      if (prev === id) return prev;
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(STORAGE_KEY, id);
+        document.documentElement.dataset.skinId = id;
+      }
+      return id;
+    });
   };
 
   useEffect(() => {
