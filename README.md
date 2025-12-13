@@ -4,20 +4,40 @@
   <img src="docs/assets/mark/gratia-mark.png" alt="Gratia Mark" width="90px" />
 </p>
 
-Gratia is a living garden – a quiet OS for presence, creation, and shared experiments.
-It holds the seeds and protocols for things that grow around it: M3, Firegate, Firecircle, Codex :: Vienna, and beyond.
+Gratia is a living garden — a quiet OS for presence, creation, and shared experiments.
+It is not a product, a platform, or a belief system.
+It is a field held through structure, restraint, and care.
 
-This repo contains the **web app** at [https://gratia.space](https://gratia.space), built as a gentle, token‑driven Next.js playground for Gratia.
+Gratia holds the seeds and protocols for things that grow around it: M3, Firegate, Firecircle, Codex :: Vienna, and beyond.
+
+---
+
+## What Gratia Is Not
+
+To avoid confusion, drift, or projection, Gratia is explicit about its limits.
+
+Gratia is **not**:
+
+- a self‑help system
+- a spiritual authority
+- a productivity tool
+- a social network
+- a therapy substitute
+- a content machine
+
+It does not promise outcomes.
+It does not optimize engagement.
+It does not try to keep you.
 
 ---
 
 ## Identity
 
-Gratia is in the process of becoming a non‑profit association.
+Gratia is held within a non‑profit association (in formation), to protect its independence and prevent capture.
 
 **Public identity:**
 
-- **Name:** Gratia (Asociación en formación)
+- **Name:** Asociación GRATIA – Ciudad de los Gatos (Asociación en formación)
 - **Place:** Casbas de Huesca · España
 - **Web:** https://gratia.space
 - **Contact:** contact@gratia.space
@@ -87,6 +107,24 @@ This is a shared garden. Fork, branch, and propose — but remember:
 - changes should respect calm, clarity, and lower noise, not higher
 
 If you’re unsure, open an issue or draft PR and describe the feeling you’re aiming for.
+
+---
+
+## Internal Guardrails
+
+This project is guided by a small set of non‑negotiables.
+
+We do **not**:
+
+- promise transformation or healing
+- capture attention or create dependency
+- centralize voice or authority
+- export private (Sealed) material
+- escalate emotion to persuade
+- monetize the ritual itself
+
+These limits matter more than new features.
+If something conflicts with them, we don’t do it.
 
 ---
 
