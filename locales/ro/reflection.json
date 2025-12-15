@@ -1,0 +1,47 @@
+{
+  "title": "Vezi reflexia",
+  "subtitle": "Lipește un text sau un link. Gratia îl va ține blând și ți-l va întoarce ca o oglindă.",
+  "placeholder": "Lipește aici ce ai scris pe Medium, YouTube sau oriunde altundeva...",
+  "hint_idle": "Poți începe și doar cu câteva rânduri.",
+  "hint_ready": "Când ești pregătit, putem vedea reflexia.",
+  "hint_listening": "Gratia ascultă… Un moment.",
+  "hint_results": "Poți aduce oricând alte cuvinte aici. Gratia se va uita din nou.",
+  "button_reveal": "Vezi reflexia",
+  "tab_reflection": "Ce vede Gratia aici",
+  "tab_trueStep": "Adevărul care vine încet",
+  "section_reflection_title": "Ce vede Gratia aici",
+  "section_patterns_title": "Semințele care lucesc aici",
+  "tone_label": "Gratia simte acest text ca fiind",
+  "tone_tag": "",
+  "trueStep_title": "Un pas blând pe care îl poți simți",
+  "trueStep_intro": "În loc să cauți răspunsul perfect, poți începe cu un singur rând:",
+  "trueStep_phrase": "„Adevărul simplu aici este…”",
+  "trueStep_hint": "Scrie-l o singură dată. Nu-l edita.",
+  "trueStep_button_openPad": "Deschide spațiul de scris",
+  "trueStep_saved_label": "Ultimul tău adevăr mic:",
+  "trueStep_footer": "Nu ești aici să performezi. Ești aici să îți amintești.",
+  "trueStep_footer_ember": "Lasă ca această frază să fie o mică jară pe care o iei cu tine.",
+  "error_text": "Încă nu vedem o reflexie clară. Poți adăuga câteva rânduri în plus sau să încerci cu alt text.",
+  "error_back": "Înapoi la text",
+  "pad_title": "Adevărul simplu aici este…",
+  "pad_placeholder": "Poți scrie cu blândețe aici. Lasă adevărul să vină fără efort.",
+  "pad_cancel": "Renunță",
+  "pad_save": "Salvează pentru mai târziu",
+  "patterns": {
+    "self-trust": {
+      "label": "încredere în tine",
+      "description": "Când deja știi și ai nevoie doar de un semn blând să urmezi ce simți.",
+      "tone": "curaj blând"
+    },
+    "doorway-moment": {
+      "label": "moment-prag",
+      "description": "Un prag unde atât a rămâne, cât și a păși mai departe sunt posibile.",
+      "tone": "prag"
+    },
+    "soft-courage": {
+      "label": "curaj blând",
+      "description": "Te miști cu îndrăzneală domoală când miza se simte fragilă.",
+      "tone": "bravură caldă"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Ver tu reflejo",
+  "subtitle": "Pega un texto o un enlace. Gratia lo sostendrá con suavidad y te lo devolverá como un espejo.",
+  "placeholder": "Pega aquí lo que escribiste en Medium, YouTube u otro lugar...",
+  "hint_idle": "Puedes empezar solo con unas pocas líneas.",
+  "hint_ready": "Cuando estés listo, podemos ver el reflejo.",
+  "hint_listening": "Gratia escucha… Un momento.",
+  "hint_results": "Puedes traer nuevas palabras aquí cuando quieras. Gratia las mirará de nuevo.",
+  "button_reveal": "Ver reflejo",
+  "tab_reflection": "Lo que Gratia ve aquí",
+  "tab_trueStep": "La verdad que llega suave",
+  "section_reflection_title": "Lo que Gratia ve aquí",
+  "section_patterns_title": "Semillas que brillan suave aquí",
+  "tone_label": "Gratia siente este texto como",
+  "tone_tag": "",
+  "trueStep_title": "Un paso suave que puedes sentir",
+  "trueStep_intro": "En lugar de buscar la respuesta perfecta, puedes empezar con una sola línea:",
+  "trueStep_phrase": "«La verdad sencilla aquí es…»",
+  "trueStep_hint": "Escríbela una sola vez. No la edites.",
+  "trueStep_button_openPad": "Abrir espacio de escritura",
+  "trueStep_saved_label": "Tu última verdad pequeña:",
+  "trueStep_footer": "No estás aquí para rendir. Estás aquí para recordar.",
+  "trueStep_footer_ember": "Deja que esta frase sea una pequeña brasa que llevas contigo.",
+  "error_text": "Aún no vemos un reflejo claro. Puedes añadir unas líneas más o probar con otro texto.",
+  "error_back": "Volver al texto",
+  "pad_title": "La verdad sencilla aquí es…",
+  "pad_placeholder": "Puedes escribir con suavidad aquí. Deja que la verdad llegue sin esfuerzo.",
+  "pad_cancel": "Cancelar",
+  "pad_save": "Guardar para más tarde",
+  "patterns": {
+    "self-trust": {
+      "label": "confianza en ti",
+      "description": "Cuando ya sabes, y solo necesitas un asentir suave para seguir tu propio sentir.",
+      "tone": "coraje suave"
+    },
+    "doorway-moment": {
+      "label": "momento-umbral",
+      "description": "Un umbral donde quedarse o avanzar se sienten posibles.",
+      "tone": "umbral"
+    },
+    "soft-courage": {
+      "label": "coraje suave",
+      "description": "Moverte con valentía tranquila cuando todo se siente tierno.",
+      "tone": "bravura cálida"
+    }
+  }
+}

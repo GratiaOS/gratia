@@ -1,0 +1,47 @@
+{
+  "title": "See your reflection",
+  "subtitle": "Paste some text or a link. Gratia will hold it softly and return it to you with care.",
+  "placeholder": "Paste here what you wrote on Medium, YouTube, or anywhere else...",
+  "hint_idle": "You can start with just a few lines.",
+  "hint_ready": "When you feel ready, we can see the reflection.",
+  "hint_listening": "Gratia is listening… Just a moment.",
+  "hint_results": "You can bring new words here anytime. Gratia will look again.",
+  "button_reveal": "Reveal reflection",
+  "tab_reflection": "What Gratia notices here",
+  "tab_trueStep": "The quiet truth",
+  "section_reflection_title": "What Gratia notices here",
+  "section_patterns_title": "Seeds quietly glowing here",
+  "tone_label": "Gratia feels this text as",
+  "tone_tag": "",
+  "trueStep_title": "A quiet step you can feel",
+  "trueStep_intro": "Instead of looking for the perfect answer, you can begin with a single line:",
+  "trueStep_phrase": "“The simple truth here is…”",
+  "trueStep_hint": "Write it only once. Don’t edit it.",
+  "trueStep_button_openPad": "Open writing space",
+  "trueStep_saved_label": "Your last small truth:",
+  "trueStep_footer": "You are not here to perform. You are here to remember.",
+  "trueStep_footer_ember": "Let this line be a small ember you keep with you.",
+  "error_text": "We don’t see a clear reflection yet. You can add a few more lines or try another text.",
+  "error_back": "Back to text",
+  "pad_title": "The simple truth here is…",
+  "pad_placeholder": "You can write softly here. Let truth come without force.",
+  "pad_cancel": "Cancel",
+  "pad_save": "Save for later",
+  "patterns": {
+    "self-trust": {
+      "label": "self-trust",
+      "description": "When you already know, and you need a gentle nod to follow your own sense.",
+      "tone": "soft courage"
+    },
+    "doorway-moment": {
+      "label": "doorway moment",
+      "description": "A threshold where staying or stepping both feel possible.",
+      "tone": "threshold"
+    },
+    "soft-courage": {
+      "label": "soft courage",
+      "description": "Moving with gentle bravery when the stakes feel tender.",
+      "tone": "warm bravery"
+    }
+  }
+}
