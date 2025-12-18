@@ -67,6 +67,24 @@
   font-display: swap;
 }
 
+/* Typography system (fallback until custom faces are added) */
+:root {
+  --font-ui: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, 'Apple Color Emoji',
+    'Segoe UI Emoji';
+  --font-mono: 'NG Funkhaus', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    monospace;
+  --font-display: var(--font-ui);
+  /* Backfills for older references */
+  --font-gratia: var(--font-display);
+  --font-selari: var(--font-ui);
+  --font-bilute: var(--font-mono);
+}
+
+[data-typo='mono'] {
+  --font-ui: var(--font-mono);
+  --font-display: var(--font-mono);
+}
+
 /* Tailwind v4 tokens + CSS variables
    - @theme: design tokens (palette, fonts)
    - :root: runtime mapping for light/dark
@@ -122,7 +140,7 @@ body {
   min-height: 100vh;
   background: radial-gradient(circle at top, color-mix(in srgb, var(--skin-bg) 95%, #ffffff 5%), var(--skin-bg));
   color: var(--color-text);
-  font-family: var(--font-selari);
+  font-family: var(--font-display);
   -webkit-font-smoothing: antialiased;
   transition:
     background-color 180ms ease-out,
@@ -160,6 +178,28 @@ body {
 
 @utility font-bilute {
   font-family: var(--font-bilute);
+}
+
+@utility font-ui {
+  font-family: var(--font-ui);
+}
+
+@utility font-mono {
+  font-family: var(--font-mono);
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+/* Pattern Mirror: readable long-form blocks (Medium mode / reflection exports) */
+.pm-longform {
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+}
+
+[data-typo='mono'] .pm-longform {
+  letter-spacing: 0.03em;
 }
 
 @utility text-title-gratia {

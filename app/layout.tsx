@@ -34,11 +34,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       document.documentElement.dataset.skinId = 'MOON';
     }
   `;
+  const setInitialTypo = `
+    try {
+      const stored = window.localStorage.getItem('gratia.typo');
+      const next = stored === 'mono' ? 'mono' : 'ui';
+      document.documentElement.dataset.typo = next;
+    } catch (e) {
+      document.documentElement.dataset.typo = 'ui';
+    }
+  `;
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-typo="ui" suppressHydrationWarning>
       <body className={inter.className}>
         <script dangerouslySetInnerHTML={{ __html: setInitialSkin }} />
+        <script dangerouslySetInnerHTML={{ __html: setInitialTypo }} />
         <SkinFieldProvider>
           <SpiritModeProvider>{children}</SpiritModeProvider>
         </SkinFieldProvider>

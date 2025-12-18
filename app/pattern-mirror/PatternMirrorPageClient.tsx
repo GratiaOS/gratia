@@ -45,6 +45,11 @@ function PatternMirrorContent({
     null
   );
   const [mediumCopied, setMediumCopied] = React.useState(false);
+  const [typoMode, setTypoMode] = React.useState<'ui' | 'mono'>(() => {
+    if (typeof window === 'undefined') return 'ui';
+    const stored = window.localStorage.getItem('gratia.typo');
+    return stored === 'mono' ? 'mono' : 'ui';
+  });
 
   const resultsRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -87,6 +92,14 @@ function PatternMirrorContent({
     setMediumCommentLocale(null);
     setMediumCopied(false);
   }, [mirrorLocale]);
+
+  React.useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.documentElement.dataset.typo = typoMode;
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('gratia.typo', typoMode);
+    }
+  }, [typoMode]);
 
   React.useEffect(() => {
     if (!savedTruth && seedsForLocale.length > 0) {
@@ -329,6 +342,13 @@ function PatternMirrorContent({
             >
               Moon
             </Button>
+            <Button
+              variant={typoMode === 'mono' ? 'solid' : 'outline'}
+              tone="warning"
+              onClick={() => setTypoMode((prev) => (prev === 'mono' ? 'ui' : 'mono'))}
+            >
+              {typoMode === 'mono' ? 'Vienna' : 'Default'}
+            </Button>
           </div>
         </div>
 
@@ -495,7 +515,7 @@ function PatternMirrorContent({
                   )}
 
                   {mediumComment && mediumCommentLocale === mirrorLocale && (
-                    <pre className="border-border/60 mt-2 rounded-lg border bg-[color:var(--color-surface)]/80 px-3 py-2 text-xs whitespace-pre-wrap text-[color:var(--color-muted)]">
+                    <pre className="pm-longform font-ui border-border/60 text-on-surface mt-2 rounded-lg border bg-[color:var(--color-surface)]/80 px-3 py-2 text-sm whitespace-pre-wrap opacity-90">
                       {mediumComment}
                     </pre>
                   )}
