@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Badge, Button, Card, Field } from '@gratiaos/ui';
+import { Badge, Button, Card, Field, Toolbar, ToolbarGroup } from '@gratiaos/ui';
 
 import type { PatternMirrorLocale, PatternMirrorResponse } from '../api/pattern-mirror/types';
 import { I18nProvider, useTranslation } from '../../i18n/I18nProvider';
@@ -305,8 +305,11 @@ function PatternMirrorContent({
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-end gap-2 text-xs text-[color:var(--color-muted)]">
-          <div className="flex gap-2">
+        <Toolbar
+          aria-label="Pattern Mirror controls"
+          className="flex flex-wrap items-center justify-end gap-2 text-xs text-[color:var(--color-muted)]"
+        >
+          <ToolbarGroup className="flex gap-2">
             {reflectionLocales.map((code) => (
               <Button
                 key={code}
@@ -318,8 +321,8 @@ function PatternMirrorContent({
                 {code.toUpperCase()}
               </Button>
             ))}
-          </div>
-          <div className="flex gap-2">
+          </ToolbarGroup>
+          <ToolbarGroup className="flex gap-2">
             <Button
               variant={skinId === 'SUN' ? 'solid' : 'outline'}
               tone="warning"
@@ -349,8 +352,8 @@ function PatternMirrorContent({
             >
               {typoMode === 'mono' ? 'Vienna' : 'Default'}
             </Button>
-          </div>
-        </div>
+          </ToolbarGroup>
+        </Toolbar>
 
         <Card variant="elev" padding="lg" className="space-y-3">
           <Field label={t('title')} hint={t(hintKey)}>

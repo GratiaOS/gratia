@@ -19,11 +19,11 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       '@gratiaos/tokens':
-        specifier: ^1.0.5
-        version: 1.0.5(tailwindcss@4.1.13)
+        specifier: ^1.0.6
+        version: 1.0.6(tailwindcss@4.1.13)
       '@gratiaos/ui':
-        specifier: ^1.1.0
-        version: 1.1.0(react@19.2.1)
+        specifier: ^1.2.0
+        version: 1.2.0(react@19.2.1)
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
@@ -112,13 +112,13 @@ packages:
   '@gratiaos/signal@1.0.3':
     resolution: {integrity: sha512-fESNzwkBHByYMoPBUcOfTlAyceG2gpjDEFYEJn0FGzEP8Er6txsQcT6tbf4qWGRtGTcFoi3AUkLw9O+yD7mqOA==}
 
-  '@gratiaos/tokens@1.0.5':
-    resolution: {integrity: sha512-P5Jltt9TWjmiMlUSNxQK0In7R8e3cnlP61EHurT7D7WXJev1O9YqXXYSThy0O4v+FvCtt7vZ4SwI7LjGQM0NGg==}
+  '@gratiaos/tokens@1.0.6':
+    resolution: {integrity: sha512-TpE5Jg5NKFB5ljtVzNLUIu8OkaE1bZQE3gK+CZaTI0/gX8/cGa5WcErCcWoqebHMAbRwTnyx+QfFCzfv0XMclQ==}
     peerDependencies:
       tailwindcss: ^4.0.0
 
-  '@gratiaos/ui@1.1.0':
-    resolution: {integrity: sha512-ZOPZMCqKdkFNUE1fO+VC+R9hOxrY45aWHThtGRnKy3NWYvDSJ3XhSDazT1NiYLmqwbXg6NbglD1Rq/0AVAnX6Q==}
+  '@gratiaos/ui@1.2.0':
+    resolution: {integrity: sha512-Kiu3H6efRrmW0LPumo0eBcQPEIz6guyEGSVUNDiFCdqMEhdAylVGy9OeSf2yUgr3k9G9jLk9C1pXg1S4lWP7Dw==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -1248,11 +1248,11 @@ snapshots:
 
   '@gratiaos/signal@1.0.3': {}
 
-  '@gratiaos/tokens@1.0.5(tailwindcss@4.1.13)':
+  '@gratiaos/tokens@1.0.6(tailwindcss@4.1.13)':
     dependencies:
       tailwindcss: 4.1.13
 
-  '@gratiaos/ui@1.1.0(react@19.2.1)':
+  '@gratiaos/ui@1.2.0(react@19.2.1)':
     dependencies:
       '@gratiaos/presence-kernel': 1.1.3(react@19.2.1)
       react: 19.2.1
