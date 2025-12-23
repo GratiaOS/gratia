@@ -2,7 +2,8 @@
 
 import * as React from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Badge, Button, Card, Field, Toolbar, ToolbarGroup } from '@gratiaos/ui';
+import { Badge, Button, Card, Pill, Toolbar, ToolbarGroup, Whisper } from '@gratiaos/ui';
+import { Leaf } from '@gratiaos/icons';
 
 import type { PatternMirrorLocale, PatternMirrorResponse } from '../api/pattern-mirror/types';
 import { I18nProvider, useTranslation } from '../../i18n/I18nProvider';
@@ -18,16 +19,12 @@ const TRUTH_SEEDS_KEY = 'pattern-mirror.truth-seeds';
 const reflectionLocales: PatternMirrorLocale[] = ['en', 'es', 'ro'];
 const normalizePatternKey = (chip: string) => chip.trim().toLowerCase().replace(/\s+/g, '-');
 
-function PatternMirrorContent({
-  onLocaleChange,
-}: {
-  onLocaleChange: (locale: PatternMirrorLocale) => void;
-}) {
-  const { t, locale: translationLocale } = useTranslation('reflection');
+function PatternMirrorContent() {
+  const { t, locale: translationLocale, setLocale } = useTranslation('reflection');
   const { skinId, setSkinId } = useSkinField();
   const searchParams = useSearchParams();
   const mirrorLocale: PatternMirrorLocale =
-    translationLocale === 'es' ? 'es' : translationLocale === 'en' ? 'en' : 'ro';
+    translationLocale === 'es' ? 'es' : translationLocale === 'ro' ? 'ro' : 'en';
 
   const [text, setText] = React.useState('');
   const [stage, setStage] = React.useState<Stage>('idle');
@@ -45,11 +42,17 @@ function PatternMirrorContent({
     null
   );
   const [mediumCopied, setMediumCopied] = React.useState(false);
-  const [typoMode, setTypoMode] = React.useState<'ui' | 'mono'>(() => {
-    if (typeof window === 'undefined') return 'ui';
-    const stored = window.localStorage.getItem('gratia.typo');
-    return stored === 'mono' ? 'mono' : 'ui';
-  });
+  const [typoMode, setTypoMode] = React.useState<'ui' | 'mono'>('ui');
+  const [toolbarDepth, setToolbarDepth] = React.useState<1 | 2>(1);
+  const hasText = text.trim().length > 0;
+  const toolbarDepthTimer = React.useRef<number | null>(null);
+
+  const [inputFocused, setInputFocused] = React.useState(false);
+  const [resultsHovered, setResultsHovered] = React.useState(false);
+  const [toolbarCollapsed, setToolbarCollapsed] = React.useState(false);
+  const [toolbarHover, setToolbarHover] = React.useState(false);
+  const [toolbarPinnedOpen, setToolbarPinnedOpen] = React.useState(false);
+  const toolbarRef = React.useRef<HTMLDivElement | null>(null);
 
   const resultsRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -60,6 +63,7 @@ function PatternMirrorContent({
 
   const isResultsStage = stage === 'reflection' || stage === 'trueStep' || stage === 'error';
   const visibleTrueStepPrompt = trueStepPrompt ?? t('trueStep_phrase');
+  const canShowReflection = stage === 'reflection' || stage === 'trueStep';
   const hintKey: 'hint_idle' | 'hint_ready' | 'hint_listening' | 'hint_results' =
     stage === 'ready'
       ? 'hint_ready'
@@ -77,7 +81,23 @@ function PatternMirrorContent({
     () => searchParams.get('text') ?? searchParams.get('url'),
     [searchParams]
   );
-  const buttonGlow = skinId === 'MOON' ? 'shadow-[0_0_0_1px_rgba(255,255,255,0.12)]' : '';
+  // Removed buttonGlow, no longer used.
+  const skinGroups = [
+    {
+      id: 'warm',
+      options: [
+        { id: 'SUN', label: '☀️ Sun' },
+        { id: 'GARDEN', label: '🌿 Garden' },
+      ],
+    },
+    {
+      id: 'night',
+      options: [
+        { id: 'MOON', label: '🌙 Moon' },
+        { id: 'STELLAR', label: '🟣 Stellar' },
+      ],
+    },
+  ] as const;
 
   React.useEffect(() => {
     const incoming = prefillValue?.trim();
@@ -94,12 +114,46 @@ function PatternMirrorContent({
   }, [mirrorLocale]);
 
   React.useEffect(() => {
+    const hasText = text.length > 0;
+    if (hasText) {
+      setToolbarCollapsed(true);
+    } else {
+      setToolbarCollapsed(false);
+      setToolbarPinnedOpen(false);
+    }
+  }, [hasText]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const stored = window.localStorage.getItem('gratia.typo');
+    const dataset = document.documentElement.dataset.typo;
+    const next = stored === 'mono' || dataset === 'mono' ? 'mono' : 'ui';
+    setTypoMode((prev) => (prev === next ? prev : next));
+  }, []);
+
+  React.useEffect(() => {
     if (typeof document === 'undefined') return;
     document.documentElement.dataset.typo = typoMode;
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('gratia.typo', typoMode);
     }
   }, [typoMode]);
+
+  React.useEffect(() => {
+    return () => {
+      if (toolbarDepthTimer.current) {
+        window.clearTimeout(toolbarDepthTimer.current);
+      }
+    };
+  }, []);
+
+  const pulseToolbarDepth = (level: 1 | 2 = 2, ms = 520) => {
+    if (toolbarDepthTimer.current) {
+      window.clearTimeout(toolbarDepthTimer.current);
+    }
+    setToolbarDepth(level);
+    toolbarDepthTimer.current = window.setTimeout(() => setToolbarDepth(1), Math.max(200, ms));
+  };
 
   React.useEffect(() => {
     if (!savedTruth && seedsForLocale.length > 0) {
@@ -177,11 +231,7 @@ function PatternMirrorContent({
     }
   };
 
-  const handleSelectTab = (tab: 'reflection' | 'trueStep') => {
-    if (stage === 'reflection' || stage === 'trueStep') {
-      setStage(tab);
-    }
-  };
+  // Removed handleSelectTab; no longer needed due to single-flow UI.
 
   const openWritingPad = () => {
     setWritingPadValue('');
@@ -239,7 +289,7 @@ function PatternMirrorContent({
     }
 
     if (energyTone) {
-      lines.push(`${t('tone_label')}: ${energyTone}.`);
+      lines.push(`${t('tone_label')} ${energyTone}.`);
       lines.push('');
     }
 
@@ -253,10 +303,7 @@ function PatternMirrorContent({
     }
 
     lines.push('🪷');
-    lines.push(t('trueStep_footer'));
-    if (t('trueStep_footer_ember')) {
-      lines.push(t('trueStep_footer_ember'));
-    }
+    lines.push(t('whisper_line'));
 
     return lines.join('\n');
   };
@@ -284,310 +331,357 @@ function PatternMirrorContent({
     }
   };
 
+  // Toolbar sigil open/close helpers
+  const openToolbar = () => {
+    setToolbarPinnedOpen(true);
+    // pulse depth so it feels alive but only on interaction
+    pulseToolbarDepth(2, 520);
+    // focus first button for keyboard users
+    requestAnimationFrame(() => {
+      const el = toolbarRef.current;
+      const first = el?.querySelector('button') as HTMLButtonElement | null;
+      first?.focus();
+    });
+  };
+
+  const closeToolbar = () => {
+    setToolbarPinnedOpen(false);
+  };
+
   return (
-    <main className="bg-surface text-on-surface flex min-h-screen justify-center px-4 py-10">
-      <div className="w-full max-w-3xl space-y-8">
-        <div className="flex flex-col items-center space-y-4">
-          <div
-            className={
-              skinId === 'MOON'
-                ? 'rounded-full bg-[color:var(--color-surface)]/70 p-3 shadow-[0_0_22px_rgba(255,255,255,0.12)] ring-1 ring-[color:var(--color-border)]/70'
-                : 'rounded-full bg-[color:var(--color-accent)]/12 p-3 shadow-inner'
-            }
-          >
-            <span className="text-xl">🪷</span>
+    <main
+      className="pm-page"
+      data-pm-has-text={hasText}
+      data-input-focused={inputFocused}
+      data-results-hovered={resultsHovered}
+    >
+      <div className="pm-page-inner">
+        <div className="pm-hero">
+          <div className="pm-lotus-shell">
+            <span className="pm-lotus-mark">🪷</span>
           </div>
-          <div className="space-y-2 text-center">
-            <h1 className="text-xl font-semibold">{t('title')}</h1>
-            <p className="mx-auto max-w-lg text-sm text-[color:var(--color-muted)]">
-              {t('subtitle')}
-            </p>
-          </div>
+          <p className="pm-mirror-whisper">{t('mirror_whisper')}</p>
         </div>
 
-        <Toolbar
-          aria-label="Pattern Mirror controls"
-          className="flex flex-wrap items-center justify-end gap-2 text-xs text-[color:var(--color-muted)]"
-        >
-          <ToolbarGroup className="flex gap-2">
-            {reflectionLocales.map((code) => (
-              <Button
-                key={code}
-                variant={code === translationLocale ? 'solid' : 'outline'}
-                tone="warning"
-                className={code === translationLocale ? buttonGlow : undefined}
-                onClick={() => onLocaleChange(code)}
-              >
-                {code.toUpperCase()}
-              </Button>
-            ))}
-          </ToolbarGroup>
-          <ToolbarGroup className="flex gap-2">
-            <Button
-              variant={skinId === 'SUN' ? 'solid' : 'outline'}
-              tone="warning"
-              className={
-                skinId === 'SUN' ? 'bg-[color:var(--color-accent)]/15 shadow-inner' : undefined
-              }
-              onClick={() => setSkinId('SUN')}
+        <div className="pm-toolbar-shell">
+          {toolbarCollapsed && !toolbarPinnedOpen && (
+            <button
+              type="button"
+              className="pm-sigil whisper-ring"
+              aria-label="Open controls"
+              onClick={openToolbar}
+              onFocus={openToolbar}
             >
-              Sun
-            </Button>
-            <Button
-              variant={skinId === 'MOON' ? 'solid' : 'outline'}
-              tone="warning"
-              className={
-                skinId === 'MOON'
-                  ? 'shadow-[0_0_0_1px_rgba(255,255,255,0.08)] ring-1 ring-[color:var(--color-border)]/60'
-                  : undefined
-              }
-              onClick={() => setSkinId('MOON')}
-            >
-              Moon
-            </Button>
-            <Button
-              variant={typoMode === 'mono' ? 'solid' : 'outline'}
-              tone="warning"
-              onClick={() => setTypoMode((prev) => (prev === 'mono' ? 'ui' : 'mono'))}
-            >
-              {typoMode === 'mono' ? 'Vienna' : 'Default'}
-            </Button>
-          </ToolbarGroup>
-        </Toolbar>
+              ⟡
+            </button>
+          )}
 
-        <Card variant="elev" padding="lg" className="space-y-3">
-          <Field label={t('title')} hint={t(hintKey)}>
+          <Toolbar
+            ref={(node) => {
+              toolbarRef.current = node as HTMLDivElement | null;
+            }}
+            aria-label="Pattern Mirror controls"
+            data-depth={toolbarDepth}
+            data-collapsed={toolbarCollapsed && !toolbarHover && !toolbarPinnedOpen}
+            data-open={toolbarPinnedOpen}
+            onMouseEnter={() => setToolbarHover(true)}
+            onMouseLeave={() => setToolbarHover(false)}
+            onFocusCapture={() => setToolbarHover(true)}
+            onBlurCapture={(e) => {
+              // close only when focus leaves the whole toolbar
+              const next = e.relatedTarget as Node | null;
+              const root = toolbarRef.current;
+              if (root && next && root.contains(next)) return;
+              setToolbarHover(false);
+              closeToolbar();
+            }}
+            density="snug"
+            className="pm-toolbar pm-toolbar-auto"
+          >
+            <ToolbarGroup>
+              {reflectionLocales.map((code) => {
+                const active = code === mirrorLocale;
+                return (
+                  <Pill
+                    key={code}
+                    as="button"
+                    data-active={active}
+                    className="pm-pill"
+                    variant={active ? 'soft' : 'subtle'}
+                    tone="subtle"
+                    density="snug"
+                    onClick={() => setLocale(code)}
+                  >
+                    {code.toUpperCase()}
+                  </Pill>
+                );
+              })}
+
+              <span className="pm-sep" aria-hidden="true">
+                ⟡
+              </span>
+
+              {skinGroups.map((group, groupIdx) => (
+                <React.Fragment key={group.id}>
+                  {group.options.map((option) => {
+                    const active = skinId === option.id;
+                    return (
+                      <Pill
+                        key={option.id}
+                        as="button"
+                        data-active={active}
+                        className="pm-pill"
+                        variant={active ? 'soft' : 'subtle'}
+                        tone="subtle"
+                        density="snug"
+                        onClick={() => {
+                          setSkinId(option.id);
+                          pulseToolbarDepth();
+                        }}
+                      >
+                        {option.label}
+                      </Pill>
+                    );
+                  })}
+
+                  {groupIdx < skinGroups.length - 1 && (
+                    <span className="pm-sep" aria-hidden="true">
+                      ⟡
+                    </span>
+                  )}
+                </React.Fragment>
+              ))}
+
+              <span className="pm-sep" aria-hidden="true">
+                ⟡
+              </span>
+
+              {(
+                [
+                  { id: 'ui', label: 'Default' },
+                  { id: 'mono', label: 'Vienna' },
+                ] as const
+              ).map((opt) => {
+                const active = typoMode === opt.id;
+                return (
+                  <Pill
+                    key={opt.id}
+                    as="button"
+                    data-active={active}
+                    className="pm-pill"
+                    variant={active ? 'soft' : 'subtle'}
+                    tone="subtle"
+                    density="snug"
+                    onClick={() => {
+                      setTypoMode(opt.id);
+                      pulseToolbarDepth();
+                    }}
+                  >
+                    {opt.label}
+                  </Pill>
+                );
+              })}
+            </ToolbarGroup>
+          </Toolbar>
+        </div>
+
+        <div className="pm-input">
+          <div className="pm-input-wrap">
             <textarea
               value={text}
               onChange={(e) => handleChange(e.target.value)}
-              rows={6}
-              className="w-full resize-none bg-transparent outline-none"
-              placeholder={t('placeholder')}
+              onFocus={() => setInputFocused(true)}
+              onBlur={() => setInputFocused(false)}
+              rows={7}
+              autoFocus
               disabled={stage === 'listening'}
+              aria-label={t('mirror_whisper')}
+              data-focused={inputFocused}
+              className="pm-textarea"
             />
-          </Field>
 
-          <div className="flex items-center justify-end">
-            <Button
-              variant="outline"
-              tone="warning"
-              disabled={!text.trim() || stage === 'listening'}
-              loading={stage === 'listening'}
-              className={buttonGlow}
-              onClick={handleRevealReflection}
-            >
-              <span className="mr-1">🪷</span>
-              {t('button_reveal')}
-            </Button>
+            <div className="pm-input-footer">
+              <Button
+                variant="ghost"
+                tone="accent"
+                disabled={!text.trim() || stage === 'listening'}
+                loading={stage === 'listening'}
+                className="pm-reveal-btn"
+                onClick={handleRevealReflection}
+              >
+                {t('button_reveal')}
+              </Button>
+            </div>
+
+            {process.env.NODE_ENV === 'development' && payloadMetaSource === 'sample-fallback' && (
+              <p className="pm-dev-hint">(using sample reflection — model not configured)</p>
+            )}
           </div>
-
-          {process.env.NODE_ENV === 'development' && payloadMetaSource === 'sample-fallback' && (
-            <p className="text-[11px] text-[color:var(--color-muted)]">
-              (using sample reflection — model not configured)
-            </p>
-          )}
-        </Card>
+        </div>
 
         {(stage === 'reflection' || stage === 'trueStep' || stage === 'error') && (
           <Card
             ref={resultsRef}
             variant="plain"
             padding="lg"
-            className="border-border space-y-4 border"
+            onMouseEnter={() => setResultsHovered(true)}
+            onMouseLeave={() => setResultsHovered(false)}
+            onFocusCapture={() => setResultsHovered(true)}
+            onBlurCapture={() => setResultsHovered(false)}
+            className="pm-results"
+            data-hovered={resultsHovered}
           >
-            <div className="border-border flex border-b text-sm">
-              <button
-                type="button"
-                onClick={() => handleSelectTab('reflection')}
-                className={`flex-1 py-2 ${stage === 'reflection' ? 'text-on-surface font-semibold' : 'text-[color:var(--color-muted)]'}`}
-              >
-                {t('tab_reflection')}
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSelectTab('trueStep')}
-                className={`flex-1 py-2 ${stage === 'trueStep' ? 'text-on-surface font-semibold' : 'text-[color:var(--color-muted)]'}`}
-              >
-                {t('tab_trueStep')}
-              </button>
-            </div>
+            <div className="pm-results-inner">
+              {canShowReflection && (
+                <div className="pm-results-body">
+                  {patternChips.length > 0 && (
+                    <div className="pm-seeds">
+                      <p className="pm-seeds-title">{t('section_patterns_title')}</p>
+                      <div className="pm-seeds-list">
+                        {patternChips.map((chip) => {
+                          const { key, meta } = getPatternMeta(chip);
+                          if (!meta) return null;
+                          const badgeContent = `${meta.emoji ?? ''} ${meta.label ?? key}`.trim();
+                          return (
+                            <Badge
+                              key={chip}
+                              tone="default"
+                              variant="soft"
+                              className="pm-seed-badge"
+                              onClick={() =>
+                                setActivePattern((prev) => (prev === key ? null : key))
+                              }
+                            >
+                              {badgeContent}
+                            </Badge>
+                          );
+                        })}
+                      </div>
 
-            {stage === 'reflection' && (
-              <div className="space-y-4 text-sm">
-                <div>
-                  <p className="mb-1 text-sm font-semibold text-[color:var(--color-muted)]">
-                    {t('section_reflection_title')}
-                  </p>
-                  <ul className="list-disc space-y-1 pl-5">
-                    {reflectionBullets.map((item, idx) => (
-                      <li key={idx}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
+                      {activePattern && (
+                        <Card variant="plain" padding="sm" className="pm-seed-meta">
+                          <div className="pm-seed-meta-head">
+                            <p className="pm-seed-meta-title">
+                              {activePatternMeta?.label ?? activePattern.replace(/-/g, ' ')}
+                            </p>
+                            <button
+                              type="button"
+                              onClick={() => setActivePattern(null)}
+                              className="pm-seed-meta-close"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                          {activePatternMeta?.description && (
+                            <p className="pm-seed-meta-desc">{activePatternMeta.description}</p>
+                          )}
+                          {activePatternMeta?.tone && (
+                            <p className="pm-seed-meta-tone">{activePatternMeta.tone}</p>
+                          )}
+                        </Card>
+                      )}
+                    </div>
+                  )}
+                  <div className="pm-reflection">
+                    <p className="pm-reflection-title">{t('section_reflection_title')}</p>
+                    <ul className="pm-reflection-list">
+                      {reflectionBullets.slice(0, 3).map((item, idx) => (
+                        <li key={idx}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
 
-                {patternChips.length > 0 && (
-                  <div className="space-y-2">
-                    <p className="text-sm font-semibold text-[color:var(--color-muted)]">
-                      {t('section_patterns_title')}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {patternChips.map((chip) => {
-                        const { key, meta } = getPatternMeta(chip);
-                        if (!meta) return null;
-                        const badgeContent = `${meta.emoji ?? ''} ${meta.label ?? key}`.trim();
-                        return (
-                          <Badge
-                            key={chip}
-                            tone="warning"
-                            variant="soft"
-                            className={
-                              skinId === 'MOON'
-                                ? 'shadow-[0_0_0_1px_rgba(255,255,255,0.08)]'
-                                : undefined
-                            }
-                            onClick={() => setActivePattern((prev) => (prev === key ? null : key))}
-                          >
-                            {badgeContent}
-                          </Badge>
-                        );
-                      })}
+                  {energyTone && (
+                    <div className="pm-tone">
+                      {t('tone_label')} <span className="pm-tone-value">{energyTone}</span>
+                    </div>
+                  )}
+
+                  <Whisper tone="presence" className="pm-cycles-whisper">
+                    <span>🜁</span>
+                    <span>{t('cycles_whisper')}</span>
+                  </Whisper>
+
+                  <div className="pm-true-step">
+                    {/* Mirror Room: prompt-first, then the footstep action */}
+                    <div className="pm-true-step-head">
+                      <p className="pm-true-step-label">{t('trueStep_title')}</p>
+
+                      <p className="pm-true-step-prompt">{visibleTrueStepPrompt}</p>
                     </div>
 
-                    {activePattern && (
-                      <Card variant="plain" padding="sm" className="border-border space-y-1 border">
-                        <div className="flex items-center justify-between gap-2">
-                          <p className="text-sm font-medium">
-                            {activePatternMeta?.label ?? activePattern.replace(/-/g, ' ')}
-                          </p>
-                          <button
-                            type="button"
-                            onClick={() => setActivePattern(null)}
-                            className="hover:text-on-surface text-[11px] text-[color:var(--color-muted)]"
-                          >
-                            ✕
-                          </button>
-                        </div>
-                        {activePatternMeta?.description && (
-                          <p className="text-xs text-[color:var(--color-muted)]">
-                            {activePatternMeta.description}
-                          </p>
-                        )}
-                        {activePatternMeta?.tone && (
-                          <p className="text-[11px] text-[color:var(--color-muted)]">
-                            {activePatternMeta.tone}
-                          </p>
-                        )}
+                    <div className="pm-true-step-actions">
+                      <div>
+                        <Button
+                          variant="subtle"
+                          leadingIcon={<Leaf size={18} aria-hidden />}
+                          className="pm-true-step-btn"
+                          onClick={openWritingPad}
+                        >
+                          {t('trueStep_button_openPad')}
+                        </Button>
+                      </div>
+
+                      <p className="pm-true-step-hint">{t('trueStep_hint')}</p>
+                    </div>
+
+                    {savedTruth && (
+                      <Card variant="plain" padding="sm" className="pm-saved-truth">
+                        <p className="pm-saved-truth-label">{t('trueStep_saved_label')}</p>
+                        <p className="pm-saved-truth-text">“{savedTruth}”</p>
                       </Card>
                     )}
                   </div>
-                )}
 
-                {energyTone && (
-                  <div className="pt-2 text-sm text-[color:var(--color-muted)]">
-                    {t('tone_label')}:{' '}
-                    <span className="text-on-surface font-medium">{energyTone}</span>
+                  <div className="pm-medium">
+                    <div className="pm-medium-row">
+                      <p className="pm-medium-helper">{t('medium_helper')}</p>
+                      <Button
+                        variant="ghost"
+                        tone="default"
+                        disabled={
+                          reflectionBullets.length === 0 &&
+                          patternChips.length === 0 &&
+                          !energyTone &&
+                          !visibleTrueStepPrompt
+                        }
+                        onClick={handleGenerateMediumComment}
+                      >
+                        {t('medium_button')}
+                      </Button>
+                    </div>
+
+                    {mediumCopied && <p className="pm-medium-copied">{t('medium_copied')}</p>}
+
+                    {mediumComment && mediumCommentLocale === mirrorLocale && (
+                      <pre className="pm-medium-comment pm-longform">{mediumComment}</pre>
+                    )}
                   </div>
-                )}
-
-                <div className="border-border border-t pt-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <p className="text-sm text-[color:var(--color-muted)]">
-                      Medium mode · generate a gentle comment you can paste on Medium or anywhere
-                      else.
-                    </p>
-                    <Button
-                      variant="outline"
-                      tone="warning"
-                      className={buttonGlow}
-                      disabled={
-                        reflectionBullets.length === 0 &&
-                        patternChips.length === 0 &&
-                        !energyTone &&
-                        !visibleTrueStepPrompt
-                      }
-                      onClick={handleGenerateMediumComment}
-                    >
-                      🪷 Generate Medium comment
-                    </Button>
-                  </div>
-
-                  {mediumCopied && (
-                    <p className="text-xs text-[color:var(--color-positive)]">
-                      Copied to clipboard. You can paste it in your response. 🫂
-                    </p>
-                  )}
-
-                  {mediumComment && mediumCommentLocale === mirrorLocale && (
-                    <pre className="pm-longform font-ui border-border/60 text-on-surface mt-2 rounded-lg border bg-[color:var(--color-surface)]/80 px-3 py-2 text-sm whitespace-pre-wrap opacity-90">
-                      {mediumComment}
-                    </pre>
-                  )}
                 </div>
-              </div>
-            )}
+              )}
 
-            {stage === 'trueStep' && (
-              <div className="space-y-3 text-sm">
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold text-[color:var(--color-muted)]">
-                    {t('trueStep_title')}
-                  </p>
-                  <p>{t('trueStep_intro')}</p>
-                  <p className="font-medium italic">{visibleTrueStepPrompt}</p>
-                  <p className="text-xs text-[color:var(--color-muted)]">{t('trueStep_hint')}</p>
-
+              {stage === 'error' && (
+                <div className="pm-error">
+                  <p className="pm-error-text">{t('error_text')}</p>
                   <Button
                     variant="outline"
-                    tone="warning"
-                    className={buttonGlow}
-                    onClick={openWritingPad}
+                    tone="default"
+                    className="pm-error-btn"
+                    onClick={() => setStage(text.trim() ? 'ready' : 'idle')}
                   >
-                    <span className="mr-1">🪷</span>
-                    {t('trueStep_button_openPad')}
+                    {t('error_back')}
                   </Button>
-
-                  {savedTruth && (
-                    <Card variant="plain" padding="sm" className="border-border space-y-1 border">
-                      <p className="text-xs font-semibold text-[color:var(--color-muted)]">
-                        {t('trueStep_saved_label')}
-                      </p>
-                      <p className="text-sm">“{savedTruth}”</p>
-                    </Card>
-                  )}
                 </div>
-
-                <p className="border-border border-t border-dashed pt-2 text-xs text-[color:var(--color-muted)]">
-                  {t('trueStep_footer')}
-                </p>
-                {t('trueStep_footer_ember') && (
-                  <p className="text-[11px] text-[color:var(--color-muted)]">
-                    {t('trueStep_footer_ember')}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {stage === 'error' && (
-              <div className="space-y-3 text-sm">
-                <p>{t('error_text')}</p>
-                <Button
-                  variant="outline"
-                  tone="warning"
-                  className={buttonGlow}
-                  onClick={() => setStage(text.trim() ? 'ready' : 'idle')}
-                >
-                  {t('error_back')}
-                </Button>
-              </div>
-            )}
+              )}
+            </div>
           </Card>
         )}
 
         {showWritingPad && (
-          <div className="fixed inset-0 z-20 flex items-end justify-center bg-black/30">
-            <Card variant="elev" padding="lg" className="w-full max-w-md space-y-3 rounded-t-3xl">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-semibold">{t('pad_title')}</p>
+          <div className="pm-pad-overlay">
+            <Card variant="elev" padding="lg" className="pm-pad-card">
+              <div className="pm-pad-header">
+                <p className="pm-pad-title">{t('pad_title')}</p>
                 <Button variant="ghost" tone="default" onClick={() => setShowWritingPad(false)}>
                   ✕
                 </Button>
@@ -596,19 +690,14 @@ function PatternMirrorContent({
                 value={writingPadValue}
                 onChange={(e) => setWritingPadValue(e.target.value)}
                 rows={4}
-                className="w-full resize-none bg-transparent text-sm outline-none"
+                className="pm-pad-textarea"
                 placeholder={t('pad_placeholder')}
               />
-              <div className="flex justify-end gap-2">
+              <div className="pm-pad-actions">
                 <Button variant="ghost" tone="default" onClick={() => setShowWritingPad(false)}>
                   {t('pad_cancel')}
                 </Button>
-                <Button
-                  variant="solid"
-                  tone="warning"
-                  className={buttonGlow}
-                  onClick={saveWritingPad}
-                >
+                <Button variant="solid" tone="default" onClick={saveWritingPad}>
                   {t('pad_save')}
                 </Button>
               </div>
@@ -621,11 +710,9 @@ function PatternMirrorContent({
 }
 
 export default function PatternMirrorPageClient() {
-  const [locale, setLocale] = React.useState<PatternMirrorLocale>('ro');
-
   return (
-    <I18nProvider locale={locale}>
-      <PatternMirrorContent onLocaleChange={setLocale} />
+    <I18nProvider>
+      <PatternMirrorContent />
     </I18nProvider>
   );
 }

@@ -3,59 +3,6 @@
 @import '@gratiaos/ui/styles/base.css' layer(components);
 @plugin '@tailwindcss/typography';
 
-/* Skin field (shared across app) */
-:root {
-  --skin-bg: var(--theme-forest-mystic-background);
-  --skin-card: color-mix(in oklab, var(--theme-forest-mystic-background) 90%, black 10%);
-  --skin-accent: var(--theme-forest-mystic-glow-accent);
-}
-
-:root[data-skin-id='SUN'] {
-  --skin-bg: #fff9ed;
-  --skin-card: #fff3db;
-  --skin-accent: #f6b74b;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root[data-skin-id='SUN'] {
-    --skin-bg: #111418;
-    --skin-card: #181c20;
-    --skin-accent: #ee9a45;
-    --color-bg: var(--skin-bg);
-    --color-text: #fdf7eb;
-  }
-}
-
-:root[data-skin-id='MOON'] {
-  --skin-bg: #050816;
-  --skin-card: #0b1024;
-  --skin-accent: #7dd3fc;
-}
-
-:root[data-skin-id='GARDEN'] {
-  --skin-bg: #f5fbf5;
-  --skin-card: #e8f3e9;
-  --skin-accent: #7cb27c;
-
-  /* ensure text stays readable (no accidental white on light) */
-  --color-bg: var(--skin-bg);
-  --color-text: #1f2620;
-  --color-border: color-mix(in oklab, #2f4736 18%, transparent);
-  --color-muted: color-mix(in oklab, #1f2620 65%, white 35%);
-}
-
-:root[data-skin-id='STELLAR'] {
-  --skin-bg: #070315;
-  --skin-card: #0f0a22;
-  --skin-accent: #a855f7;
-}
-
-:root[data-skin-id='OFF'] {
-  --skin-bg: var(--theme-forest-mystic-background);
-  --skin-card: color-mix(in oklab, var(--theme-forest-mystic-background) 88%, black 12%);
-  --skin-accent: var(--theme-forest-mystic-accent-leaf);
-}
-
 @font-face {
   font-family: 'NG Funkhaus';
   src:
@@ -67,89 +14,56 @@
   font-display: swap;
 }
 
-/* Typography system (fallback until custom faces are added) */
+/* -------------------------------------------------------------------------- */
+/* Typography (defaults + fallbacks)                                           */
+/* -------------------------------------------------------------------------- */
+
 :root {
-  --font-ui: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, 'Apple Color Emoji',
+  /* UI / reading */
+  --font-ui:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, 'Apple Color Emoji',
     'Segoe UI Emoji';
-  --font-mono: 'NG Funkhaus', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+
+  /* Mono / codex */
+  --font-mono:
+    'NG Funkhaus', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     monospace;
+
+  /* Display defaults to UI unless a theme overrides it */
   --font-display: var(--font-ui);
-  /* Backfills for older references */
+
+  /* Garden token aliases (keep legacy tone vars mapped to tokens) */
+  --tone-surface: var(--color-surface);
+  --tone-ink: var(--color-text);
+  --tone-accent: var(--color-accent);
+  --tone-border: var(--color-border);
+  --accent: var(--color-accent);
+
+  /* Project aliases (used throughout CSS/components) */
   --font-gratia: var(--font-display);
   --font-selari: var(--font-ui);
   --font-bilute: var(--font-mono);
 }
 
-[data-typo='mono'] {
-  --font-ui: var(--font-mono);
+/* Typography toggle (B): mono / Codex */
+:root[data-typo='mono'] {
   --font-display: var(--font-mono);
-}
-
-/* Tailwind v4 tokens + CSS variables
-   - @theme: design tokens (palette, fonts)
-   - :root: runtime mapping for light/dark
-   - utilities: thin helpers consuming the variables
-*/
-:root {
-  color-scheme: light dark;
-  --font-funkhaus: 'NG Funkhaus', system-ui, -apple-system, 'SF Pro Text', sans-serif;
-
-  /* Light theme wiring (day / spring) */
-  --background: var(--theme-forest-mystic-background-light);
-  --foreground: var(--theme-forest-mystic-foreground-light);
-  --color-bg: var(--theme-forest-mystic-background-light);
-  --color-text: var(--theme-forest-mystic-foreground-light);
-  --color-accent: var(--theme-forest-mystic-accent-leaf);
-  --color-muted: #6b7b6c; /* earthy-muted upgrade */
-  --color-border: #d5e0d7;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: var(--theme-forest-mystic-background);
-    --foreground: var(--theme-forest-mystic-foreground);
-    --color-bg: var(--theme-forest-mystic-background);
-    --color-text: var(--theme-forest-mystic-foreground);
-    --color-accent: var(--theme-forest-mystic-glow-accent);
-    --color-muted: #8ea79b; /* glowing fog-level muted */
-    --color-border: #34524a;
-  }
-}
-
-@theme {
-  --font-gratia: var(--font-gratia);
-  --font-selari: var(--font-selari);
-  --font-bilute: var(--font-bilute);
-  --theme-forest-mystic-background: #0d1a1a;
-  --theme-forest-mystic-foreground: #f3f7f5;
-  --theme-forest-mystic-leaf: #3b6343;
-  --theme-forest-mystic-leaf-light: #6fa37c;
-  --theme-forest-mystic-glow-blue: #7ae1e4;
-  --theme-forest-mystic-mushroom: #6bd0c6;
-  --theme-forest-mystic-amber: #d9a766;
-  --theme-forest-mystic-fruit-gold: #d5b75a;
-  --theme-forest-mystic-background-light: #f3f7f5;
-  --theme-forest-mystic-foreground-light: #2d2d2d;
-  --theme-forest-mystic-accent-leaf: #4d7f5f;
-  --theme-forest-mystic-glow-accent: #4acbcc;
-  --theme-forest-mystic-flower-warm: #c68b4d;
-  --theme-forest-mystic-berry-gold: #d5c379;
+  --font-gratia: var(--font-mono);
 }
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at top, color-mix(in srgb, var(--skin-bg) 95%, #ffffff 5%), var(--skin-bg));
+  background-color: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-display);
   -webkit-font-smoothing: antialiased;
   transition:
     background-color 180ms ease-out,
-    background 180ms ease-out,
     color 180ms ease-out;
 }
 
 @utility bg-surface {
-  background-color: var(--color-bg);
+  background-color: var(--color-surface);
 }
 
 @utility bg-accent {
@@ -194,12 +108,12 @@ body {
 
 /* Pattern Mirror: readable long-form blocks (Medium mode / reflection exports) */
 .pm-longform {
-  line-height: 1.65;
-  letter-spacing: 0.02em;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
 [data-typo='mono'] .pm-longform {
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
 }
 
 @utility text-title-gratia {
@@ -226,7 +140,7 @@ body {
   --tw-prose-captions: var(--color-muted);
   --tw-prose-code: var(--color-text);
   --tw-prose-pre-code: var(--color-text);
-  --tw-prose-pre-bg: var(--color-bg);
+  --tw-prose-pre-bg: var(--color-surface);
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
   --tw-prose-invert-body: var(--color-text);
@@ -242,14 +156,9 @@ body {
   --tw-prose-invert-captions: var(--color-muted);
   --tw-prose-invert-code: var(--color-text);
   --tw-prose-invert-pre-code: var(--color-text);
-  --tw-prose-invert-pre-bg: var(--color-bg);
+  --tw-prose-invert-pre-bg: var(--color-surface);
   --tw-prose-invert-th-borders: var(--color-border);
   --tw-prose-invert-td-borders: var(--color-border);
-}
-
-:root[data-skin-id='MOON'] body,
-:root[data-skin-id='STELLAR'] body {
-  background: radial-gradient(circle at top, color-mix(in srgb, var(--skin-bg) 98%, #ffffff 2%), var(--skin-bg));
 }
 
 @layer components {
@@ -281,7 +190,7 @@ body {
     width: 112px;
     height: 112px;
     animation: gratia-mark-breathe 6s ease-in-out infinite;
-    transition: transform 2400ms ease-in-out, filter 2400ms ease-in-out;
+    transition: transform 2400ms ease-in-out;
   }
 
   /* Mark motion — Suave Bloom halo */
@@ -296,7 +205,11 @@ body {
     position: absolute;
     inset: -6px;
     border-radius: 999px;
-    background: radial-gradient(circle, color-mix(in oklab, #fff8ee 40%, transparent), transparent);
+    background: radial-gradient(
+      circle,
+      color-mix(in oklab, var(--color-accent) 40%, transparent),
+      transparent
+    );
     opacity: 0.05;
     filter: blur(12px);
     animation: mark-suave-halo 6s ease-in-out infinite;
@@ -332,13 +245,14 @@ body {
     display: none;
     color: var(--color-text);
   }
-  @media (prefers-color-scheme: dark) {
-    .site-logo-color {
-      display: none;
-    }
-    .site-logo-outline {
-      display: block;
-    }
+  /* Skins decide, not OS preference */
+  :root[data-skin-id='MOON'] .site-logo-color,
+  :root[data-skin-id='STELLAR'] .site-logo-color {
+    display: none;
+  }
+  :root[data-skin-id='MOON'] .site-logo-outline,
+  :root[data-skin-id='STELLAR'] .site-logo-outline {
+    display: block;
   }
 
   @keyframes scene-fade-in {
@@ -356,11 +270,9 @@ body {
     0%,
     100% {
       transform: scale(1);
-      filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.08));
     }
     50% {
       transform: scale(1.04);
-      filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.12));
     }
   }
 
@@ -374,63 +286,721 @@ body {
     color: var(--color-text);
   }
 
-  .input-base {
-    display: block;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-    border: 1px solid var(--color-muted);
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-selari);
-    transition:
-      border-color 0.2s ease,
-      background-color 0.2s ease;
-  }
-  .input-base:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    background-color: var(--color-bg);
-  }
-
-  .btn-primary {
-    display: inline-block;
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-    padding: 0.5rem 1.25rem;
-    border-radius: 9999px;
-    font-weight: 500;
-    transition:
-      background-color 0.2s ease,
-      color 0.2s ease;
-    text-decoration: none;
-    border: 2px solid transparent;
-  }
-
-  .btn-primary:hover {
-    background-color: var(--color-text);
-    color: var(--color-bg);
-  }
-
-  .btn-outline {
-    display: inline-block;
-    border: 2px solid var(--color-accent);
-    color: var(--color-accent);
-    padding: 0.5rem 1.25rem;
-    border-radius: 9999px;
-    font-weight: 500;
-    transition:
-      background-color 0.2s ease,
-      color 0.2s ease;
-    text-decoration: none;
-  }
-
-  .btn-outline:hover {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-  }
-
   .border-default {
     border-color: var(--color-border);
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* Pattern Mirror: route styles moved to globals to avoid FOUC                  */
+  /* -------------------------------------------------------------------------- */
+
+  /* Page field aura (very soft, Pad-like). Attach this class to the PM page root. */
+  .pm-page {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+  }
+
+
+  .pm-page-inner {
+    width: 100%;
+    max-width: 48rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .pm-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .pm-lotus-shell {
+    border-radius: 9999px;
+    padding: 0.75rem;
+    background: color-mix(in oklab, var(--color-accent) 12%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in oklab, var(--color-text) 8%, transparent);
+  }
+
+  :root[data-skin-id='MOON'] .pm-lotus-shell {
+    background: color-mix(in oklab, var(--color-surface) 70%, transparent);
+    box-shadow: 0 0 22px color-mix(in oklab, var(--color-text) 12%, transparent);
+    outline: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
+  }
+
+  .pm-lotus-mark {
+    display: inline-flex;
+    font-size: 1.25rem;
+    transition: transform 200ms ease;
+  }
+
+  .pm-page[data-input-focused='true'] .pm-lotus-mark,
+  .pm-page[data-results-hovered='true'] .pm-lotus-mark {
+    transform: translateY(-1px) scale(1.04);
+  }
+
+  .pm-mirror-whisper {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    color: var(--color-muted);
+  }
+
+  /* Single slow light in the page field (subtle; not the input mirror). */
+  .pm-page::before {
+    content: '';
+    position: absolute;
+    inset: -12vh -12vw;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.14;
+    transition:
+      opacity 220ms ease,
+      transform 520ms ease,
+      filter 520ms ease;
+  }
+
+  .pm-page::before {
+    background:
+      radial-gradient(
+        1200px 760px at 30% 20%,
+        color-mix(in oklab, var(--color-accent) 12%, transparent) 0%,
+        transparent 70%
+      );
+    filter: saturate(1.02) brightness(1.01);
+  }
+
+  /* Lift the field slightly when the user engages (focus/hover). */
+  .pm-page:focus-within::before,
+  .pm-page:hover::before {
+    opacity: 0.18;
+    transform: translate3d(0, -6px, 0);
+    filter: saturate(1.06) brightness(1.03);
+  }
+
+  /* Ensure PM content layers above the aura */
+  .pm-page > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Animatable light positions (subtle, not club) */
+  @property --pm-l1x {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 28%;
+  }
+  @property --pm-l1y {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 22%;
+  }
+  @property --pm-l2x {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 72%;
+  }
+  @property --pm-l2y {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 78%;
+  }
+
+  .pm-toolbar-shell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Auto-hide toolbar after first character; return on hover/focus (calmer/organic version) */
+  .pm-toolbar-auto {
+    transition:
+      opacity 320ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 380ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: center;
+    will-change: opacity, filter, transform;
+  }
+
+  /* When we have text, soften toolbar unless user hovers the shell */
+  [data-pm-has-text='true'] .pm-toolbar-shell .pm-toolbar-auto {
+    opacity: 0;
+    transform: translate3d(0, -2px, 0);
+    pointer-events: none;
+    filter: blur(0.18px) saturate(0.98);
+  }
+
+  [data-pm-has-text='true'] .pm-toolbar-shell:hover .pm-toolbar-auto,
+  [data-pm-has-text='true'] .pm-toolbar-shell:focus-within .pm-toolbar-auto {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    pointer-events: auto;
+    filter: none;
+  }
+
+  .pm-sigil {
+    position: absolute;
+    left: 0.65rem;
+    top: 50%;
+    transform: translateY(-50%) translate3d(0, 0, 0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--color-surface) 70%, transparent);
+    border: 1px solid color-mix(in oklab, var(--color-border) 70%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--color-accent) 18%, transparent),
+      0 10px 24px color-mix(in oklab, var(--color-accent) 10%, transparent);
+    opacity: 1;
+    pointer-events: auto;
+    transition:
+      opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .pm-toolbar {
+    border: 1px solid color-mix(in oklab, var(--color-border) 68%, transparent);
+    background: color-mix(in oklab, var(--color-surface) 86%, transparent);
+    border-radius: 9999px;
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, var(--color-text) 6%, transparent),
+      0 10px 28px color-mix(in oklab, var(--color-text) 8%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.75rem;
+  }
+
+  .pm-toolbar[data-depth='2'] {
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, var(--color-text) 6%, transparent),
+      var(--shadow-depth-2);
+  }
+
+  .pm-pill[data-active='true'] {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--color-accent) 40%, transparent),
+      0 6px 16px color-mix(in oklab, var(--color-accent) 12%, transparent);
+  }
+
+  .pm-pill:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 1.5px color-mix(in oklab, var(--color-accent) 65%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--color-accent) 20%, transparent);
+  }
+
+  /* When auto-hidden, keep it as a faint presence instead of vanishing */
+  [data-pm-has-text='true'] .pm-toolbar-shell .pm-toolbar {
+    box-shadow:
+      inset 0 1px 0 color-mix(in oklab, var(--color-text) 5%, transparent),
+      0 8px 22px color-mix(in oklab, var(--color-text) 7%, transparent);
+  }
+
+  .pm-sep {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.25rem;
+    opacity: 0.6;
+  }
+
+  .pm-input {
+    position: relative;
+    border-radius: 0 !important;
+  }
+
+
+  .pm-input-wrap {
+    position: relative;
+    isolation: isolate;
+    border-radius: 0 !important;
+    overflow: hidden;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+
+    /* Mirror surface: quiet glass (no border; edge is implied) */
+    background:
+      /* soft top haze */
+      radial-gradient(
+        140% 120% at 50% 0%,
+        color-mix(in oklab, var(--color-text) 6%, transparent),
+        transparent 58%
+      ),
+      /* soft bottom haze */
+        radial-gradient(
+          140% 140% at 50% 120%,
+          color-mix(in oklab, var(--color-text) 5%, transparent),
+          transparent 62%
+        ),
+      /* base */ color-mix(in oklab, var(--color-surface) 92%, transparent);
+
+    box-shadow:
+      /* inner edge (very subtle) */
+      inset 0 0 0 1px color-mix(in oklab, var(--color-border) 62%, transparent),
+      /* gentle inner lift */ inset 0 1px 0 color-mix(in oklab, var(--color-text) 4%, transparent);
+
+    /* Two moving lights (start positions) */
+    --pm-l1x: 28%;
+    --pm-l1y: 22%;
+    --pm-l2x: 72%;
+    --pm-l2y: 78%;
+
+    transition:
+      box-shadow 180ms ease,
+      background-color 180ms ease,
+      --pm-l1x 520ms ease,
+      --pm-l1y 520ms ease,
+      --pm-l2x 620ms ease,
+      --pm-l2y 620ms ease;
+  }
+
+  .pm-input-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    /* Single soft light (accent), controlled by animatable vars */
+    background: radial-gradient(
+      560px 320px at var(--pm-l1x) var(--pm-l1y),
+      color-mix(in oklab, var(--color-accent) 14%, transparent),
+      transparent 70%
+    );
+
+    opacity: 0.12;
+    filter: blur(0.1px);
+  }
+
+  .pm-input-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    /* faint grain/veil so the mirror feels alive but quiet */
+    background: radial-gradient(
+      900px 420px at 50% 50%,
+      color-mix(in oklab, var(--color-text) 4%, transparent),
+      transparent 70%
+    );
+    opacity: 0.08;
+  }
+
+  .pm-textarea {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    resize: none;
+    border-radius: 0 !important;
+
+    /* Let the wrap be the mirror */
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -webkit-text-fill-color: var(--color-text);
+    caret-color: var(--color-text);
+    font-family: var(--font-display);
+
+    padding: 1.05rem 1.1rem;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+    color: var(--color-text);
+    outline: none;
+
+    transition:
+      color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  /* Stronger mirror response on focus within */
+  .pm-input-wrap:focus-within {
+    --pm-l1x: 34%;
+    --pm-l1y: 18%;
+    --pm-l2x: 66%;
+    --pm-l2y: 84%;
+    box-shadow:
+      /* focus aura */
+      0 0 0 1.25px color-mix(in oklab, var(--color-accent) 26%, transparent),
+      0 0 0 12px color-mix(in oklab, var(--color-accent) 8%, transparent),
+      /* inner edge */ inset 0 0 0 1px color-mix(in oklab, var(--color-accent) 18%, transparent),
+      inset 0 1px 0 color-mix(in oklab, var(--color-text) 4%, transparent);
+  }
+
+  .pm-input-wrap:hover {
+    --pm-l1x: 24%;
+    --pm-l1y: 26%;
+    --pm-l2x: 76%;
+    --pm-l2y: 74%;
+  }
+
+  .pm-textarea::placeholder {
+    color: color-mix(in oklab, var(--color-muted) 82%, transparent);
+  }
+
+  .pm-textarea:disabled {
+    opacity: 0.72;
+  }
+
+  /* Longform readability (Medium block) */
+  .pm-longform {
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+  }
+
+  [data-typo='mono'] .pm-longform {
+    letter-spacing: 0.02em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pm-textarea {
+      transition: none;
+    }
+  }
+
+  .pm-input-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .pm-reveal-btn {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 180ms ease, transform 180ms ease, box-shadow 200ms ease;
+  }
+
+  [data-pm-has-text='true'] .pm-reveal-btn {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .pm-reveal-btn:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 1.5px color-mix(in oklab, var(--color-accent) 65%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--color-accent) 20%, transparent);
+  }
+
+  .pm-dev-hint {
+    margin-top: 0.5rem;
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+  }
+
+  .pm-results {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-elev);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: box-shadow 220ms ease, transform 220ms ease;
+  }
+
+  .pm-results[data-hovered='true'] {
+    box-shadow: var(--shadow-depth-2);
+    transform: translateY(-1px);
+  }
+
+
+  .pm-results-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .pm-results-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .pm-seeds {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pm-seeds-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .pm-seeds-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .pm-seed-badge {
+    cursor: pointer;
+  }
+
+  :root[data-skin-id='MOON'] .pm-seed-badge {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-text) 8%, transparent);
+  }
+
+  .pm-seed-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pm-seed-meta-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .pm-seed-meta-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pm-seed-meta-close {
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+  }
+
+  .pm-seed-meta-close:hover {
+    color: var(--color-text);
+  }
+
+  .pm-seed-meta-desc {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  .pm-seed-meta-tone {
+    font-size: 0.6875rem;
+    color: var(--color-muted);
+  }
+
+  .pm-reflection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pm-reflection-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .pm-reflection-list {
+    list-style: disc;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pm-tone {
+    padding-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .pm-tone-value {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .pm-cycles-whisper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .pm-true-step {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .pm-true-step-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pm-true-step-label {
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    opacity: 0.75;
+  }
+
+  .pm-true-step-prompt {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--color-text);
+  }
+
+  .pm-true-step-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pm-true-step-btn:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 1.5px color-mix(in oklab, var(--color-accent) 65%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--color-accent) 20%, transparent);
+  }
+
+  .pm-true-step-hint {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    opacity: 0.9;
+  }
+
+  .pm-saved-truth {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .pm-saved-truth-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .pm-saved-truth-text {
+    font-size: 0.875rem;
+  }
+
+  .pm-medium {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pm-medium-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .pm-medium-helper {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  .pm-medium-copied {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-positive);
+  }
+
+  .pm-medium-comment {
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid color-mix(in oklab, var(--color-border) 60%, transparent);
+    background: color-mix(in oklab, var(--color-elev) 80%, transparent);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    white-space: pre-wrap;
+    color: var(--color-text);
+    opacity: 0.9;
+    font-family: var(--font-ui);
+  }
+
+  .pm-error {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .pm-error-text {
+    font-size: 0.875rem;
+  }
+
+  .pm-error-btn:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 1.5px color-mix(in oklab, var(--color-accent) 65%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--color-accent) 20%, transparent);
+  }
+
+  .pm-pad-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: color-mix(in oklab, var(--color-border) 60%, transparent);
+  }
+
+  .pm-pad-card {
+    width: 100%;
+    max-width: 28rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-radius: 1.5rem 1.5rem 0 0;
+    background: var(--color-elev);
+  }
+
+  .pm-pad-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pm-pad-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pm-pad-textarea {
+    width: 100%;
+    resize: none;
+    background: transparent;
+    font-size: 0.875rem;
+    outline: none;
+  }
+
+  .pm-pad-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
   }
 }
 
@@ -452,8 +1022,8 @@ body {
   }
   .mood-glow {
     box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--tone-accent) 35%, transparent),
-      0 18px 40px color-mix(in oklab, var(--tone-accent) 18%, transparent);
+      0 0 0 1px color-mix(in oklab, var(--color-accent) 35%, transparent),
+      0 18px 40px color-mix(in oklab, var(--color-accent) 18%, transparent);
   }
   .whisper-ring {
     transition:
@@ -463,8 +1033,8 @@ body {
   .whisper-ring:focus-visible {
     outline: none;
     box-shadow:
-      0 0 0 1.5px color-mix(in oklab, var(--tone-accent) 65%, transparent),
-      0 0 0 6px color-mix(in oklab, var(--tone-accent) 20%, transparent);
+      0 0 0 1.5px color-mix(in oklab, var(--color-accent) 65%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--color-accent) 20%, transparent);
     transform: translateY(-1px);
   }
 }
@@ -481,29 +1051,6 @@ body {
   :root[data-spirit='lion'] {
     --grain-strength: 0.14;
     --glow-intensity: 0.16;
-  }
-
-  /* Bom Bhole mood — soft spring, warm leaf, honey dust */
-  :root[data-pad-mood='bom-bhole'],
-  [data-pad-mood='bom-bhole'] {
-    --tone-surface: color-mix(in oklab, var(--color-surface) 92%, var(--color-accent) 8%);
-    --tone-ink: color-mix(in oklab, var(--color-text) 96%, white 4%);
-    --tone-accent: color-mix(in oklab, var(--color-accent) 78%, white 22%);
-    --accent-strength: 0.65;
-    --ring-alpha: 0.14;
-    --glow-intensity: 0.06;
-    --grain-strength: 0.06;
-    --grain-size: 170px;
-    --track-glow: color-mix(in oklab, var(--tone-accent) 40%, transparent);
-    --scene-highlight: color-mix(in oklab, var(--tone-accent) 48%, transparent);
-    --presence-dot-color: color-mix(in oklab, var(--tone-accent) 62%, white 10%);
-    --ghost-trail-color: color-mix(in oklab, var(--tone-accent) 16%, transparent);
-    --pad-hero-start: color-mix(in oklab, var(--tone-accent) 12%, var(--tone-surface));
-    --pad-hero-end: color-mix(in oklab, var(--tone-accent) 4%, var(--tone-surface));
-    --scene-enter-duration: 420ms;
-    --scene-exit-duration: 360ms;
-    --scene-enter-ease: var(--ease-soft);
-    --scene-exit-ease: var(--ease-soft);
   }
 
   * {
@@ -529,26 +1076,26 @@ body {
     cursor: pointer;
   }
 
-  input,
-  textarea,
+  input:not(.pm-textarea),
+  textarea:not(.pm-textarea),
   select {
     display: block;
     padding: 0.5rem 0.75rem;
     border-radius: 0.375rem;
     border: 1px solid var(--color-muted);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
     color: var(--color-text);
     font-family: var(--font-selari);
     transition:
       border-color 0.2s ease,
       background-color 0.2s ease;
   }
-  input:focus,
-  textarea:focus,
+  input:not(.pm-textarea):focus,
+  textarea:not(.pm-textarea):focus,
   select:focus {
     outline: none;
     border-color: var(--color-accent);
-    background-color: var(--color-bg);
+    background-color: var(--color-surface);
   }
 
   body,
