@@ -7,9 +7,7 @@ import { useSkinField } from '../skin/SkinFieldProvider';
 
 function GlowWrap({ isMoon, children }: { isMoon: boolean; children: React.ReactNode }) {
   return (
-    <div className={isMoon ? 'rounded-[inherit] shadow-[0_0_18px_rgba(255,255,255,0.06)]' : ''}>
-      {children}
-    </div>
+    <div className={isMoon ? 'rounded-[inherit] shadow-depth-1' : ''}>{children}</div>
   );
 }
 

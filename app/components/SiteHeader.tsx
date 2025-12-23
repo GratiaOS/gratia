@@ -3,7 +3,7 @@ import GratiaMark from '@/components/GratiaMark';
 
 export default function SiteHeader() {
   return (
-    <header className="w-full border-b border-(--color-border) bg-(--color-bg)/80 backdrop-blur">
+    <header className="w-full border-b border-(--color-border) bg-(--color-surface)/80 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
           <span className="relative inline-block h-8 w-8">

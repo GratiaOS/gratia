@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import GratiaMark from '@/components/GratiaMark';
+import HomeLanguageSwitcher from '@/components/HomeLanguageSwitcher';
+import { defaultLocale } from '../i18n/config';
 
 const messages = {
   en: {
@@ -69,19 +71,19 @@ const meta = {
 } as const;
 
 const languages = [
-  { code: 'en', label: 'English' },
   { code: 'es', label: 'Español' },
+  { code: 'ro', label: 'Română' },
+  { code: 'en', label: 'English' },
   { code: 'fr', label: 'Français' },
   { code: 'ar', label: 'العربية' },
-  { code: 'ro', label: 'Română' },
 ] as const;
 
 type LangCode = (typeof languages)[number]['code'];
 
 function resolveLang(raw?: string): LangCode {
-  if (!raw) return 'en';
+  if (!raw) return defaultLocale as LangCode;
   const lower = raw.toLowerCase();
-  return (languages.find((l) => l.code === lower)?.code as LangCode) ?? 'en';
+  return (languages.find((l) => l.code === lower)?.code as LangCode) ?? (defaultLocale as LangCode);
 }
 
 type HomeSearchParams = { lang?: string };
@@ -129,25 +131,11 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
           )}
         </div>
 
-        <div className="flex items-center justify-center gap-3 text-xs opacity-80">
-          {languages.map((lang) => {
-            const isActive = lang.code === activeLang;
-            const href = lang.code === 'en' ? '/' : `/?lang=${lang.code}`;
-
-            return (
-              <a
-                key={lang.code}
-                href={href}
-                className={
-                  'underline-offset-4 ' +
-                  (isActive ? 'font-semibold underline' : 'opacity-85 hover:underline')
-                }
-              >
-                {lang.label}
-              </a>
-            );
-          })}
-        </div>
+        <HomeLanguageSwitcher
+          activeLang={activeLang}
+          languages={languages}
+          className="flex items-center justify-center gap-3 text-xs opacity-80"
+        />
 
         <div className="flex items-center justify-center gap-4 text-sm opacity-80">
           <a href="https://github.com/GratiaOS" className="underline-offset-4 hover:underline">

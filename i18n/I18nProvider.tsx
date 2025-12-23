@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { defaultLocale } from './config.js';
 import { resources, type Locale } from './resources';
 
@@ -19,13 +19,24 @@ export type TranslationKey<N extends Namespaces> = LeafPaths<Resources[DefaultLo
 
 type I18nContextValue = {
   locale: Locale;
+  setLocale: (locale: Locale) => void;
   t: <N extends Namespaces, K extends TranslationKey<N>>(namespace: N, key: K) => string;
 };
 
 const I18nContext = createContext<I18nContextValue>({
   locale: defaultLocale as Locale,
+  setLocale: () => undefined,
   t: (_ns, key) => key,
 });
+
+const LOCALE_STORAGE_KEY = 'gratia.locale';
+const LOCALE_QUERY_KEY = 'lang';
+
+function normalizeLocale(value?: string | null): Locale {
+  const resourceLocales = Object.keys(resources) as Locale[];
+  if (value && resourceLocales.includes(value as Locale)) return value as Locale;
+  return defaultLocale as Locale;
+}
 
 function getNested(obj: any, path: string): unknown {
   return path.split('.').reduce((acc, part) => {
@@ -53,24 +64,76 @@ type ProviderProps = {
 };
 
 export function I18nProvider({ locale, children }: ProviderProps) {
-  const resourceLocales = Object.keys(resources) as Locale[];
-  const safeLocale: Locale = resourceLocales.includes(locale as Locale) ? (locale as Locale) : (defaultLocale as Locale);
+  const [activeLocale, setActiveLocale] = useState<Locale>(() => {
+    if (locale) return normalizeLocale(locale);
+    return defaultLocale as Locale;
+  });
+
+  const setLocale = useCallback((next: Locale) => {
+    setActiveLocale(normalizeLocale(next));
+  }, []);
+
+  React.useEffect(() => {
+    if (!locale) return;
+    const normalized = normalizeLocale(locale);
+    setActiveLocale((prev) => (prev === normalized ? prev : normalized));
+  }, [locale]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const syncFromQuery = () => {
+      const params = new URL(window.location.href).searchParams;
+      const raw = params.get(LOCALE_QUERY_KEY);
+      const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+      const normalized = normalizeLocale(raw ?? stored);
+      setActiveLocale((prev) => (prev === normalized ? prev : normalized));
+    };
+    syncFromQuery();
+    window.addEventListener('popstate', syncFromQuery);
+    return () => window.removeEventListener('popstate', syncFromQuery);
+  }, []);
+
+  React.useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = activeLocale;
+    }
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(LOCALE_STORAGE_KEY, activeLocale);
+      const url = new URL(window.location.href);
+      const shouldSet = activeLocale !== (defaultLocale as Locale);
+      if (shouldSet) {
+        url.searchParams.set(LOCALE_QUERY_KEY, activeLocale);
+      } else {
+        url.searchParams.delete(LOCALE_QUERY_KEY);
+      }
+      const next =
+        url.pathname +
+        (url.searchParams.toString() ? `?${url.searchParams.toString()}` : '') +
+        url.hash;
+      const current = window.location.pathname + window.location.search + window.location.hash;
+      if (next !== current) {
+        window.history.replaceState({}, '', next);
+      }
+    }
+  }, [activeLocale]);
 
   const value = useMemo<I18nContextValue>(
     () => ({
-      locale: safeLocale,
-      t: (namespace, key) => translate(safeLocale, namespace, key as any),
+      locale: activeLocale,
+      setLocale,
+      t: (namespace, key) => translate(activeLocale, namespace, key as any),
     }),
-    [safeLocale]
+    [activeLocale, setLocale]
   );
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
 export function useTranslation<N extends Namespaces>(namespace: N) {
-  const { locale, t } = useContext(I18nContext);
+  const { locale, setLocale, t } = useContext(I18nContext);
   return {
     locale,
+    setLocale,
     t: <K extends TranslationKey<N>>(key: K) => t(namespace, key),
   };
 }

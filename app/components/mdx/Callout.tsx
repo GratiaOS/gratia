@@ -12,11 +12,10 @@ export default function Callout({
   children: ReactNode;
 }) {
   const tone: Record<Kind, string> = {
-    note: 'border-slate-400/50 bg-slate-50/40 dark:border-slate-600/40 dark:bg-slate-900/20',
-    info: 'border-cyan-400/50 bg-cyan-50/40 dark:border-cyan-600/40 dark:bg-cyan-900/20',
-    warn: 'border-amber-400/50 bg-amber-50/40 dark:border-amber-600/40 dark:bg-amber-900/20',
-    success:
-      'border-emerald-400/50 bg-emerald-50/40 dark:border-emerald-600/40 dark:bg-emerald-900/20',
+    note: 'border-(--color-border)/50 bg-(--color-elev)/60',
+    info: 'border-(--color-accent)/40 bg-(--color-accent)/10',
+    warn: 'border-(--color-accent)/50 bg-(--color-accent)/14',
+    success: 'border-(--color-accent)/50 bg-(--color-accent)/18',
   };
 
   return (

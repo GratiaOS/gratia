@@ -6,7 +6,7 @@ import Image from 'next/image';
  */
 export function MarkSceneCard() {
   return (
-    <section className="rounded-3xl border border-(--color-border) bg-(--skin-card) p-6 md:p-8 shadow-lg shadow-black/10">
+    <section className="rounded-3xl border border-(--color-border) bg-(--color-elev) p-6 md:p-8 shadow-depth-2">
       <header className="space-y-1">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-(--color-muted)">
           Seed · Suave Bloom
@@ -17,7 +17,7 @@ export function MarkSceneCard() {
       </header>
 
       <div className="mt-4 flex flex-col gap-6 md:flex-row md:items-start">
-        <div className="relative h-28 w-28 shrink-0 rounded-2xl bg-(--skin-bg) ring-1 ring-(--color-border) overflow-hidden">
+        <div className="relative h-28 w-28 shrink-0 rounded-2xl bg-(--color-surface) ring-1 ring-(--color-border) overflow-hidden">
           <Image
             src="/mark/gratia-mark.svg"
             alt="Gratia Mark · Suave Bloom"
@@ -37,9 +37,9 @@ export function MarkSceneCard() {
       </div>
 
       <footer className="mt-4 flex flex-wrap gap-2 text-[11px] text-(--color-muted)">
-        <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">Mark v0.3 · Suave Bloom</span>
-        <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">Witnessed in Vienna</span>
-        <span className="rounded-full bg-(--skin-accent)/10 px-2 py-1">Floare · Grajd · Cal</span>
+        <span className="rounded-full bg-(--color-accent)/10 px-2 py-1">Mark v0.3 · Suave Bloom</span>
+        <span className="rounded-full bg-(--color-accent)/10 px-2 py-1">Witnessed in Vienna</span>
+        <span className="rounded-full bg-(--color-accent)/10 px-2 py-1">Floare · Grajd · Cal</span>
       </footer>
     </section>
   );

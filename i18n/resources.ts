@@ -33,6 +33,13 @@ export const resources = {
     patterns: enPatterns,
     about: enAbout,
   },
+  fr: {
+    vortex: enVortex,
+    common: enCommon,
+    reflection: enReflection,
+    patterns: enPatterns,
+    about: enAbout,
+  },
   de: {
     vortex: deVortex,
     common: deCommon,
