@@ -6,24 +6,27 @@ settings:
 
 overrides:
   '@gratiaos/signal': ^1.0.3
-  '@gratiaos/presence-kernel': ^1.1.3
+  '@gratiaos/presence-kernel': ^1.1.4
 
 importers:
 
   .:
     dependencies:
+      '@gratiaos/icons':
+        specifier: ^1.0.4
+        version: 1.0.4(react@19.2.1)
       '@gratiaos/presence-kernel':
-        specifier: ^1.1.3
-        version: 1.1.3(react@19.2.1)
+        specifier: ^1.1.4
+        version: 1.1.4(react@19.2.1)
       '@gratiaos/signal':
         specifier: ^1.0.3
         version: 1.0.3
       '@gratiaos/tokens':
-        specifier: ^1.0.6
-        version: 1.0.6(tailwindcss@4.1.13)
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@4.1.13)
       '@gratiaos/ui':
-        specifier: ^1.2.0
-        version: 1.2.0(react@19.2.1)
+        specifier: ^1.3.0
+        version: 1.3.0(react@19.2.1)
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(next@15.5.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
@@ -104,21 +107,26 @@ packages:
   '@emnapi/runtime@1.5.0':
     resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
 
-  '@gratiaos/presence-kernel@1.1.3':
-    resolution: {integrity: sha512-ysiiCJt6WbgQXF03SoQhuq6jN1wEAp5ie40cwTNJinNnZ1btfXMePezIzZssd0pXOkNbjoMaeShucOAUtDnGAA==}
+  '@gratiaos/icons@1.0.4':
+    resolution: {integrity: sha512-gR1wXCGwzGt4Z4IsA6U4kUl0uVoWhhLQRv/vw5ecQrnCvKJdHtsmSCF0qxMSn1iheGh2aPPtTQbY1trHA9EAZA==}
+    peerDependencies:
+      react: ^18 || ^19
+
+  '@gratiaos/presence-kernel@1.1.4':
+    resolution: {integrity: sha512-O0Tpy5dnYdkk+9pKJvaoYbGrW9VM+2IkAUf9HBQ+fUeAKQw0jQqrLsIt31yKpiOhUmkrvItmf24UysZp70G6jQ==}
     peerDependencies:
       react: ^18 || ^19
 
   '@gratiaos/signal@1.0.3':
     resolution: {integrity: sha512-fESNzwkBHByYMoPBUcOfTlAyceG2gpjDEFYEJn0FGzEP8Er6txsQcT6tbf4qWGRtGTcFoi3AUkLw9O+yD7mqOA==}
 
-  '@gratiaos/tokens@1.0.6':
-    resolution: {integrity: sha512-TpE5Jg5NKFB5ljtVzNLUIu8OkaE1bZQE3gK+CZaTI0/gX8/cGa5WcErCcWoqebHMAbRwTnyx+QfFCzfv0XMclQ==}
+  '@gratiaos/tokens@1.0.7':
+    resolution: {integrity: sha512-UKCYSvsWAqPs0RJ3/PuJu9T6JIZah0cbSdkpCFK/0Ip/JdAwrfy2yilPUZ2T8Ekc5drfxJRiE58cqasvf7EQzA==}
     peerDependencies:
       tailwindcss: ^4.0.0
 
-  '@gratiaos/ui@1.2.0':
-    resolution: {integrity: sha512-Kiu3H6efRrmW0LPumo0eBcQPEIz6guyEGSVUNDiFCdqMEhdAylVGy9OeSf2yUgr3k9G9jLk9C1pXg1S4lWP7Dw==}
+  '@gratiaos/ui@1.3.0':
+    resolution: {integrity: sha512-yQrL5kbiReBxh4tQ+3nOK0irAvPYfYZGkukNl/9NA3nU1DCvjQv/uYDNF7RrusPTQK8bb2W5ORxTG2+5Cjc7Jg==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -1241,20 +1249,24 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@gratiaos/presence-kernel@1.1.3(react@19.2.1)':
+  '@gratiaos/icons@1.0.4(react@19.2.1)':
+    dependencies:
+      react: 19.2.1
+
+  '@gratiaos/presence-kernel@1.1.4(react@19.2.1)':
     dependencies:
       '@gratiaos/signal': 1.0.3
       react: 19.2.1
 
   '@gratiaos/signal@1.0.3': {}
 
-  '@gratiaos/tokens@1.0.6(tailwindcss@4.1.13)':
+  '@gratiaos/tokens@1.0.7(tailwindcss@4.1.13)':
     dependencies:
       tailwindcss: 4.1.13
 
-  '@gratiaos/ui@1.2.0(react@19.2.1)':
+  '@gratiaos/ui@1.3.0(react@19.2.1)':
     dependencies:
-      '@gratiaos/presence-kernel': 1.1.3(react@19.2.1)
+      '@gratiaos/presence-kernel': 1.1.4(react@19.2.1)
       react: 19.2.1
 
   '@img/colour@1.0.0':
