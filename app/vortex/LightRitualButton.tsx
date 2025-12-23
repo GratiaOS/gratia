@@ -37,20 +37,23 @@ export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
         className="relative w-full max-w-xs rounded-[28px] p-[3px] transition-all duration-500"
         style={{
           background: lit
-            ? 'radial-gradient(circle at 50% 20%, rgba(251,191,36,0.4), rgba(255,255,255,0.16))'
-            : 'radial-gradient(circle at 50% 20%, rgba(255,255,255,0.08), rgba(0,0,0,0.65))',
+            ? 'radial-gradient(circle at 50% 20%, color-mix(in oklab, var(--color-accent) 40%, transparent), color-mix(in oklab, var(--color-text) 16%, transparent))'
+            : 'radial-gradient(circle at 50% 20%, color-mix(in oklab, var(--color-text) 8%, transparent), color-mix(in oklab, var(--color-text) 65%, transparent))',
         }}
       >
-        <div className="absolute inset-0 rounded-[26px] border border-white/10" aria-hidden />
+        <div
+          className="absolute inset-0 rounded-[26px] border border-(--color-border)/40"
+          aria-hidden
+        />
 
         <button
           type="button"
           onClick={handleClick}
           disabled={phase !== 'idle'}
-          className={`relative z-[1] w-full rounded-[22px] px-5 py-3 text-sm font-semibold tracking-wide transition-all duration-400 shadow-[0_0_12px_rgba(0,0,0,0.28)] focus:outline-none focus:ring-2 focus:ring-amber-200/60 focus:ring-offset-2 focus:ring-offset-transparent ${
+          className={`whisper-ring relative z-[1] w-full rounded-[22px] px-5 py-3 text-sm font-semibold tracking-wide transition-all duration-400 shadow-depth-1 ${
             lit
-              ? 'bg-gradient-to-b from-amber-200 via-amber-100 to-amber-50 text-stone-900 shadow-[0_0_18px_rgba(251,191,36,0.55)]'
-              : 'bg-gradient-to-b from-slate-800/80 via-slate-900/80 to-slate-950 text-amber-100/90 hover:from-slate-700 hover:to-slate-900'
+              ? 'bg-(--color-accent)/20 text-(--color-text) shadow-depth-2'
+              : 'bg-(--color-elev)/80 text-(--color-text)'
           }`}
         >
           {phase === 'idle' && 'Enciende la luz'}
@@ -59,7 +62,7 @@ export default function LightRitualButton({ onLight }: LightRitualButtonProps) {
         </button>
       </div>
 
-      <p className="text-xs text-stone-400 text-center max-w-sm leading-snug">
+      <p className="text-xs text-(--color-muted) text-center max-w-sm leading-snug">
         {phase === 'idle' && 'Solo pulsa. Lo demás llega solo.'}
         {phase === 'lighting' && 'La luz se enciende. Solo respira.'}
         {phase === 'invite' && 'Lienzo. Tú puedes imaginarte el próximo paso. Un singur pas e suficient pentru azi.'}

@@ -16,14 +16,14 @@ export function WhisperEnergy({ energy }: WhisperEnergyProps) {
   return (
     <div className="relative h-32 w-32">
       <div
-        className={`absolute inset-4 rounded-full border border-amber-400/70 ${ringOpacity[energy.pulse]}`}
+        className={`absolute inset-4 rounded-full border border-(--color-accent)/70 ${ringOpacity[energy.pulse]}`}
       />
       <div
-        className={`absolute inset-2 rounded-full border border-emerald-400/70 ${ringOpacity[energy.load]}`}
+        className={`absolute inset-2 rounded-full border border-(--color-border)/70 ${ringOpacity[energy.load]}`}
       />
-      <div className="absolute inset-0 rounded-full border border-sky-400/60 opacity-60" />
+      <div className="absolute inset-0 rounded-full border border-(--color-muted)/60 opacity-60" />
 
-      <div className="absolute inset-0 flex items-center justify-center text-[11px] uppercase tracking-[0.2em] text-slate-200">
+      <div className="absolute inset-0 flex items-center justify-center text-[11px] uppercase tracking-[0.2em] text-(--color-text)">
         {energy.drift}
       </div>
     </div>

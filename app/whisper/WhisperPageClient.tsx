@@ -9,11 +9,13 @@ export default function WhisperPageClient() {
   const feed = useWhisper();
 
   return (
-    <main className="flex min-h-screen justify-center bg-[#050812] text-slate-100">
+    <main className="flex min-h-screen justify-center bg-(--color-surface) text-(--color-text)">
       <div className="w-full max-w-4xl space-y-8 px-4 py-10">
         <header className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-slate-500">M3 · Whisper Interface</p>
+            <p className="text-xs uppercase tracking-[0.25em] text-(--color-muted)">
+              M3 · Whisper Interface
+            </p>
             <h1 className="mt-1 text-xl font-semibold">Field whispers for the current kernel state</h1>
           </div>
           <WhisperState state={feed.kernelState} />
@@ -22,18 +24,20 @@ export default function WhisperPageClient() {
         <section className="grid items-start gap-8 md:grid-cols-[220px_minmax(0,1fr)]">
           <div className="flex flex-col items-center gap-3">
             <WhisperEnergy energy={feed.energy} />
-            <p className="max-w-[14rem] text-center text-xs text-slate-400">
+            <p className="max-w-[14rem] text-center text-xs text-(--color-muted)">
               Pulse, load și drift energetic — snapshot rapid al câmpului.
             </p>
           </div>
 
           <div>
-            <p className="mb-3 text-xs uppercase tracking-[0.25em] text-slate-500">Recent whispers</p>
+            <p className="mb-3 text-xs uppercase tracking-[0.25em] text-(--color-muted)">
+              Recent whispers
+            </p>
             <WhisperTimeline items={feed.timeline} />
           </div>
         </section>
 
-        <footer className="border-t border-white/5 pt-4 text-[11px] text-slate-500">
+        <footer className="border-t border-(--color-border)/40 pt-4 text-[11px] text-(--color-muted)">
           whisper: when the spine is clear, every scene knows where to land. 🌬️
         </footer>
       </div>

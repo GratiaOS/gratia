@@ -4,10 +4,6 @@ import VortexScene from './VortexScene';
 import SceneLayout from '@/components/layouts/SceneLayout';
 import { I18nProvider, useTranslation } from '../../i18n/I18nProvider';
 
-type Props = {
-  locale?: string;
-};
-
 function VortexPageContent() {
   const { t } = useTranslation('vortex');
 
@@ -24,9 +20,9 @@ function VortexPageContent() {
   );
 }
 
-export default function VortexPageClient({ locale = 'es' }: Props) {
+export default function VortexPageClient() {
   return (
-    <I18nProvider locale={locale}>
+    <I18nProvider>
       <VortexPageContent />
     </I18nProvider>
   );

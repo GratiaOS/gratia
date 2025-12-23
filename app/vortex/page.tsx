@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import './vortex.css';
-import { redirect } from 'next/navigation';
-import { defaultLocale } from '../../i18n/config';
 import VortexPageClient from './VortexPageClient';
 
 export const metadata: Metadata = {
@@ -10,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function VortexPage() {
-  redirect(`/${defaultLocale}/vortex`);
+  return <VortexPageClient />;
 }

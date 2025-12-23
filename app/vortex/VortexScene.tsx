@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@gratiaos/ui';
 import LightRitualButton from './LightRitualButton';
-import LanguageSwitcher from '../[locale]/vortex/LanguageSwitcher';
+import LanguageSwitcher from './LanguageSwitcher';
 
 type BreathPhase = 'inhale' | 'hold' | 'exhale';
 type VortexMode = 'idle' | 'lighting' | 'ritual' | 'closing';
