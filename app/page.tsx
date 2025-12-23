@@ -10,6 +10,7 @@ const messages = {
     line2: 'Soft as light. Warm as spring. 🌿',
     subtitle: 'A calm way to listen to nature, feel the world, and remember yourself.',
     footer: 'Offer only what you love.',
+    support: 'Support',
   },
   es: {
     title: 'Gratia es un espacio vivo de memoria y presencia.',
@@ -18,6 +19,7 @@ const messages = {
     subtitle:
       'Una forma tranquila de sentir y escuchar la naturaleza y de volver a encontrarse con el propio ser.',
     footer: 'Ofrece solo lo que amas.',
+    support: 'Apoyar',
   },
   fr: {
     title: 'Gratia est un espace doux de mémoire et de présence.',
@@ -25,6 +27,7 @@ const messages = {
     line2: 'Légère comme la lumière. Chaude comme le printemps. 🍃',
     subtitle: 'Une manière paisible d’écouter la nature, de sentir le monde et de te retrouver toi-même.',
     footer: 'N’offre que ce que tu aimes.',
+    support: 'Soutenir',
   },
   ar: {
     title: 'Gratia فضاء لطيف للذاكرة والحضور.',
@@ -32,6 +35,7 @@ const messages = {
     line2: 'ناعمة كالنور، دافئة مثل الربيع. 🍃',
     subtitle: 'طريق هادئ للإصغاء إلى الطبيعة، والشعور بالعالم، والتلاقي مع ذاتك من جديد.',
     footer: 'قدّم فقط ما تحبّه.',
+    support: 'الدعم',
   },
   ro: {
     title: 'Gratia este un spațiu blând de memorie și prezență.',
@@ -39,6 +43,7 @@ const messages = {
     line2: 'Moale ca lumina. Caldă ca primăvara. 🌿',
     subtitle: 'O cale liniștită de a asculta natura, de a simți lumea și de a te regăsi pe tine.',
     footer: 'Oferă doar ceea ce iubești.',
+    support: 'Sprijină',
   },
 } as const;
 
@@ -106,6 +111,8 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
   const params = (await searchParams) ?? {};
   const activeLang = resolveLang(params.lang);
   const t = messages[activeLang];
+  const supportHref =
+    activeLang === defaultLocale ? '/asociacion' : `/asociacion?lang=${activeLang}`;
 
   return (
     <main
@@ -137,24 +144,17 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
           className="flex items-center justify-center gap-3 text-xs opacity-80"
         />
 
-        <div className="flex items-center justify-center gap-4 text-sm opacity-80">
-          <a href="https://github.com/GratiaOS" className="underline-offset-4 hover:underline">
-            GitHub
+        <div className="flex items-center justify-center gap-4 text-sm opacity-40 transition-opacity hover:opacity-100 focus-within:opacity-100">
+          <a href={supportHref} className="underline-offset-4 hover:underline">
+            {t.support}
           </a>
-          <span>·</span>
-          <a
-            href="https://github.com/orgs/GratiaOS/discussions"
-            className="underline-offset-4 hover:underline"
-          >
-            Discussions
-          </a>
-          <span>·</span>
+          <span>⟡</span>
           <a href="mailto:contact@gratia.space" className="underline-offset-4 hover:underline">
             Email
           </a>
-          <span>·</span>
-          <a href="/vortex" className="underline-offset-4 hover:underline">
-            ✺ Vortex
+          <span>⟡</span>
+          <a href="https://github.com/GratiaOS" className="underline-offset-4 hover:underline">
+            GitHub
           </a>
         </div>
 
