@@ -20,6 +20,15 @@
   "medium_helper": "¿Necesitas responder? Puedo crear un comentario suave para pegar en cualquier parte.",
   "medium_button": "Generar comentario",
   "medium_copied": "Copiado.",
+  "presence_whispers": [
+    "Estoy aquí.",
+    "Sostengo el espacio.",
+    "Despacio.",
+    "Respiramos.",
+    "Silencio bueno.",
+    "Está bien estar vacío.",
+    "Solo presencia."
+  ],
   "error_text": "Aún no vemos un reflejo claro. Puedes añadir unas líneas más o probar con otro texto.",
   "error_back": "Volver al texto",
   "pad_title": "Una frase",

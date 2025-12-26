@@ -15,4 +15,24 @@
   - Tracks `mediumCommentLocale`.
   - Resets comment state on locale switch / new fetch.
   - Only shows preview when it matches current locale.
-- **TypeScript green**: `pnpm tsc --noEmit` OK.
+
+- **Published package deps**: switched Gratia to npm versions (no local links):
+  - `@gratiaos/tokens` → `^1.0.7`
+  - `@gratiaos/ui` → `^1.3.0`
+  - `@gratiaos/presence-kernel` → `^1.1.4`
+  - `@gratiaos/icons` resolved via npm (lockfile)
+- **SkinFieldProvider initialization fixed** in `app/skin/SkinFieldProvider.tsx`:
+  - Always sets `dataset.skinId` on first mount to avoid flash
+  - Default respects system preference (Sun for light, Moon for dark) when no stored value
+  - Persists corrected value when system dark forces Sun → Moon
+- **Theme + tokens tuning**:
+  - Moon skin refined toward a warmer, lower‑chroma “semineu / slow burn” palette
+  - Reduced neon tone colors (green/amber/red) for Moon
+- **Pattern Mirror UX refinements**:
+  - Toolbar toggles moved to Pill buttons and hydration mismatch fixed for typography mode
+  - Mirror Room copy updated across `en/es/ro` (anchored by “This is us.” / “Așa suntem noi.”)
+  - Idle whisper bubble uses rotating `presence_whispers` (emoji‑only, no named entity)
+- **Site footer links updated**:
+  - Removed Vortex link
+  - Separator switched to `⟡`
+  - Links use subtle opacity reveal on hover/focus

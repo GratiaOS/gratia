@@ -46,6 +46,18 @@ function PatternMirrorContent() {
   const [toolbarDepth, setToolbarDepth] = React.useState<1 | 2>(1);
   const hasText = text.trim().length > 0;
   const toolbarDepthTimer = React.useRef<number | null>(null);
+  const stageRef = React.useRef<Stage>(stage);
+  // Pause-detect (idle nudge after a quiet moment — does NOT auto-submit)
+  const PAUSE_IDLE_MS = 2400;
+  const PAUSE_MIN_CHARS = 18;
+  const pauseTimerRef = React.useRef<number | null>(null);
+  const pauseCountRef = React.useRef(0);
+  const textRef = React.useRef<string>('');
+  const suppressAutoRevealRef = React.useRef(false);
+
+  const [idleNudgeVisible, setIdleNudgeVisible] = React.useState(false);
+  const [presenceIdle, setPresenceIdle] = React.useState(false);
+  const [presenceWhisper, setPresenceWhisper] = React.useState<string>('');
 
   const [inputFocused, setInputFocused] = React.useState(false);
   const [resultsHovered, setResultsHovered] = React.useState(false);
@@ -72,6 +84,55 @@ function PatternMirrorContent() {
         : isResultsStage
           ? 'hint_results'
           : 'hint_idle';
+
+  // Reveal gating: allow full mirror only after the text has a real "paragraph",
+  // unless the input is a link (links can be mirrored immediately).
+  const trimmedText = text.trim();
+  const isLinkInput = /^https?:\/\//i.test(trimmedText);
+  const hasParagraph = trimmedText.includes('\n') || trimmedText.length >= 140;
+  const canReveal = isLinkInput || hasParagraph;
+
+  // Idle whisper should feel like a tiny reflection, not a CTA.
+  const idleWhisperText = React.useMemo(() => {
+    if (!trimmedText) return '';
+    // If it's a link, keep it soft + simple.
+    if (isLinkInput) {
+      return t('whisper_line');
+    }
+
+    // Take the last meaningful line/sentence and mirror it back gently.
+    const lines = trimmedText
+      .split(/\n+/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    const lastLine = lines[lines.length - 1] ?? trimmedText;
+
+    // If there’s enough material, offer a micro-mirror rather than an instruction.
+    if (trimmedText.length >= PAUSE_MIN_CHARS) {
+      const snippet = lastLine.length > 84 ? lastLine.slice(0, 84).trimEnd() + '…' : lastLine;
+      return `“${snippet}”`;
+    }
+
+    // Not enough yet → keep it as presence.
+    return t('mirror_whisper');
+  }, [trimmedText, isLinkInput, t]);
+
+  const presenceWhispers = React.useMemo(() => {
+    const fromLocale = (resources as any)[mirrorLocale]?.reflection?.presence_whispers;
+    const fromDefault =
+      (resources as any)[defaultLocale as PatternMirrorLocale]?.reflection?.presence_whispers;
+    const list = Array.isArray(fromLocale) && fromLocale.length ? fromLocale : fromDefault;
+    const normalized = Array.isArray(list)
+      ? list.map((item) => (typeof item === 'string' ? item.trim() : '')).filter(Boolean)
+      : [];
+    return normalized.length ? normalized : [t('mirror_whisper')];
+  }, [mirrorLocale, t]);
+
+  const pickPresenceWhisper = React.useCallback(() => {
+    if (!presenceWhispers.length) return;
+    const next = presenceWhispers[Math.floor(Math.random() * presenceWhispers.length)];
+    setPresenceWhisper(next);
+  }, [presenceWhispers]);
 
   const seedsForLocale = React.useMemo(
     () => loadTruthSeeds().filter((s) => s.locale === mirrorLocale),
@@ -102,6 +163,7 @@ function PatternMirrorContent() {
   React.useEffect(() => {
     const incoming = prefillValue?.trim();
     if (incoming && !text) {
+      textRef.current = incoming;
       setText(incoming);
       setStage('ready');
     }
@@ -124,6 +186,42 @@ function PatternMirrorContent() {
   }, [hasText]);
 
   React.useEffect(() => {
+    stageRef.current = stage;
+  }, [stage]);
+
+  React.useEffect(() => {
+    if (stage === 'listening' || isResultsStage) {
+      if (presenceIdle) setPresenceIdle(false);
+      return;
+    }
+
+    if (trimmedText) {
+      if (presenceIdle) setPresenceIdle(false);
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      pickPresenceWhisper();
+      setPresenceIdle(true);
+    }, 9000);
+
+    return () => window.clearTimeout(timer);
+  }, [stage, isResultsStage, trimmedText, presenceIdle, pickPresenceWhisper]);
+
+  React.useEffect(() => {
+    if (!presenceWhispers.length) return;
+    setPresenceWhisper((prev) => (prev && presenceWhispers.includes(prev) ? prev : presenceWhispers[0]));
+  }, [presenceWhispers]);
+
+  React.useEffect(() => {
+    if (!presenceIdle || trimmedText) return;
+    const interval = window.setInterval(() => {
+      pickPresenceWhisper();
+    }, 12000);
+    return () => window.clearInterval(interval);
+  }, [presenceIdle, trimmedText, pickPresenceWhisper]);
+
+  React.useEffect(() => {
     if (typeof window === 'undefined') return;
     const stored = window.localStorage.getItem('gratia.typo');
     const dataset = document.documentElement.dataset.typo;
@@ -143,6 +241,14 @@ function PatternMirrorContent() {
     return () => {
       if (toolbarDepthTimer.current) {
         window.clearTimeout(toolbarDepthTimer.current);
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      if (pauseTimerRef.current) {
+        window.clearTimeout(pauseTimerRef.current);
       }
     };
   }, []);
@@ -179,8 +285,37 @@ function PatternMirrorContent() {
   }, []);
 
   const handleChange = (value: string) => {
+    textRef.current = value;
+    suppressAutoRevealRef.current = false;
+
+    if (pauseTimerRef.current) {
+      window.clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = null;
+    }
+
+    // Any new typing hides the nudge; we only show it after a pause.
+    setIdleNudgeVisible(false);
+    setPresenceIdle(false);
+    setPresenceIdle(false);
+
+    const trimmed = value.trim();
+    if (trimmed && stage !== 'listening') {
+      pauseTimerRef.current = window.setTimeout(() => {
+        const latest = (textRef.current || '').trim();
+        if (!latest) return;
+        if (suppressAutoRevealRef.current) return;
+        if (stageRef.current === 'listening') return;
+        if (latest.length < PAUSE_MIN_CHARS) return;
+
+        pauseCountRef.current += 1;
+        if (pauseCountRef.current < 2) return;
+        setIdleNudgeVisible(true);
+      }, PAUSE_IDLE_MS);
+    }
+
     setText(value);
     if (!value.trim()) {
+      pauseCountRef.current = 0;
       setStage('idle');
       return;
     }
@@ -190,7 +325,22 @@ function PatternMirrorContent() {
   };
 
   const handleRevealReflection = async () => {
-    if (!text.trim() || stage === 'listening') return;
+    const current = (textRef.current || text).trim();
+    if (!current || stage === 'listening') return;
+
+    if (pauseTimerRef.current) {
+      window.clearTimeout(pauseTimerRef.current);
+      pauseTimerRef.current = null;
+    }
+
+    setIdleNudgeVisible(false);
+
+    // Gate: only reveal the full mirror after a paragraph (unless it’s a link).
+    if (!canReveal) {
+      setStage(current ? 'ready' : 'idle');
+      return;
+    }
+
     setStage('listening');
     setMediumComment(null);
     setMediumCommentLocale(null);
@@ -204,7 +354,7 @@ function PatternMirrorContent() {
           'Accept-Language': mirrorLocale,
         },
         body: JSON.stringify({
-          content: text,
+          content: current,
           lang: mirrorLocale,
           locale: mirrorLocale,
         }),
@@ -228,6 +378,8 @@ function PatternMirrorContent() {
       console.error('[pattern-mirror]', error);
       setPayloadMetaSource('sample-fallback');
       setStage('error');
+    } finally {
+      // nothing to do here
     }
   };
 
@@ -352,6 +504,7 @@ function PatternMirrorContent() {
     <main
       className="pm-page"
       data-pm-has-text={hasText}
+      data-pm-idle={Boolean(idleNudgeVisible || presenceIdle)}
       data-input-focused={inputFocused}
       data-results-hovered={resultsHovered}
     >
@@ -490,6 +643,19 @@ function PatternMirrorContent() {
             <textarea
               value={text}
               onChange={(e) => handleChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  suppressAutoRevealRef.current = true;
+                  if (pauseTimerRef.current) {
+                    window.clearTimeout(pauseTimerRef.current);
+                    pauseTimerRef.current = null;
+                  }
+    setIdleNudgeVisible(false);
+    setPresenceIdle(false);
+    pauseCountRef.current = 0;
+                  setStage(textRef.current.trim() ? 'ready' : 'idle');
+                }
+              }}
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
               rows={7}
@@ -501,15 +667,29 @@ function PatternMirrorContent() {
             />
 
             <div className="pm-input-footer">
+              {(stage === 'ready' || stage === 'idle') && !suppressAutoRevealRef.current ? (
+                <div className="pm-idle-whisper" role="note" aria-label="Antonio whisper">
+                  <span className="pm-idle-whisper-icon" aria-hidden>
+                    🐸
+                  </span>
+                  <span className="pm-idle-whisper-text">
+                    {trimmedText ? idleWhisperText : presenceWhisper}
+                  </span>
+                </div>
+              ) : null}
+
               <Button
                 variant="ghost"
                 tone="accent"
-                disabled={!text.trim() || stage === 'listening'}
+                disabled={!text.trim() || stage === 'listening' || !canReveal}
                 loading={stage === 'listening'}
                 className="pm-reveal-btn"
-                onClick={handleRevealReflection}
+                onClick={() => {
+                  suppressAutoRevealRef.current = true;
+                  void handleRevealReflection();
+                }}
               >
-                {t('button_reveal')}
+                <span aria-hidden>🪷</span> {t('button_reveal')}
               </Button>
             </div>
 

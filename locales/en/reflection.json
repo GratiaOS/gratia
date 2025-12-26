@@ -20,6 +20,15 @@
   "medium_helper": "Need a reply? I can craft a gentle comment you can paste anywhere.",
   "medium_button": "Generate comment",
   "medium_copied": "Copied.",
+  "presence_whispers": [
+    "I am here.",
+    "Holding the space.",
+    "Slowly.",
+    "We breathe.",
+    "Good silence.",
+    "It is okay to be empty.",
+    "Only presence."
+  ],
   "error_text": "We don’t see a clear reflection yet. You can add a few more lines or try another text.",
   "error_back": "Back to text",
   "pad_title": "One sentence",
