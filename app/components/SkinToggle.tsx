@@ -1,21 +1,28 @@
 'use client';
 
 import { useSkinField, type KernelSkinId } from '@/skin/SkinFieldProvider';
+import { useTranslation } from '../../i18n/I18nProvider';
 
-const SKINS: { id: KernelSkinId; label: string }[] = [
-  { id: 'SUN', label: '☀️ Sun' },
-  { id: 'MOON', label: '🌙 Moon' },
-  { id: 'GARDEN', label: '🌿 Garden' },
-  { id: 'STELLAR', label: '🟣 Stellar' },
+const SKINS: {
+  id: KernelSkinId;
+  emoji: string;
+  labelKey: 'skins.sun' | 'skins.moon' | 'skins.garden' | 'skins.stellar';
+}[] = [
+  { id: 'SUN', emoji: '☀️', labelKey: 'skins.sun' },
+  { id: 'MOON', emoji: '🌙', labelKey: 'skins.moon' },
+  { id: 'GARDEN', emoji: '🌿', labelKey: 'skins.garden' },
+  { id: 'STELLAR', emoji: '🟣', labelKey: 'skins.stellar' },
 ];
 
 export function SkinToggle() {
   const { skinId, setSkinId } = useSkinField();
+  const { t } = useTranslation('common');
 
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-(--color-border) bg-(--color-elev) px-2 py-1 text-xs shadow-sm">
       {SKINS.map((skin) => {
         const active = skinId === skin.id;
+        const label = t(skin.labelKey);
         return (
           <button
             key={skin.id}
@@ -32,8 +39,8 @@ export function SkinToggle() {
                 : '1px solid transparent',
             }}
           >
-            <span aria-hidden>{skin.label.split(' ')[0]}</span>
-            <span className="hidden sm:inline">{skin.label.replace(/^[^ ]+ /, '')}</span>
+            <span aria-hidden>{skin.emoji}</span>
+            <span className="hidden sm:inline">{label}</span>
           </button>
         );
       })}

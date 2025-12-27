@@ -6,5 +6,28 @@
   },
   "links": {
     "learnMore": "معرفة المزيد"
+  },
+  "skins": {
+    "sun": "الشمس",
+    "moon": "القمر",
+    "garden": "الحديقة",
+    "stellar": "نجمي"
+  },
+  "types": {
+    "default": "افتراضي",
+    "vienna": "فيينا"
+  },
+  "locales": {
+    "en": "English",
+    "es": "Español",
+    "ro": "Română",
+    "fr": "Français",
+    "ar": "العربية",
+    "de": "Deutsch"
+  },
+  "nozzle": {
+    "soft": "ناعم",
+    "focused": "مركّز",
+    "celebratory": "احتفالي"
   }
 }

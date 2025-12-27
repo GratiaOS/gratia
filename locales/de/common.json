@@ -6,5 +6,28 @@
   },
   "links": {
     "learnMore": "Mehr erfahren"
+  },
+  "skins": {
+    "sun": "Sonne",
+    "moon": "Mond",
+    "garden": "Garten",
+    "stellar": "Stellar"
+  },
+  "types": {
+    "default": "Standard",
+    "vienna": "Wien"
+  },
+  "locales": {
+    "en": "English",
+    "es": "Español",
+    "ro": "Română",
+    "fr": "Français",
+    "ar": "العربية",
+    "de": "Deutsch"
+  },
+  "nozzle": {
+    "soft": "Sanft",
+    "focused": "Fokussiert",
+    "celebratory": "Feierlich"
   }
 }

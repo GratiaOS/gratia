@@ -45,7 +45,11 @@ function getNested(obj: any, path: string): unknown {
   }, obj);
 }
 
-function translate<N extends Namespaces, K extends TranslationKey<N>>(locale: Locale, namespace: N, key: K): string {
+function translate<N extends Namespaces, K extends TranslationKey<N>>(
+  locale: Locale,
+  namespace: N,
+  key: K
+): string {
   const nsPack = resources[locale]?.[namespace];
   const basePack = resources[defaultLocale as Locale]?.[namespace];
 
@@ -82,10 +86,10 @@ export function I18nProvider({ locale, children }: ProviderProps) {
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
     const syncFromQuery = () => {
-      const params = new URL(window.location.href).searchParams;
-      const raw = params.get(LOCALE_QUERY_KEY);
+      const url = new URL(window.location.href);
+      const rawQuery = url.searchParams.get(LOCALE_QUERY_KEY);
       const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-      const normalized = normalizeLocale(raw ?? stored);
+      const normalized = normalizeLocale(rawQuery ?? stored);
       setActiveLocale((prev) => (prev === normalized ? prev : normalized));
     };
     syncFromQuery();
@@ -99,13 +103,15 @@ export function I18nProvider({ locale, children }: ProviderProps) {
     }
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(LOCALE_STORAGE_KEY, activeLocale);
+      const isDefault = activeLocale === (defaultLocale as Locale);
+
       const url = new URL(window.location.href);
-      const shouldSet = activeLocale !== (defaultLocale as Locale);
-      if (shouldSet) {
+      if (!isDefault) {
         url.searchParams.set(LOCALE_QUERY_KEY, activeLocale);
       } else {
         url.searchParams.delete(LOCALE_QUERY_KEY);
       }
+
       const next =
         url.pathname +
         (url.searchParams.toString() ? `?${url.searchParams.toString()}` : '') +

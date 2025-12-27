@@ -6,5 +6,28 @@
   },
   "links": {
     "learnMore": "Află mai mult"
+  },
+  "skins": {
+    "sun": "Soare",
+    "moon": "Lună",
+    "garden": "Grădină",
+    "stellar": "Stelar"
+  },
+  "types": {
+    "default": "Implicit",
+    "vienna": "Viena"
+  },
+  "locales": {
+    "en": "English",
+    "es": "Español",
+    "ro": "Română",
+    "fr": "Français",
+    "ar": "العربية",
+    "de": "Deutsch"
+  },
+  "nozzle": {
+    "soft": "Blând",
+    "focused": "Focalizat",
+    "celebratory": "Celebrator"
   }
 }

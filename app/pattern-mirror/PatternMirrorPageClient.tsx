@@ -16,11 +16,14 @@ type PatternMeta = { label: string; description?: string; tone?: string; emoji?:
 type TruthSeed = { text: string; createdAt: string; locale: PatternMirrorLocale };
 
 const TRUTH_SEEDS_KEY = 'pattern-mirror.truth-seeds';
+const TOOLBAR_NOZZLE_KEY = 'pattern-mirror.toolbar-nozzle';
+const TOOLBAR_HINT_KEY = 'pattern-mirror.toolbar-hint-seen';
 const reflectionLocales: PatternMirrorLocale[] = ['en', 'es', 'ro'];
 const normalizePatternKey = (chip: string) => chip.trim().toLowerCase().replace(/\s+/g, '-');
 
 function PatternMirrorContent() {
   const { t, locale: translationLocale, setLocale } = useTranslation('reflection');
+  const { t: tCommon } = useTranslation('common');
   const { skinId, setSkinId } = useSkinField();
   const searchParams = useSearchParams();
   const mirrorLocale: PatternMirrorLocale =
@@ -44,16 +47,47 @@ function PatternMirrorContent() {
   const [mediumCopied, setMediumCopied] = React.useState(false);
   const [typoMode, setTypoMode] = React.useState<'ui' | 'mono'>('ui');
   const [toolbarDepth, setToolbarDepth] = React.useState<1 | 2>(1);
+  const [toolbarNozzle, setToolbarNozzle] = React.useState<1 | 2 | 3>(1);
+  const [toolbarHintSeen, setToolbarHintSeen] = React.useState(false);
   const hasText = text.trim().length > 0;
   const toolbarDepthTimer = React.useRef<number | null>(null);
   const stageRef = React.useRef<Stage>(stage);
   // Pause-detect (idle nudge after a quiet moment — does NOT auto-submit)
-  const PAUSE_IDLE_MS = 2400;
+  // Trigger = first pause (~1.6–2.0s idle) OR max 9s from first character.
+  const PAUSE_IDLE_MS = 1800;
+  const FIRST_CHAR_MAX_MS = 9000;
   const PAUSE_MIN_CHARS = 18;
   const pauseTimerRef = React.useRef<number | null>(null);
-  const pauseCountRef = React.useRef(0);
+  const firstCharTimerRef = React.useRef<number | null>(null);
+  const firstCharAtRef = React.useRef<number | null>(null);
   const textRef = React.useRef<string>('');
   const suppressAutoRevealRef = React.useRef(false);
+
+  // G 📻 — local ambient tone bed (no external streams; user-initiated)
+  const [radioOn, setRadioOn] = React.useState(false);
+  const [radioHz, setRadioHz] = React.useState<number>(528);
+  const [radioVolume, setRadioVolume] = React.useState<number>(0.06);
+  const [radioMode, setRadioMode] = React.useState<'single' | 'binaural'>('single');
+  const [radioBeatHz, setRadioBeatHz] = React.useState<number>(6);
+
+  const audioCtxRef = React.useRef<AudioContext | null>(null);
+  const oscRef = React.useRef<OscillatorNode | null>(null);
+  const osc2Ref = React.useRef<OscillatorNode | null>(null);
+  const gainRef = React.useRef<GainNode | null>(null);
+  const filterRef = React.useRef<BiquadFilterNode | null>(null);
+  const panLRef = React.useRef<StereoPannerNode | null>(null);
+  const panRRef = React.useRef<StereoPannerNode | null>(null);
+
+  const RADIO_PRESETS = React.useMemo(
+    () => [
+      { hz: 432, label: '432 Hz' },
+      { hz: 528, label: '528 Hz' },
+      { hz: 639, label: '639 Hz' },
+      { hz: 741, label: '741 Hz' },
+      { hz: 852, label: '852 Hz' },
+    ],
+    []
+  );
 
   const [idleNudgeVisible, setIdleNudgeVisible] = React.useState(false);
   const [presenceIdle, setPresenceIdle] = React.useState(false);
@@ -84,6 +118,18 @@ function PatternMirrorContent() {
         : isResultsStage
           ? 'hint_results'
           : 'hint_idle';
+  const localeLabels: Record<PatternMirrorLocale, string> = {
+    en: tCommon('locales.en'),
+    es: tCommon('locales.es'),
+    ro: tCommon('locales.ro'),
+  };
+  const nozzleMood: 'soft' | 'focused' | 'celebratory' =
+    toolbarNozzle === 1 ? 'soft' : toolbarNozzle === 2 ? 'focused' : 'celebratory';
+  const nozzleLabels: Record<'soft' | 'focused' | 'celebratory', string> = {
+    soft: tCommon('nozzle.soft'),
+    focused: tCommon('nozzle.focused'),
+    celebratory: tCommon('nozzle.celebratory'),
+  };
 
   // Reveal gating: allow full mirror only after the text has a real "paragraph",
   // unless the input is a link (links can be mirrored immediately).
@@ -119,8 +165,8 @@ function PatternMirrorContent() {
 
   const presenceWhispers = React.useMemo(() => {
     const fromLocale = (resources as any)[mirrorLocale]?.reflection?.presence_whispers;
-    const fromDefault =
-      (resources as any)[defaultLocale as PatternMirrorLocale]?.reflection?.presence_whispers;
+    const fromDefault = (resources as any)[defaultLocale as PatternMirrorLocale]?.reflection
+      ?.presence_whispers;
     const list = Array.isArray(fromLocale) && fromLocale.length ? fromLocale : fromDefault;
     const normalized = Array.isArray(list)
       ? list.map((item) => (typeof item === 'string' ? item.trim() : '')).filter(Boolean)
@@ -147,15 +193,15 @@ function PatternMirrorContent() {
     {
       id: 'warm',
       options: [
-        { id: 'SUN', label: '☀️ Sun' },
-        { id: 'GARDEN', label: '🌿 Garden' },
+        { id: 'SUN', label: `☀️ ${tCommon('skins.sun')}` },
+        { id: 'GARDEN', label: `🌿 ${tCommon('skins.garden')}` },
       ],
     },
     {
       id: 'night',
       options: [
-        { id: 'MOON', label: '🌙 Moon' },
-        { id: 'STELLAR', label: '🟣 Stellar' },
+        { id: 'MOON', label: `🌙 ${tCommon('skins.moon')}` },
+        { id: 'STELLAR', label: `🟣 ${tCommon('skins.stellar')}` },
       ],
     },
   ] as const;
@@ -210,7 +256,9 @@ function PatternMirrorContent() {
 
   React.useEffect(() => {
     if (!presenceWhispers.length) return;
-    setPresenceWhisper((prev) => (prev && presenceWhispers.includes(prev) ? prev : presenceWhispers[0]));
+    setPresenceWhisper((prev) =>
+      prev && presenceWhispers.includes(prev) ? prev : presenceWhispers[0]
+    );
   }, [presenceWhispers]);
 
   React.useEffect(() => {
@@ -230,12 +278,33 @@ function PatternMirrorContent() {
   }, []);
 
   React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // migration: legacy simple/advanced -> nozzle (1..3)
+    const legacyMode = window.localStorage.getItem('pattern-mirror.toolbar-mode');
+    const storedNozzle = window.localStorage.getItem(TOOLBAR_NOZZLE_KEY);
+    let nextNozzle: 1 | 2 | 3 = 1;
+    if (storedNozzle === '2') nextNozzle = 2;
+    if (storedNozzle === '3') nextNozzle = 3;
+    if (!storedNozzle && legacyMode === 'advanced') nextNozzle = 3;
+    setToolbarNozzle(nextNozzle);
+
+    const seen = window.localStorage.getItem(TOOLBAR_HINT_KEY) === '1';
+    setToolbarHintSeen(seen);
+  }, []);
+
+  React.useEffect(() => {
     if (typeof document === 'undefined') return;
     document.documentElement.dataset.typo = typoMode;
     if (typeof window !== 'undefined') {
       window.localStorage.setItem('gratia.typo', typoMode);
     }
   }, [typoMode]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem(TOOLBAR_NOZZLE_KEY, String(toolbarNozzle));
+  }, [toolbarNozzle]);
 
   React.useEffect(() => {
     return () => {
@@ -247,11 +316,189 @@ function PatternMirrorContent() {
 
   React.useEffect(() => {
     return () => {
-      if (pauseTimerRef.current) {
-        window.clearTimeout(pauseTimerRef.current);
-      }
+      if (pauseTimerRef.current) window.clearTimeout(pauseTimerRef.current);
+      if (firstCharTimerRef.current) window.clearTimeout(firstCharTimerRef.current);
     };
   }, []);
+
+  React.useEffect(() => {
+    const ctx = audioCtxRef.current;
+    const gain = gainRef.current;
+    if (!radioOn || !ctx || !gain) return;
+
+    try {
+      // Longer ramp = more "suave" + less clicky
+      gain.gain.cancelScheduledValues(ctx.currentTime);
+      gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, radioVolume), ctx.currentTime + 0.25);
+    } catch {}
+  }, [radioOn, radioVolume]);
+
+  React.useEffect(() => {
+    const ctx = audioCtxRef.current;
+    const osc = oscRef.current;
+    if (!radioOn || !ctx || !osc) return;
+
+    try {
+      if (radioMode === 'binaural' && osc2Ref.current) {
+        const half = Math.max(0.5, radioBeatHz / 2);
+        osc.frequency.setValueAtTime(Math.max(1, radioHz - half), ctx.currentTime);
+        osc2Ref.current.frequency.setValueAtTime(Math.max(1, radioHz + half), ctx.currentTime);
+      } else {
+        osc.frequency.setValueAtTime(radioHz, ctx.currentTime);
+      }
+    } catch {}
+  }, [radioOn, radioHz, radioMode, radioBeatHz]);
+
+  const stopRadio = React.useCallback(() => {
+    const ctx = audioCtxRef.current;
+    const gain = gainRef.current;
+
+    // Fade out to avoid a hard cut click
+    if (ctx && gain) {
+      try {
+        gain.gain.cancelScheduledValues(ctx.currentTime);
+        gain.gain.setValueAtTime(Math.max(0.0001, gain.gain.value), ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.2);
+      } catch {}
+    }
+
+    const stopAt = ctx ? ctx.currentTime + 0.21 : undefined;
+
+    try {
+      if (oscRef.current) {
+        if (stopAt) oscRef.current.stop(stopAt);
+        else oscRef.current.stop();
+        oscRef.current.disconnect();
+      }
+    } catch {}
+    oscRef.current = null;
+
+    try {
+      if (osc2Ref.current) {
+        if (stopAt) osc2Ref.current.stop(stopAt);
+        else osc2Ref.current.stop();
+        osc2Ref.current.disconnect();
+      }
+    } catch {}
+    osc2Ref.current = null;
+
+    try {
+      if (panLRef.current) panLRef.current.disconnect();
+    } catch {}
+    panLRef.current = null;
+
+    try {
+      if (panRRef.current) panRRef.current.disconnect();
+    } catch {}
+    panRRef.current = null;
+
+    try {
+      if (filterRef.current) filterRef.current.disconnect();
+    } catch {}
+    filterRef.current = null;
+
+    try {
+      if (gainRef.current) gainRef.current.disconnect();
+    } catch {}
+    gainRef.current = null;
+  }, []);
+
+  const startRadio = React.useCallback(
+    async (hz: number) => {
+      // Must be user-initiated to satisfy autoplay policies.
+      const Ctx = (window.AudioContext || (window as any).webkitAudioContext) as
+        | typeof AudioContext
+        | undefined;
+      if (!Ctx) return;
+
+      if (!audioCtxRef.current) audioCtxRef.current = new Ctx();
+
+      try {
+        if (audioCtxRef.current.state === 'suspended') {
+          await audioCtxRef.current.resume();
+        }
+      } catch {}
+
+      stopRadio();
+
+      const ctx = audioCtxRef.current;
+
+      // Gain (with softer attack)
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.0001, radioVolume), ctx.currentTime + 0.25);
+
+      // Gentle low-pass to soften the pure sine and reduce perceived sharpness
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(1200, ctx.currentTime);
+      filter.Q.setValueAtTime(0.7, ctx.currentTime);
+
+      filterRef.current = filter;
+      gainRef.current = gain;
+
+      if (radioMode === 'binaural') {
+        const half = Math.max(0.5, radioBeatHz / 2);
+        const leftHz = Math.max(1, hz - half);
+        const rightHz = Math.max(1, hz + half);
+
+        const oscL = ctx.createOscillator();
+        const oscR = ctx.createOscillator();
+        oscL.type = 'sine';
+        oscR.type = 'sine';
+        oscL.frequency.setValueAtTime(leftHz, ctx.currentTime);
+        oscR.frequency.setValueAtTime(rightHz, ctx.currentTime);
+
+        const panL = ctx.createStereoPanner();
+        const panR = ctx.createStereoPanner();
+        panL.pan.setValueAtTime(-0.6, ctx.currentTime);
+        panR.pan.setValueAtTime(0.6, ctx.currentTime);
+
+        // L/R oscillators -> panners -> filter -> gain -> destination
+        oscL.connect(panL);
+        oscR.connect(panR);
+        panL.connect(filter);
+        panR.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        oscRef.current = oscL;
+        osc2Ref.current = oscR;
+        panLRef.current = panL;
+        panRRef.current = panR;
+
+        oscL.start();
+        oscR.start();
+      } else {
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(hz, ctx.currentTime);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        oscRef.current = osc;
+        osc2Ref.current = null;
+
+        osc.start();
+      }
+    },
+    [radioVolume, radioMode, radioBeatHz, stopRadio]
+  );
+
+  const setRadioEnabled = React.useCallback(
+    async (nextOn: boolean, nextHz: number = radioHz) => {
+      setRadioOn(nextOn);
+      if (nextOn) {
+        await startRadio(nextHz);
+      } else {
+        stopRadio();
+      }
+    },
+    [radioHz, startRadio, stopRadio]
+  );
 
   const pulseToolbarDepth = (level: 1 | 2 = 2, ms = 520) => {
     if (toolbarDepthTimer.current) {
@@ -279,7 +526,13 @@ function PatternMirrorContent() {
     if (previous === 'SUN') {
       setSkinId('MOON');
     }
-    return () => setSkinId(previous);
+    return () => {
+      setSkinId(previous);
+      stopRadio();
+      try {
+        audioCtxRef.current?.suspend();
+      } catch {}
+    };
     // Intentional empty deps: run only on mount/unmount with initial skinId.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -296,26 +549,40 @@ function PatternMirrorContent() {
     // Any new typing hides the nudge; we only show it after a pause.
     setIdleNudgeVisible(false);
     setPresenceIdle(false);
-    setPresenceIdle(false);
 
     const trimmed = value.trim();
+    if (trimmed && !firstCharAtRef.current && stage !== 'listening') {
+      firstCharAtRef.current = Date.now();
+      if (firstCharTimerRef.current) window.clearTimeout(firstCharTimerRef.current);
+      firstCharTimerRef.current = window.setTimeout(() => {
+        firstCharTimerRef.current = null;
+        const latest = (textRef.current || '').trim();
+        if (!latest) return;
+        if (suppressAutoRevealRef.current) return;
+        if (stageRef.current === 'listening') return;
+        setIdleNudgeVisible(true);
+      }, FIRST_CHAR_MAX_MS);
+    }
+
     if (trimmed && stage !== 'listening') {
       pauseTimerRef.current = window.setTimeout(() => {
+        pauseTimerRef.current = null;
         const latest = (textRef.current || '').trim();
         if (!latest) return;
         if (suppressAutoRevealRef.current) return;
         if (stageRef.current === 'listening') return;
         if (latest.length < PAUSE_MIN_CHARS) return;
-
-        pauseCountRef.current += 1;
-        if (pauseCountRef.current < 2) return;
         setIdleNudgeVisible(true);
       }, PAUSE_IDLE_MS);
     }
 
     setText(value);
     if (!value.trim()) {
-      pauseCountRef.current = 0;
+      firstCharAtRef.current = null;
+      if (firstCharTimerRef.current) {
+        window.clearTimeout(firstCharTimerRef.current);
+        firstCharTimerRef.current = null;
+      }
       setStage('idle');
       return;
     }
@@ -334,6 +601,12 @@ function PatternMirrorContent() {
     }
 
     setIdleNudgeVisible(false);
+    setPresenceIdle(false);
+    firstCharAtRef.current = null;
+    if (firstCharTimerRef.current) {
+      window.clearTimeout(firstCharTimerRef.current);
+      firstCharTimerRef.current = null;
+    }
 
     // Gate: only reveal the full mirror after a paragraph (unless it’s a link).
     if (!canReveal) {
@@ -357,6 +630,7 @@ function PatternMirrorContent() {
           content: current,
           lang: mirrorLocale,
           locale: mirrorLocale,
+          mood: nozzleMood,
         }),
       });
 
@@ -500,6 +774,15 @@ function PatternMirrorContent() {
     setToolbarPinnedOpen(false);
   };
 
+  const setNozzle = (level: 1 | 2 | 3) => {
+    setToolbarNozzle(level);
+    pulseToolbarDepth(2, 520);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(TOOLBAR_HINT_KEY, '1');
+    }
+    setToolbarHintSeen(true);
+  };
+
   return (
     <main
       className="pm-page"
@@ -507,6 +790,7 @@ function PatternMirrorContent() {
       data-pm-idle={Boolean(idleNudgeVisible || presenceIdle)}
       data-input-focused={inputFocused}
       data-results-hovered={resultsHovered}
+      data-nozzle-mood={nozzleMood}
     >
       <div className="pm-page-inner">
         <div className="pm-hero">
@@ -565,7 +849,7 @@ function PatternMirrorContent() {
                     density="snug"
                     onClick={() => setLocale(code)}
                   >
-                    {code.toUpperCase()}
+                    {localeLabels[code] ?? code.toUpperCase()}
                   </Pill>
                 );
               })}
@@ -605,35 +889,128 @@ function PatternMirrorContent() {
                 </React.Fragment>
               ))}
 
-              <span className="pm-sep" aria-hidden="true">
-                ⟡
-              </span>
+              {toolbarNozzle >= 2 && (
+                <>
+                  <span className="pm-sep" aria-hidden="true">
+                    ⟡
+                  </span>
 
-              {(
-                [
-                  { id: 'ui', label: 'Default' },
-                  { id: 'mono', label: 'Vienna' },
-                ] as const
-              ).map((opt) => {
-                const active = typoMode === opt.id;
-                return (
-                  <Pill
-                    key={opt.id}
-                    as="button"
-                    data-active={active}
-                    className="pm-pill"
-                    variant={active ? 'soft' : 'subtle'}
-                    tone="subtle"
-                    density="snug"
-                    onClick={() => {
-                      setTypoMode(opt.id);
-                      pulseToolbarDepth();
-                    }}
-                  >
-                    {opt.label}
-                  </Pill>
-                );
-              })}
+                  {(
+                    [
+                      { id: 'ui', label: tCommon('types.default') },
+                      { id: 'mono', label: tCommon('types.vienna') },
+                    ] as const
+                  ).map((opt) => {
+                    const active = typoMode === opt.id;
+                    return (
+                      <Pill
+                        key={opt.id}
+                        as="button"
+                        data-active={active}
+                        className="pm-pill"
+                        variant={active ? 'soft' : 'subtle'}
+                        tone="subtle"
+                        density="snug"
+                        onClick={() => {
+                          setTypoMode(opt.id);
+                          pulseToolbarDepth();
+                        }}
+                      >
+                        {opt.label}
+                      </Pill>
+                    );
+                  })}
+
+                  {toolbarNozzle === 3 && (
+                    <>
+                      <span className="pm-sep" aria-hidden="true">
+                        ⟡
+                      </span>
+
+                      <div className="pm-radio-controls" data-radio-on={radioOn}>
+                        <Pill
+                          as="button"
+                          className="pm-pill"
+                          variant={radioOn ? 'soft' : 'subtle'}
+                          tone={radioOn ? 'accent' : 'subtle'}
+                          density="snug"
+                          data-active={radioOn}
+                          onClick={async () => {
+                            pulseToolbarDepth();
+                            await setRadioEnabled(!radioOn, radioHz);
+                          }}
+                          title="G 📻 — ambient tone bed"
+                        >
+                          G 📻
+                        </Pill>
+
+                        <select
+                          aria-label="G Radio mode"
+                          className="pm-radio-select"
+                          value={radioMode}
+                          onChange={async (e) => {
+                            const next = (e.target.value as 'single' | 'binaural') || 'single';
+                            setRadioMode(next);
+                            pulseToolbarDepth();
+                            if (radioOn) await startRadio(radioHz);
+                          }}
+                        >
+                          <option value="single">1x</option>
+                          <option value="binaural">2x</option>
+                        </select>
+
+                        {radioMode === 'binaural' && (
+                          <input
+                            aria-label="Binaural beat Hz"
+                            className="pm-radio-range"
+                            type="range"
+                            min={1}
+                            max={12}
+                            step={1}
+                            value={radioBeatHz}
+                            onChange={async (e) => {
+                              const next = Number(e.target.value);
+                              setRadioBeatHz(next);
+                              pulseToolbarDepth();
+                              if (radioOn) await startRadio(radioHz);
+                            }}
+                            title={`${radioBeatHz} Hz beat`}
+                          />
+                        )}
+
+                        <select
+                          aria-label="G Radio frequency"
+                          className="pm-radio-select"
+                          value={radioHz}
+                          onChange={async (e) => {
+                            const next = Number(e.target.value);
+                            setRadioHz(next);
+                            pulseToolbarDepth();
+                            if (radioOn) await startRadio(next);
+                          }}
+                        >
+                          {RADIO_PRESETS.map((preset) => (
+                            <option key={preset.hz} value={preset.hz}>
+                              {preset.label}
+                            </option>
+                          ))}
+                        </select>
+
+                        <input
+                          aria-label="G Radio volume"
+                          className="pm-radio-range"
+                          type="range"
+                          min={0.0}
+                          max={0.18}
+                          step={0.005}
+                          value={radioVolume}
+                          onChange={(e) => setRadioVolume(Number(e.target.value))}
+                        />
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
             </ToolbarGroup>
           </Toolbar>
         </div>
@@ -650,9 +1027,13 @@ function PatternMirrorContent() {
                     window.clearTimeout(pauseTimerRef.current);
                     pauseTimerRef.current = null;
                   }
-    setIdleNudgeVisible(false);
-    setPresenceIdle(false);
-    pauseCountRef.current = 0;
+                  setIdleNudgeVisible(false);
+                  setPresenceIdle(false);
+                  firstCharAtRef.current = null;
+                  if (firstCharTimerRef.current) {
+                    window.clearTimeout(firstCharTimerRef.current);
+                    firstCharTimerRef.current = null;
+                  }
                   setStage(textRef.current.trim() ? 'ready' : 'idle');
                 }
               }}
@@ -668,15 +1049,44 @@ function PatternMirrorContent() {
 
             <div className="pm-input-footer">
               {(stage === 'ready' || stage === 'idle') && !suppressAutoRevealRef.current ? (
-                <div className="pm-idle-whisper" role="note" aria-label="Antonio whisper">
+                <button
+                  type="button"
+                  className="pm-idle-whisper"
+                  aria-label="Presence whisper"
+                  onClick={() => {
+                    if (!trimmedText) return;
+                    suppressAutoRevealRef.current = true;
+                    void handleRevealReflection();
+                  }}
+                >
                   <span className="pm-idle-whisper-icon" aria-hidden>
                     🐸
                   </span>
                   <span className="pm-idle-whisper-text">
                     {trimmedText ? idleWhisperText : presenceWhisper}
                   </span>
-                </div>
+                </button>
               ) : null}
+
+              <button
+                type="button"
+                className="pm-mood-chip"
+                aria-label={nozzleLabels[nozzleMood]}
+                title={nozzleLabels[nozzleMood]}
+                onClick={() => {
+                  // cycle 1 → 2 → 3 → 1
+                  const next = toolbarNozzle === 1 ? 2 : toolbarNozzle === 2 ? 3 : 1;
+                  setNozzle(next);
+                }}
+                disabled={stage === 'listening'}
+              >
+                <span className="pm-mood-chip-icon" aria-hidden>
+                  🌸
+                </span>
+                <span className="pm-mood-chip-steps" aria-hidden>
+                  {toolbarNozzle === 1 ? '⟡' : toolbarNozzle === 2 ? '⟡⟡' : '⟡⟡⟡'}
+                </span>
+              </button>
 
               <Button
                 variant="ghost"
