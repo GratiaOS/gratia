@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { SpiritModeProvider } from '@/components/SpiritModeProvider';
+import DevToggles from '@/components/DevToggles';
 import { SkinFieldProvider } from './skin/SkinFieldProvider';
 import { defaultLocale, supportedLocales } from '../i18n/config';
 
@@ -91,6 +92,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <SkinFieldProvider>
           <SpiritModeProvider>{children}</SpiritModeProvider>
         </SkinFieldProvider>
+        {process.env.NODE_ENV === 'development' ? <DevToggles /> : null}
       </body>
     </html>
   );

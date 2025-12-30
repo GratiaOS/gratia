@@ -95,12 +95,18 @@ function PatternMirrorContent() {
 
   const [inputFocused, setInputFocused] = React.useState(false);
   const [resultsHovered, setResultsHovered] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
   const [toolbarCollapsed, setToolbarCollapsed] = React.useState(false);
   const [toolbarHover, setToolbarHover] = React.useState(false);
   const [toolbarPinnedOpen, setToolbarPinnedOpen] = React.useState(false);
   const toolbarRef = React.useRef<HTMLDivElement | null>(null);
 
   const resultsRef = React.useRef<HTMLDivElement | null>(null);
+
+  // Textarea auto-grow (bounded)
+  const TEXTAREA_MAX_PX_MOBILE = 240;
+  const TEXTAREA_MAX_PX_DESKTOP = 360;
+  const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
 
   const patternPack =
     (resources as any)[mirrorLocale]?.patterns ??
@@ -508,6 +514,12 @@ function PatternMirrorContent() {
     toolbarDepthTimer.current = window.setTimeout(() => setToolbarDepth(1), Math.max(200, ms));
   };
 
+  const latestSkinIdRef = React.useRef(skinId);
+
+  React.useEffect(() => {
+    latestSkinIdRef.current = skinId;
+  }, [skinId]);
+
   React.useEffect(() => {
     if (!savedTruth && seedsForLocale.length > 0) {
       setSavedTruth(seedsForLocale[0]?.text ?? null);
@@ -521,13 +533,37 @@ function PatternMirrorContent() {
   }, [isResultsStage]);
 
   React.useEffect(() => {
-    // Default to MOON once when entering the ritual; restore on exit.
-    const previous = skinId;
-    if (previous === 'SUN') {
-      setSkinId('MOON');
-    }
+    // Match M3: force base palette by removing skin + pinning tone vars.
+    const root = document.documentElement;
+    const previous = root.getAttribute('data-skin-id');
+    const prevPadDrift = root.getAttribute('data-pad-drift');
+    const prevToneSurface = root.style.getPropertyValue('--tone-surface');
+    const prevToneInk = root.style.getPropertyValue('--tone-ink');
+    const prevToneAccent = root.style.getPropertyValue('--tone-accent');
+    const prevToneBorder = root.style.getPropertyValue('--tone-border');
+
+    root.removeAttribute('data-skin-id');
+    root.setAttribute('data-pad-drift', 'm3');
+
     return () => {
-      setSkinId(previous);
+      const next = latestSkinIdRef.current;
+      if (next) {
+        root.setAttribute('data-skin-id', next);
+      } else if (previous) {
+        root.setAttribute('data-skin-id', previous);
+      } else {
+        root.removeAttribute('data-skin-id');
+      }
+      if (prevPadDrift) root.setAttribute('data-pad-drift', prevPadDrift);
+      else root.removeAttribute('data-pad-drift');
+      if (prevToneSurface) root.style.setProperty('--tone-surface', prevToneSurface);
+      else root.style.removeProperty('--tone-surface');
+      if (prevToneInk) root.style.setProperty('--tone-ink', prevToneInk);
+      else root.style.removeProperty('--tone-ink');
+      if (prevToneAccent) root.style.setProperty('--tone-accent', prevToneAccent);
+      else root.style.removeProperty('--tone-accent');
+      if (prevToneBorder) root.style.setProperty('--tone-border', prevToneBorder);
+      else root.style.removeProperty('--tone-border');
       stopRadio();
       try {
         audioCtxRef.current?.suspend();
@@ -536,6 +572,63 @@ function PatternMirrorContent() {
     // Intentional empty deps: run only on mount/unmount with initial skinId.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    // Keep base palette even if a skin toggle updates the dataset.
+    const root = document.documentElement;
+    if (root.hasAttribute('data-skin-id')) {
+      root.removeAttribute('data-skin-id');
+    }
+  }, [skinId]);
+
+  const resizeTextarea = React.useCallback(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+
+    // Determine cap by viewport (mobile vs desktop)
+    const isMobile =
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(max-width: 640px)').matches;
+    const maxPx = isMobile ? TEXTAREA_MAX_PX_MOBILE : TEXTAREA_MAX_PX_DESKTOP;
+
+    // Reset height so scrollHeight is accurate, then clamp.
+    el.style.height = 'auto';
+    const next = Math.min(el.scrollHeight, maxPx);
+    el.style.height = `${next}px`;
+    el.style.overflowY = el.scrollHeight > maxPx ? 'auto' : 'hidden';
+  }, []);
+
+  React.useEffect(() => {
+    resizeTextarea();
+  }, [text, resizeTextarea]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mq = window.matchMedia?.('(max-width: 640px)');
+    const update = () => {
+      setIsMobile(Boolean(mq ? mq.matches : window.innerWidth <= 640));
+    };
+
+    const onResize = () => {
+      resizeTextarea();
+      update();
+    };
+
+    update();
+    window.addEventListener('resize', onResize);
+
+    if (mq?.addEventListener) {
+      mq.addEventListener('change', update);
+      return () => {
+        window.removeEventListener('resize', onResize);
+        mq.removeEventListener('change', update);
+      };
+    }
+
+    return () => window.removeEventListener('resize', onResize);
+  }, [resizeTextarea]);
 
   const handleChange = (value: string) => {
     textRef.current = value;
@@ -1017,91 +1110,196 @@ function PatternMirrorContent() {
 
         <div className="pm-input">
           <div className="pm-input-wrap">
-            <textarea
-              value={text}
-              onChange={(e) => handleChange(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Escape') {
-                  suppressAutoRevealRef.current = true;
-                  if (pauseTimerRef.current) {
-                    window.clearTimeout(pauseTimerRef.current);
-                    pauseTimerRef.current = null;
-                  }
-                  setIdleNudgeVisible(false);
-                  setPresenceIdle(false);
-                  firstCharAtRef.current = null;
-                  if (firstCharTimerRef.current) {
-                    window.clearTimeout(firstCharTimerRef.current);
-                    firstCharTimerRef.current = null;
-                  }
-                  setStage(textRef.current.trim() ? 'ready' : 'idle');
-                }
-              }}
-              onFocus={() => setInputFocused(true)}
-              onBlur={() => setInputFocused(false)}
-              rows={7}
-              autoFocus
-              disabled={stage === 'listening'}
-              aria-label={t('mirror_whisper')}
-              data-focused={inputFocused}
-              className="pm-textarea"
-            />
+            {isMobile ? (
+              <div className="pm-mobile-stack">
+                {(stage === 'ready' || stage === 'idle') && !suppressAutoRevealRef.current ? (
+                  <button
+                    type="button"
+                    className="pm-idle-whisper pm-idle-whisper--mobile"
+                    aria-label="Presence whisper"
+                    onClick={() => {
+                      if (!trimmedText) return;
+                      suppressAutoRevealRef.current = true;
+                      void handleRevealReflection();
+                    }}
+                  >
+                    <span className="pm-idle-whisper-icon" aria-hidden>
+                      🐸
+                    </span>
+                    <span className="pm-idle-whisper-text">
+                      {trimmedText ? idleWhisperText : presenceWhisper}
+                    </span>
+                  </button>
+                ) : null}
 
-            <div className="pm-input-footer">
-              {(stage === 'ready' || stage === 'idle') && !suppressAutoRevealRef.current ? (
-                <button
-                  type="button"
-                  className="pm-idle-whisper"
-                  aria-label="Presence whisper"
-                  onClick={() => {
-                    if (!trimmedText) return;
-                    suppressAutoRevealRef.current = true;
-                    void handleRevealReflection();
+                <textarea
+                  ref={(node) => {
+                    textareaRef.current = node;
                   }}
-                >
-                  <span className="pm-idle-whisper-icon" aria-hidden>
-                    🐸
-                  </span>
-                  <span className="pm-idle-whisper-text">
-                    {trimmedText ? idleWhisperText : presenceWhisper}
-                  </span>
-                </button>
-              ) : null}
+                  value={text}
+                  onChange={(e) => {
+                    handleChange(e.target.value);
+                    // resize after React state updates
+                    requestAnimationFrame(() => resizeTextarea());
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      suppressAutoRevealRef.current = true;
+                      if (pauseTimerRef.current) {
+                        window.clearTimeout(pauseTimerRef.current);
+                        pauseTimerRef.current = null;
+                      }
+                      setIdleNudgeVisible(false);
+                      setPresenceIdle(false);
+                      firstCharAtRef.current = null;
+                      if (firstCharTimerRef.current) {
+                        window.clearTimeout(firstCharTimerRef.current);
+                        firstCharTimerRef.current = null;
+                      }
+                      setStage(textRef.current.trim() ? 'ready' : 'idle');
+                    }
+                  }}
+                  onFocus={() => setInputFocused(true)}
+                  onBlur={() => setInputFocused(false)}
+                  rows={5}
+                  autoFocus
+                  disabled={stage === 'listening'}
+                  aria-label={t('mirror_whisper')}
+                  data-focused={inputFocused}
+                  className="pm-textarea"
+                />
 
-              <button
-                type="button"
-                className="pm-mood-chip"
-                aria-label={nozzleLabels[nozzleMood]}
-                title={nozzleLabels[nozzleMood]}
-                onClick={() => {
-                  // cycle 1 → 2 → 3 → 1
-                  const next = toolbarNozzle === 1 ? 2 : toolbarNozzle === 2 ? 3 : 1;
-                  setNozzle(next);
-                }}
-                disabled={stage === 'listening'}
-              >
-                <span className="pm-mood-chip-icon" aria-hidden>
-                  🌸
-                </span>
-                <span className="pm-mood-chip-steps" aria-hidden>
-                  {toolbarNozzle === 1 ? '⟡' : toolbarNozzle === 2 ? '⟡⟡' : '⟡⟡⟡'}
-                </span>
-              </button>
+                <div className="pm-mobile-cta">
+                  <button
+                    type="button"
+                    className="pm-mood-chip"
+                    aria-label={nozzleLabels[nozzleMood]}
+                    title={nozzleLabels[nozzleMood]}
+                    onClick={() => {
+                      const next = toolbarNozzle === 1 ? 2 : toolbarNozzle === 2 ? 3 : 1;
+                      setNozzle(next);
+                    }}
+                    disabled={stage === 'listening'}
+                  >
+                    <span className="pm-mood-chip-icon" aria-hidden>
+                      🌸
+                    </span>
+                    <span className="pm-mood-chip-steps" aria-hidden>
+                      {toolbarNozzle === 1 ? '⟡' : toolbarNozzle === 2 ? '⟡⟡' : '⟡⟡⟡'}
+                    </span>
+                  </button>
 
-              <Button
-                variant="ghost"
-                tone="accent"
-                disabled={!text.trim() || stage === 'listening' || !canReveal}
-                loading={stage === 'listening'}
-                className="pm-reveal-btn"
-                onClick={() => {
-                  suppressAutoRevealRef.current = true;
-                  void handleRevealReflection();
-                }}
-              >
-                <span aria-hidden>🪷</span> {t('button_reveal')}
-              </Button>
-            </div>
+                  <Button
+                    variant="ghost"
+                    tone="accent"
+                    disabled={!text.trim() || stage === 'listening' || !canReveal}
+                    loading={stage === 'listening'}
+                    className="pm-reveal-btn"
+                    onClick={() => {
+                      suppressAutoRevealRef.current = true;
+                      void handleRevealReflection();
+                    }}
+                  >
+                    <span aria-hidden>🪷</span> {t('button_reveal')}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <textarea
+                  ref={(node) => {
+                    textareaRef.current = node;
+                  }}
+                  value={text}
+                  onChange={(e) => {
+                    handleChange(e.target.value);
+                    // resize after React state updates
+                    requestAnimationFrame(() => resizeTextarea());
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      suppressAutoRevealRef.current = true;
+                      if (pauseTimerRef.current) {
+                        window.clearTimeout(pauseTimerRef.current);
+                        pauseTimerRef.current = null;
+                      }
+                      setIdleNudgeVisible(false);
+                      setPresenceIdle(false);
+                      firstCharAtRef.current = null;
+                      if (firstCharTimerRef.current) {
+                        window.clearTimeout(firstCharTimerRef.current);
+                        firstCharTimerRef.current = null;
+                      }
+                      setStage(textRef.current.trim() ? 'ready' : 'idle');
+                    }
+                  }}
+                  onFocus={() => setInputFocused(true)}
+                  onBlur={() => setInputFocused(false)}
+                  rows={5}
+                  autoFocus
+                  disabled={stage === 'listening'}
+                  aria-label={t('mirror_whisper')}
+                  data-focused={inputFocused}
+                  className="pm-textarea"
+                />
+
+                <div className="pm-input-footer pm-reveal-sticky">
+                  {(stage === 'ready' || stage === 'idle') && !suppressAutoRevealRef.current ? (
+                    <button
+                      type="button"
+                      className="pm-idle-whisper"
+                      aria-label="Presence whisper"
+                      onClick={() => {
+                        if (!trimmedText) return;
+                        suppressAutoRevealRef.current = true;
+                        void handleRevealReflection();
+                      }}
+                    >
+                      <span className="pm-idle-whisper-icon" aria-hidden>
+                        🐸
+                      </span>
+                      <span className="pm-idle-whisper-text">
+                        {trimmedText ? idleWhisperText : presenceWhisper}
+                      </span>
+                    </button>
+                  ) : null}
+
+                  <button
+                    type="button"
+                    className="pm-mood-chip"
+                    aria-label={nozzleLabels[nozzleMood]}
+                    title={nozzleLabels[nozzleMood]}
+                    onClick={() => {
+                      // cycle 1 → 2 → 3 → 1
+                      const next = toolbarNozzle === 1 ? 2 : toolbarNozzle === 2 ? 3 : 1;
+                      setNozzle(next);
+                    }}
+                    disabled={stage === 'listening'}
+                  >
+                    <span className="pm-mood-chip-icon" aria-hidden>
+                      🌸
+                    </span>
+                    <span className="pm-mood-chip-steps" aria-hidden>
+                      {toolbarNozzle === 1 ? '⟡' : toolbarNozzle === 2 ? '⟡⟡' : '⟡⟡⟡'}
+                    </span>
+                  </button>
+
+                  <Button
+                    variant="ghost"
+                    tone="accent"
+                    disabled={!text.trim() || stage === 'listening' || !canReveal}
+                    loading={stage === 'listening'}
+                    className="pm-reveal-btn"
+                    onClick={() => {
+                      suppressAutoRevealRef.current = true;
+                      void handleRevealReflection();
+                    }}
+                  >
+                    <span aria-hidden>🪷</span> {t('button_reveal')}
+                  </Button>
+                </div>
+              </>
+            )}
 
             {process.env.NODE_ENV === 'development' && payloadMetaSource === 'sample-fallback' && (
               <p className="pm-dev-hint">(using sample reflection — model not configured)</p>
