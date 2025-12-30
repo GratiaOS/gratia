@@ -44,7 +44,7 @@ export default function DevToggles() {
 
   return (
     <div
-      title="M3 drift on (Option + D)"
+      title="M3 drift (Alt/Option + D). docs/drift.md"
       onClick={() => {
         const root = document.documentElement;
         root.removeAttribute('data-pad-drift');
