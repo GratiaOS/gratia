@@ -214,16 +214,133 @@ function safeParseModelResponse(input: string): PatternMirrorResponse | null {
   }
 }
 
+const EN_WORDS = [
+  'the',
+  'and',
+  'you',
+  'your',
+  'this',
+  'that',
+  'with',
+  'for',
+  'are',
+  'is',
+  'not',
+  'it',
+  'there',
+  'feels',
+  'like',
+  'soft',
+  'warm',
+  'quiet',
+  'truth',
+] as const;
+
+const RO_WORDS = [
+  'si',
+  'și',
+  'este',
+  'nu',
+  'in',
+  'în',
+  'pe',
+  'cu',
+  'ca',
+  'sa',
+  'să',
+  'un',
+  'o',
+  'aici',
+  'adevar',
+  'adevăr',
+  'simte',
+  'cald',
+  'liniste',
+  'liniște',
+  'respira',
+  'respiră',
+  'poti',
+  'poți',
+  'vrea',
+  'singur',
+  'încet',
+  'incet',
+] as const;
+
+const ES_WORDS = [
+  'y',
+  'es',
+  'no',
+  'en',
+  'con',
+  'para',
+  'como',
+  'aqui',
+  'aquí',
+  'verdad',
+  'siente',
+  'suave',
+  'calma',
+  'calmado',
+  'respira',
+  'puedes',
+  'quieres',
+  'solo',
+  'dentro',
+  'quieto',
+  'lento',
+  'luz',
+  'verdadero',
+] as const;
+
+function countWordHits(text: string, words: readonly string[]): number {
+  if (!text) return 0;
+  const wordSet = new Set(words);
+  const tokens = text
+    .toLowerCase()
+    .split(/[^\p{L}]+/u)
+    .filter(Boolean);
+  let count = 0;
+  for (const token of tokens) {
+    if (wordSet.has(token)) count += 1;
+  }
+  return count;
+}
+
 function enforceLocale(payload: PatternMirrorResponse, locale: PatternMirrorLocale): PatternMirrorResponse {
   if (locale === 'en') return payload;
+
   const bullets = payload.reflectionBullets ?? [];
   const startsEnglish = (line: string) =>
     /^(it|there)(\s|’|'|s)/i.test(line.trim());
-  const allEnglishStarts = bullets.length > 0 && bullets.every((b) => startsEnglish(b));
-  if (allEnglishStarts) {
+  const englishStarts = bullets.filter((b) => startsEnglish(b)).length;
+
+  const combined = [
+    ...bullets,
+    payload.energyTone ?? '',
+    payload.nextTrueStepPrompt ?? '',
+  ]
+    .join(' ')
+    .trim();
+
+  const englishScore =
+    countWordHits(combined, EN_WORDS) + (englishStarts >= 2 ? 2 : 0);
+  const targetWords = locale === 'ro' ? RO_WORDS : ES_WORDS;
+  const targetScore = countWordHits(combined, targetWords);
+  const hasTargetDiacritics =
+    locale === 'ro'
+      ? /[ăâîșț]/i.test(combined)
+      : /[áéíóúñü]/i.test(combined);
+
+  // Guard only when the output looks strongly English with minimal target signals.
+  const shouldGuard =
+    englishScore >= 4 && !hasTargetDiacritics && targetScore < 2;
+
+  if (shouldGuard) {
     const fallback = samples[locale] ?? samples[fallbackLocale];
     return fallback;
   }
+
   return payload;
 }
 
