@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://www.gratia.space';
+  const base = 'https://gratia.space';
   const pages = [
     '',
     '/manifesto',
@@ -9,6 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/protocols/splinters-gift',
     '/join',
     '/contribute',
+    '/living',
+    '/whisper',
     '/vortex',
     '/codex/vienna',
   ];
