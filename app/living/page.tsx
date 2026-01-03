@@ -14,6 +14,12 @@ const splitBody = (body: string) =>
     .map((line) => line.trim())
     .filter(Boolean);
 
+const hashText = (text: string) =>
+  text
+    .split('')
+    .reduce((acc, ch) => (acc * 31 + ch.charCodeAt(0)) >>> 0, 7)
+    .toString(36);
+
 export default function LivingPage() {
   return (
     <main className="min-h-screen bg-(--color-surface) text-(--color-text)">
@@ -55,7 +61,7 @@ export default function LivingPage() {
 
               <div className="mt-4 space-y-3 text-sm leading-relaxed text-(--color-text)">
                 {splitBody(scene.body).map((paragraph, idx) => (
-                  <p key={idx}>{paragraph}</p>
+                  <p key={`${scene.id}-${hashText(paragraph)}`}>{paragraph}</p>
                 ))}
               </div>
 

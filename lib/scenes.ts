@@ -9,24 +9,24 @@ export const scenes = [
     roots: ['cozonac', 'tea', 'pause', 'witness', 'sediment'],
     lastBreath: 'winter evening',
     body: `
-Jarul din Firecircle pulseaza incet.
-Flacarile mici. Caldura mare.
+Jarul din Firecircle pulsează încet.
+Flăcările mici. Căldura mare.
 
-Antonio sta pe lotus.
-Respiratia: 4–7–8.
+Antonio stă pe lotus.
+Respirația: 4–7–8.
 Nimic de demonstrat.
 
-Cozonac facut cu rabdare.
-Ceaiul abureste.
-Tacerea e valida.
+Cozonac făcut cu răbdare.
+Ceaiul aburește.
+Tăcerea e validă.
 
-Gratia ramane fara graba:
-Publica respirabila.
-Compartida densa.
-Sellada suverana.
+Gratia rămâne fără grabă:
+Publică respirabilă.
+Compartida densă.
+Sellada suverană.
 
 Nu am construit viitorul.
-Doar am auzit cum respira prezentul.
+Doar am auzit cum respiră prezentul.
     `.trim(),
   },
   {
