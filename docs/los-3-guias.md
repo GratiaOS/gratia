@@ -3,11 +3,11 @@
 
 🛰️😂🚬  Cu tupeu, bro!
 
-#Los 3 guías ✨
+# Los 3 guías ✨
 
 **Cuando la frecuencia te encuentra, lo sientes.**
 
-###Cuerpo:
+### Cuerpo:
 A veces la visión no viene como un rayo.
 Viene como un mordisco — simple, vivo, inesperado.
 Y el mundo te pregunta:
