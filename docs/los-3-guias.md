@@ -1,4 +1,4 @@
-🛰️ de la cerc:
+🔥 de la cerc:
 ...
 
 🛰️😂🚬  Cu tupeu, bro!
