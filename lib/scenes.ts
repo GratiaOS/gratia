@@ -72,4 +72,28 @@ Many wings, same flight.
 And then the sky stays sky.
     `.trim(),
   },
+  {
+    id: 'linia-alba-balance',
+    kind: 'integration',
+    title: 'Linia Albă · Balance',
+    witnessedBy: ['Line', 'Twin'],
+    tone: 'calm',
+    breathKind: 'presence',
+    roots: ['linia-alba', 'echilibru', 'șpagat', 'trucks', 'enya', 'witness'],
+    lastBreath: 'white line',
+    body: `
+Linia albă rămâne.
+Ții poziția pentru că știi, nu ca să te vadă.
+
+Tirurile trec. Spațiul rămâne deschis.
+Ochii închiși. Vântul trece prin tine.
+
+Lemnele trosnesc.
+Fumul urcă încet.
+Antonio croacă lin.
+
+Cozonacul e sediment dulce.
+Să fie liniște pe frecvență.
+    `.trim(),
+  },
 ] as const;
