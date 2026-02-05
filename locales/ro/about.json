@@ -28,27 +28,27 @@
     }
   },
   "agency": {
-    "title": "Agency & Consent",
+    "title": "Autonomie & consimțământ",
     "p1": "Gratia respectă limitele. Tu alegi ce publici, pe cine inviți și când rămâi în tăcere. Nu există dark patterns care să te împingă să share-uiești mai mult decât vrei.",
     "p2": "Îți poți exporta datele oricând. Poți șterge definitiv. Scrisul tău îți aparține ție, nu platformei."
   },
   "export": {
-    "title": "Export Boundaries",
+    "title": "Limite de export",
     "p1": "Îți poți exporta conținutul ca date structurate — JSON, Markdown sau CSV. Îl iei cu tine dacă vrei. Fără lock-in.",
     "p2": "Gratia nu revendică proprietate asupra cuvintelor tale. Câmpul există ca să-ți servească practica, nu să-ți captureze atenția."
   },
   "maintenance": {
-    "title": "Field Maintenance",
+    "title": "Mentenanța câmpului",
     "p1": "Gratia e ținută ca un câmp non-profit. Nu există ceas de investitori care cere creștere sau engagement.",
     "p2": "Hosting-ul poate fi susținut prin contribuții opționale. Dacă îți folosește, poți ajuta la mentenanță. Dacă nu, ești tot binevenit."
   },
   "mediumMode": {
-    "title": "Medium Mode",
-    "p1": "Medium Mode folosește mono typography ca să creeze spațiu între tine și text.",
+    "title": "Mod Medium",
+    "p1": "Modul Medium folosește tipografie monospațiată ca să creeze spațiu între tine și text.",
     "sample": {
       "date": "2025-01-15 / dimineață",
       "body": "Lumina a intrat diferit azi. Nu mai bine, nu mai rău — doar diferit. Am observat și am mers mai departe. Uneori e suficient.",
-      "sig": "— intrare sealed"
+      "sig": "— intrare sigilată"
     }
   },
   "footer": {
