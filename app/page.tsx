@@ -21,22 +21,6 @@ const messages = {
     footer: 'Ofrece solo lo que amas.',
     support: 'Apoyar',
   },
-  fr: {
-    title: 'Gratia est un espace doux de mémoire et de présence.',
-    line1: 'Un lieu où la création se souvient qu’elle est en sécurité.',
-    line2: 'Légère comme la lumière. Chaude comme le printemps. 🍃',
-    subtitle: 'Une manière paisible d’écouter la nature, de sentir le monde et de te retrouver toi-même.',
-    footer: 'N’offre que ce que tu aimes.',
-    support: 'Soutenir',
-  },
-  ar: {
-    title: 'Gratia فضاء لطيف للذاكرة والحضور.',
-    line1: 'مكانٌ تتذكّر فيه الخليقة أنها في أمان.',
-    line2: 'ناعمة كالنور، دافئة مثل الربيع. 🍃',
-    subtitle: 'طريق هادئ للإصغاء إلى الطبيعة، والشعور بالعالم، والتلاقي مع ذاتك من جديد.',
-    footer: 'قدّم فقط ما تحبّه.',
-    support: 'الدعم',
-  },
   ro: {
     title: 'Gratia este un spațiu blând de memorie și prezență.',
     line1: 'Un loc în care creația își amintește siguranța.',
@@ -58,16 +42,6 @@ const meta = {
     description:
       'GratiaOS es un espacio suave donde la naturaleza y la memoria respiran juntas. Animales, plantas y piedras invitan a sentir el mundo y a sentirte a ti mismo.',
   },
-  fr: {
-    title: 'GratiaOS · Nature, mémoire et présence douce',
-    description:
-      'GratiaOS est un espace doux où nature et mémoire respirent ensemble. Animaux, plantes, rochers – un voyage calme pour sentir le monde et se sentir soi.',
-  },
-  ar: {
-    title: 'GratiaOS · طبيعة وذاكرة وحضور بلطف',
-    description:
-      'GratiaOS هو فضاء لطيف تُصافح فيه الطبيعة الذاكرة. حيوانات ونباتات وصخور، رحلة هادئة لاكتشاف العالم والشعور بالذات.',
-  },
   ro: {
     title: 'GratiaOS · Natură, memorie și prezență blândă',
     description:
@@ -79,8 +53,6 @@ const languages = [
   { code: 'es', label: 'Español' },
   { code: 'ro', label: 'Română' },
   { code: 'en', label: 'English' },
-  { code: 'fr', label: 'Français' },
-  { code: 'ar', label: 'العربية' },
 ] as const;
 
 type LangCode = (typeof languages)[number]['code'];
@@ -117,7 +89,7 @@ export default async function Home({ searchParams }: { searchParams?: Promise<Ho
   return (
     <main
       className="flex min-h-screen items-center justify-center px-6 py-10"
-      dir={activeLang === 'ar' ? 'rtl' : 'ltr'}
+      dir="ltr"
     >
       <div className="landing-hero max-w-xl space-y-8 text-center">
         <div className="landing-hero-mark">

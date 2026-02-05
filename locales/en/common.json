@@ -20,10 +20,7 @@
   "locales": {
     "en": "English",
     "es": "Español",
-    "ro": "Română",
-    "fr": "Français",
-    "ar": "العربية",
-    "de": "Deutsch"
+    "ro": "Română"
   },
   "nozzle": {
     "soft": "Soft",

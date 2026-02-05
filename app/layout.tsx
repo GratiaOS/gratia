@@ -82,7 +82,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   `;
 
   return (
-    <html lang={defaultLocale} data-typo="ui" data-skin-id={initialSkin} suppressHydrationWarning>
+    <html lang={defaultLocale} dir="ltr" data-typo="ui" data-skin-id={initialSkin} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: setInitialSkin }} />
         <script dangerouslySetInnerHTML={{ __html: setInitialTypo }} />

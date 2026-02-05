@@ -1,4 +1,4 @@
-export const locales = ['es', 'ro', 'en', 'fr', 'de', 'ar'];
+export const locales = ['es', 'ro', 'en'];
 export const defaultLocale = 'es';
 export const namespaces = ['vortex', 'common', 'reflection', 'patterns', 'about'];
 

@@ -1,7 +1,3 @@
-import arCommon from '../locales/ar/common.json';
-import arVortex from '../locales/ar/vortex.json';
-import deCommon from '../locales/de/common.json';
-import deVortex from '../locales/de/vortex.json';
 import enAbout from '../locales/en/about.json';
 import enCommon from '../locales/en/common.json';
 import enPatterns from '../locales/en/patterns.json';
@@ -29,27 +25,6 @@ export const resources = {
   en: {
     vortex: enVortex,
     common: enCommon,
-    reflection: enReflection,
-    patterns: enPatterns,
-    about: enAbout,
-  },
-  fr: {
-    vortex: enVortex,
-    common: enCommon,
-    reflection: enReflection,
-    patterns: enPatterns,
-    about: enAbout,
-  },
-  de: {
-    vortex: deVortex,
-    common: deCommon,
-    reflection: enReflection,
-    patterns: enPatterns,
-    about: enAbout,
-  },
-  ar: {
-    vortex: arVortex,
-    common: arCommon,
     reflection: enReflection,
     patterns: enPatterns,
     about: enAbout,
