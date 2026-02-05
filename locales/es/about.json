@@ -5,7 +5,7 @@
   },
   "header": {
     "title": "Sobre Gratia",
-    "subtitle": "Un espacio de práctica para registrar lo que importa. Sin presión de crecimiento. Sin bucles de engagement."
+    "subtitle": "Un espacio de práctica para registrar lo que importa. Sin presión de crecimiento. Sin bucles de atención."
   },
   "whatIs": {
     "title": "Qué es Gratia",
@@ -39,7 +39,7 @@
   },
   "maintenance": {
     "title": "Mantenimiento del Campo",
-    "p1": "Gratia se sostiene como un campo sin ánimo de lucro. No hay un reloj de inversores exigiendo crecimiento o engagement.",
+    "p1": "Gratia se sostiene como un campo sin ánimo de lucro. No hay un reloj de inversores exigiendo crecimiento o atención.",
     "p2": "El hosting puede sostenerse con contribuciones opcionales. Si el campo te sirve, puedes ayudar a mantenerlo. Si no, igual eres bienvenido."
   },
   "mediumMode": {
@@ -52,6 +52,6 @@
     }
   },
   "footer": {
-    "text": "Sin anuncios. Sin tracking. Sin feed algorítmico. Solo un campo para la práctica."
+    "text": "Sin anuncios. Sin rastreo. Sin flujo algorítmico. Solo un campo para la práctica."
   }
 }
